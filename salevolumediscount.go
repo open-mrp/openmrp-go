@@ -555,8 +555,8 @@ type SaleVolumeDiscountNewParams struct {
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
 	//
-	// Any of "customer_groups", "product_lines", "categories", "attributes",
-	// "acceptable_units".
+	// Any of "customer_groups", "product_lines", "categories",
+	// "categories.properties", "attributes", "acceptable_units".
 	Include []string `query:"include,omitzero" json:"-"`
 	paramObj
 }
@@ -581,8 +581,8 @@ type SaleVolumeDiscountGetParams struct {
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
 	//
-	// Any of "customer_groups", "product_lines", "categories", "attributes",
-	// "acceptable_units".
+	// Any of "customer_groups", "product_lines", "categories",
+	// "categories.properties", "attributes", "acceptable_units".
 	Include []string `query:"include,omitzero" json:"-"`
 	paramObj
 }
@@ -602,8 +602,8 @@ type SaleVolumeDiscountUpdateParams struct {
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
 	//
-	// Any of "customer_groups", "product_lines", "categories", "attributes",
-	// "acceptable_units".
+	// Any of "customer_groups", "product_lines", "categories",
+	// "categories.properties", "attributes", "acceptable_units".
 	Include []string `query:"include,omitzero" json:"-"`
 	paramObj
 }
@@ -640,8 +640,8 @@ type SaleVolumeDiscountListParams struct {
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
 	//
-	// Any of "customer_groups", "product_lines", "categories", "attributes",
-	// "acceptable_units".
+	// Any of "customer_groups", "product_lines", "categories",
+	// "categories.properties", "attributes", "acceptable_units".
 	Include []string `query:"include,omitzero" json:"-"`
 	paramObj
 }
