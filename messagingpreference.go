@@ -125,7 +125,10 @@ type NotificationPreference struct {
 	//
 	// A preference with no category is the user's global default, used for every
 	// category they have not set a specific preference for.
-	Category string `json:"category" api:"required"`
+	//
+	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
+	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered".
+	Category NotificationPreferenceCategory `json:"category" api:"required"`
 	// Creation timestamp.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// How often email for this category is sent.
@@ -182,6 +185,23 @@ func (r NotificationPreference) RawJSON() string { return r.JSON.raw }
 func (r *NotificationPreference) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// The notification category this preference applies to.
+//
+// A preference with no category is the user's global default, used for every
+// category they have not set a specific preference for.
+type NotificationPreferenceCategory string
+
+const (
+	NotificationPreferenceCategoryChatMessage        NotificationPreferenceCategory = "chat.message"
+	NotificationPreferenceCategoryChatMention        NotificationPreferenceCategory = "chat.mention"
+	NotificationPreferenceCategoryChatAdded          NotificationPreferenceCategory = "chat.added"
+	NotificationPreferenceCategoryOrderUpdated       NotificationPreferenceCategory = "order.updated"
+	NotificationPreferenceCategoryAgentRunCompleted  NotificationPreferenceCategory = "agent.run_completed"
+	NotificationPreferenceCategoryAgentAlert         NotificationPreferenceCategory = "agent.alert"
+	NotificationPreferenceCategorySystemBroadcast    NotificationPreferenceCategory = "system.broadcast"
+	NotificationPreferenceCategoryCustomerRegistered NotificationPreferenceCategory = "customer.registered"
+)
 
 // How often email for this category is sent.
 //

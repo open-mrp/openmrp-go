@@ -61,7 +61,7 @@ func TestMessagingConversationActionAssignWithOptionalParams(t *testing.T) {
 			Include: []string{"assignee"},
 			AssignConversationRequest: openmrp.AssignConversationRequestParam{
 				AssigneeResourceID:   openmrp.String("acus_e5zu8bde0z3h"),
-				AssigneeResourceType: openmrp.String("account_user"),
+				AssigneeResourceType: openmrp.AssignConversationRequestAssigneeResourceTypeAccountUser,
 			},
 		},
 	)

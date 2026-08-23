@@ -88,7 +88,9 @@ type AvailableTool struct {
 	//     fetching a web page or drafting a reply for a teammate to approve.
 	//   - `api_endpoint`: an operation of this API exposed as a tool, letting the agent
 	//     perform it on the account's behalf.
-	Category string `json:"category" api:"required"`
+	//
+	// Any of "built_in", "api_endpoint".
+	Category AvailableToolCategory `json:"category" api:"required"`
 	// JSON schema describing the configuration options this tool accepts.
 	//
 	// Defines the shape of the `config` field on AgentDefinitionTool: a schema
@@ -121,7 +123,9 @@ type AvailableTool struct {
 	RequiredPermissions []string `json:"required_permissions" api:"required"`
 	// Role type the caller must have for this tool, when the operation is gated by
 	// role rather than a permission (e.g. `admin`).
-	RequiredRoleType string `json:"required_role_type" api:"required"`
+	//
+	// Any of "admin", "user", "scanner", "sales_rep", "agent".
+	RequiredRoleType AvailableToolRequiredRoleType `json:"required_role_type" api:"required"`
 	// A stable identifier used when attaching the tool to an agent.
 	Slug string `json:"slug" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -146,11 +150,36 @@ func (r *AvailableTool) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Where the tool's behavior comes from.
+//
+//   - `built_in`: a capability implemented by the agent runtime itself, such as
+//     fetching a web page or drafting a reply for a teammate to approve.
+//   - `api_endpoint`: an operation of this API exposed as a tool, letting the agent
+//     perform it on the account's behalf.
+type AvailableToolCategory string
+
+const (
+	AvailableToolCategoryBuiltIn     AvailableToolCategory = "built_in"
+	AvailableToolCategoryAPIEndpoint AvailableToolCategory = "api_endpoint"
+)
+
 // Resource type identifier.
 type AvailableToolObject string
 
 const (
 	AvailableToolObjectAvailableTool AvailableToolObject = "available_tool"
+)
+
+// Role type the caller must have for this tool, when the operation is gated by
+// role rather than a permission (e.g. `admin`).
+type AvailableToolRequiredRoleType string
+
+const (
+	AvailableToolRequiredRoleTypeAdmin    AvailableToolRequiredRoleType = "admin"
+	AvailableToolRequiredRoleTypeUser     AvailableToolRequiredRoleType = "user"
+	AvailableToolRequiredRoleTypeScanner  AvailableToolRequiredRoleType = "scanner"
+	AvailableToolRequiredRoleTypeSalesRep AvailableToolRequiredRoleType = "sales_rep"
+	AvailableToolRequiredRoleTypeAgent    AvailableToolRequiredRoleType = "agent"
 )
 
 // A single page of resources, together with the metadata needed to page through

@@ -155,7 +155,9 @@ type EmailDomain struct {
 	// - `failed`: verification could not be completed.
 	//
 	// Inboxes can only be created on a `verified` domain.
-	Status string `json:"status" api:"required"`
+	//
+	// Any of "pending", "verified", "failed".
+	Status EmailDomainStatus `json:"status" api:"required"`
 	// Last updated timestamp.
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// When the domain's DKIM verification was confirmed.
@@ -186,6 +188,21 @@ type EmailDomainObject string
 
 const (
 	EmailDomainObjectEmailDomain EmailDomainObject = "email_domain"
+)
+
+// Verification status.
+//
+// - `pending`: registered and awaiting DKIM confirmation.
+// - `verified`: DKIM confirmed; the domain can send mail.
+// - `failed`: verification could not be completed.
+//
+// Inboxes can only be created on a `verified` domain.
+type EmailDomainStatus string
+
+const (
+	EmailDomainStatusPending  EmailDomainStatus = "pending"
+	EmailDomainStatusVerified EmailDomainStatus = "verified"
+	EmailDomainStatusFailed   EmailDomainStatus = "failed"
 )
 
 // A single page of resources, together with the metadata needed to page through

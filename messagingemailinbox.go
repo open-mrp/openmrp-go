@@ -136,16 +136,6 @@ type CreateEmailInboxRequestParam struct {
 	// With no agent bound, mail is still threaded into a conversation for your team,
 	// but nothing runs on it automatically.
 	AgentConfigID param.Opt[string] `json:"agent_config_id,omitzero"`
-	// How the bound agent decides whether to run on incoming mail.
-	//
-	//   - `mention`: runs only when the agent is @mentioned, matched against the trigger
-	//     keywords below.
-	//   - `keyword`: runs when the message contains any of the trigger keywords.
-	//   - `always`: runs on every incoming message.
-	//
-	// Leaving this unset makes the agent run on every incoming message, since email
-	// has no reliable @mention convention.
-	AgentTriggerPolicy param.Opt[string] `json:"agent_trigger_policy,omitzero"`
 	// Display name for the `From` header of outbound mail.
 	FromName param.Opt[string] `json:"from_name,omitzero"`
 	// The messaging group (roster) whose members are seated on every conversation this
@@ -159,6 +149,18 @@ type CreateEmailInboxRequestParam struct {
 	// Under the `keyword` policy a keyword matches anywhere in the message; under
 	// `mention` it only counts where it is prefixed with `@`.
 	AgentTriggerKeywords []string `json:"agent_trigger_keywords,omitzero"`
+	// How the bound agent decides whether to run on incoming mail.
+	//
+	//   - `mention`: runs only when the agent is @mentioned, matched against the trigger
+	//     keywords below.
+	//   - `keyword`: runs when the message contains any of the trigger keywords.
+	//   - `always`: runs on every incoming message.
+	//
+	// Leaving this unset makes the agent run on every incoming message, since email
+	// has no reliable @mention convention.
+	//
+	// Any of "mention", "keyword", "always".
+	AgentTriggerPolicy CreateEmailInboxRequestAgentTriggerPolicy `json:"agent_trigger_policy,omitzero"`
 	paramObj
 }
 
@@ -169,6 +171,23 @@ func (r CreateEmailInboxRequestParam) MarshalJSON() (data []byte, err error) {
 func (r *CreateEmailInboxRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// How the bound agent decides whether to run on incoming mail.
+//
+//   - `mention`: runs only when the agent is @mentioned, matched against the trigger
+//     keywords below.
+//   - `keyword`: runs when the message contains any of the trigger keywords.
+//   - `always`: runs on every incoming message.
+//
+// Leaving this unset makes the agent run on every incoming message, since email
+// has no reliable @mention convention.
+type CreateEmailInboxRequestAgentTriggerPolicy string
+
+const (
+	CreateEmailInboxRequestAgentTriggerPolicyMention CreateEmailInboxRequestAgentTriggerPolicy = "mention"
+	CreateEmailInboxRequestAgentTriggerPolicyKeyword CreateEmailInboxRequestAgentTriggerPolicy = "keyword"
+	CreateEmailInboxRequestAgentTriggerPolicyAlways  CreateEmailInboxRequestAgentTriggerPolicy = "always"
+)
 
 // A routable email inbox on a verified domain.
 //
@@ -200,7 +219,9 @@ type EmailInbox struct {
 	//
 	// When no policy is set the agent runs on every incoming message, since email has
 	// no reliable @mention convention.
-	AgentTriggerPolicy string `json:"agent_trigger_policy" api:"required"`
+	//
+	// Any of "mention", "keyword", "always".
+	AgentTriggerPolicy EmailInboxAgentTriggerPolicy `json:"agent_trigger_policy" api:"required"`
 	// Creation timestamp.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// A domain registered with the email bridge for sending and receiving mail.
@@ -233,7 +254,9 @@ type EmailInbox struct {
 	//   - `active`: inbound mail is threaded into a conversation.
 	//   - `disabled`: the inbox stays provisioned and keeps its history, but inbound
 	//     mail is dropped without being threaded.
-	Status string `json:"status" api:"required"`
+	//
+	// Any of "active", "disabled".
+	Status EmailInboxStatus `json:"status" api:"required"`
 	// Last updated timestamp.
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -262,11 +285,40 @@ func (r *EmailInbox) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// When the bound agent runs on incoming mail.
+//
+//   - `mention`: only when the agent is @mentioned, matched against its trigger
+//     keywords.
+//   - `keyword`: when the mail contains any of the configured trigger keywords.
+//   - `always`: on every incoming message.
+//
+// When no policy is set the agent runs on every incoming message, since email has
+// no reliable @mention convention.
+type EmailInboxAgentTriggerPolicy string
+
+const (
+	EmailInboxAgentTriggerPolicyMention EmailInboxAgentTriggerPolicy = "mention"
+	EmailInboxAgentTriggerPolicyKeyword EmailInboxAgentTriggerPolicy = "keyword"
+	EmailInboxAgentTriggerPolicyAlways  EmailInboxAgentTriggerPolicy = "always"
+)
+
 // Resource type identifier.
 type EmailInboxObject string
 
 const (
 	EmailInboxObjectEmailInbox EmailInboxObject = "email_inbox"
+)
+
+// Whether the inbox is currently accepting mail.
+//
+//   - `active`: inbound mail is threaded into a conversation.
+//   - `disabled`: the inbox stays provisioned and keeps its history, but inbound
+//     mail is dropped without being threaded.
+type EmailInboxStatus string
+
+const (
+	EmailInboxStatusActive   EmailInboxStatus = "active"
+	EmailInboxStatusDisabled EmailInboxStatus = "disabled"
 )
 
 // A single page of resources, together with the metadata needed to page through
@@ -319,19 +371,11 @@ type UpdateEmailInboxRequestParam struct {
 	//   - `active`: inbound mail is threaded into a conversation.
 	//   - `disabled`: the inbox stays provisioned and keeps its history, but inbound
 	//     mail is dropped without being threaded.
-	Status string `json:"status" api:"required"`
+	//
+	// Any of "active", "disabled".
+	Status UpdateEmailInboxRequestStatus `json:"status,omitzero" api:"required"`
 	// The agent to bind to this inbox to handle incoming mail.
 	AgentConfigID param.Opt[string] `json:"agent_config_id,omitzero"`
-	// How the bound agent decides whether to run on incoming mail.
-	//
-	//   - `mention`: runs only when the agent is @mentioned, matched against the trigger
-	//     keywords below.
-	//   - `keyword`: runs when the message contains any of the trigger keywords.
-	//   - `always`: runs on every incoming message.
-	//
-	// While no policy has been set, the agent runs on every incoming message, since
-	// email has no reliable @mention convention.
-	AgentTriggerPolicy param.Opt[string] `json:"agent_trigger_policy,omitzero"`
 	// Display name for the `From` header of outbound mail.
 	FromName param.Opt[string] `json:"from_name,omitzero"`
 	// The messaging group (roster) whose members are seated on every conversation this
@@ -345,6 +389,18 @@ type UpdateEmailInboxRequestParam struct {
 	// Under the `keyword` policy a keyword matches anywhere in the message; under
 	// `mention` it only counts where it is prefixed with `@`.
 	AgentTriggerKeywords []string `json:"agent_trigger_keywords,omitzero"`
+	// How the bound agent decides whether to run on incoming mail.
+	//
+	//   - `mention`: runs only when the agent is @mentioned, matched against the trigger
+	//     keywords below.
+	//   - `keyword`: runs when the message contains any of the trigger keywords.
+	//   - `always`: runs on every incoming message.
+	//
+	// While no policy has been set, the agent runs on every incoming message, since
+	// email has no reliable @mention convention.
+	//
+	// Any of "mention", "keyword", "always".
+	AgentTriggerPolicy UpdateEmailInboxRequestAgentTriggerPolicy `json:"agent_trigger_policy,omitzero"`
 	paramObj
 }
 
@@ -355,6 +411,35 @@ func (r UpdateEmailInboxRequestParam) MarshalJSON() (data []byte, err error) {
 func (r *UpdateEmailInboxRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether the inbox accepts mail.
+//
+//   - `active`: inbound mail is threaded into a conversation.
+//   - `disabled`: the inbox stays provisioned and keeps its history, but inbound
+//     mail is dropped without being threaded.
+type UpdateEmailInboxRequestStatus string
+
+const (
+	UpdateEmailInboxRequestStatusActive   UpdateEmailInboxRequestStatus = "active"
+	UpdateEmailInboxRequestStatusDisabled UpdateEmailInboxRequestStatus = "disabled"
+)
+
+// How the bound agent decides whether to run on incoming mail.
+//
+//   - `mention`: runs only when the agent is @mentioned, matched against the trigger
+//     keywords below.
+//   - `keyword`: runs when the message contains any of the trigger keywords.
+//   - `always`: runs on every incoming message.
+//
+// While no policy has been set, the agent runs on every incoming message, since
+// email has no reliable @mention convention.
+type UpdateEmailInboxRequestAgentTriggerPolicy string
+
+const (
+	UpdateEmailInboxRequestAgentTriggerPolicyMention UpdateEmailInboxRequestAgentTriggerPolicy = "mention"
+	UpdateEmailInboxRequestAgentTriggerPolicyKeyword UpdateEmailInboxRequestAgentTriggerPolicy = "keyword"
+	UpdateEmailInboxRequestAgentTriggerPolicyAlways  UpdateEmailInboxRequestAgentTriggerPolicy = "always"
+)
 
 type MessagingEmailInboxDeleteResponse struct {
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].

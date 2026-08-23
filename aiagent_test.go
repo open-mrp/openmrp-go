@@ -218,7 +218,7 @@ func TestAIAgentUpdateStatusWithOptionalParams(t *testing.T) {
 		"agdf_ah7tkyfxk8jl",
 		openmrp.AIAgentUpdateStatusParams{
 			UpdateAgentStatusRequest: openmrp.UpdateAgentStatusRequestParam{
-				Status: "active",
+				Status: openmrp.UpdateAgentStatusRequestStatusActive,
 			},
 			Include: []string{"config"},
 		},

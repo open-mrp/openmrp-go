@@ -230,7 +230,19 @@ type RequestLog struct {
 	//
 	// Matches the `code` of the error response the caller received. Populated only for
 	// failed requests.
-	ErrorCode string `json:"error_code" api:"required"`
+	//
+	// Any of "expired_token", "api_key_expired", "api_key_revoked",
+	// "invalid_credentials", "insufficient_permissions", "payment_required",
+	// "agent_spending_cap_reached", "validation_failed", "missing_field",
+	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
+	// "resource_conflict", "resource_gone", "idempotency_in_progress",
+	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
+	// "parameter_missing", "parameter_invalid", "parameter_unknown",
+	// "parameters_exclusive", "internal_error", "service_unavailable",
+	// "external_service_error", "timeout", "connection_error", "request_timeout",
+	// "client_closed_request", "api_version_required", "api_version_invalid",
+	// "api_version_too_old".
+	ErrorCode RequestLogErrorCode `json:"error_code" api:"required"`
 	// Human-readable error message.
 	//
 	// The same message the caller received. Populated only for failed requests.
@@ -248,7 +260,9 @@ type RequestLog struct {
 	// OpenMRP.
 	LatencyUs int64 `json:"latency_us" api:"required"`
 	// HTTP method.
-	Method string `json:"method" api:"required"`
+	//
+	// Any of "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS".
+	Method RequestLogMethod `json:"method" api:"required"`
 	// The route template the request matched, with path parameters left as
 	// placeholders.
 	//
@@ -327,6 +341,61 @@ func (r RequestLog) RawJSON() string { return r.JSON.raw }
 func (r *RequestLog) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Machine-readable API error code.
+//
+// Matches the `code` of the error response the caller received. Populated only for
+// failed requests.
+type RequestLogErrorCode string
+
+const (
+	RequestLogErrorCodeExpiredToken            RequestLogErrorCode = "expired_token"
+	RequestLogErrorCodeAPIKeyExpired           RequestLogErrorCode = "api_key_expired"
+	RequestLogErrorCodeAPIKeyRevoked           RequestLogErrorCode = "api_key_revoked"
+	RequestLogErrorCodeInvalidCredentials      RequestLogErrorCode = "invalid_credentials"
+	RequestLogErrorCodeInsufficientPermissions RequestLogErrorCode = "insufficient_permissions"
+	RequestLogErrorCodePaymentRequired         RequestLogErrorCode = "payment_required"
+	RequestLogErrorCodeAgentSpendingCapReached RequestLogErrorCode = "agent_spending_cap_reached"
+	RequestLogErrorCodeValidationFailed        RequestLogErrorCode = "validation_failed"
+	RequestLogErrorCodeMissingField            RequestLogErrorCode = "missing_field"
+	RequestLogErrorCodeInvalidFormat           RequestLogErrorCode = "invalid_format"
+	RequestLogErrorCodeMethodNotAllowed        RequestLogErrorCode = "method_not_allowed"
+	RequestLogErrorCodeResourceNotFound        RequestLogErrorCode = "resource_not_found"
+	RequestLogErrorCodeResourceExists          RequestLogErrorCode = "resource_exists"
+	RequestLogErrorCodeResourceConflict        RequestLogErrorCode = "resource_conflict"
+	RequestLogErrorCodeResourceGone            RequestLogErrorCode = "resource_gone"
+	RequestLogErrorCodeIdempotencyInProgress   RequestLogErrorCode = "idempotency_in_progress"
+	RequestLogErrorCodeLimitExceeded           RequestLogErrorCode = "limit_exceeded"
+	RequestLogErrorCodeRegistrationClosed      RequestLogErrorCode = "registration_closed"
+	RequestLogErrorCodeRateLimitExceeded       RequestLogErrorCode = "rate_limit_exceeded"
+	RequestLogErrorCodeParameterMissing        RequestLogErrorCode = "parameter_missing"
+	RequestLogErrorCodeParameterInvalid        RequestLogErrorCode = "parameter_invalid"
+	RequestLogErrorCodeParameterUnknown        RequestLogErrorCode = "parameter_unknown"
+	RequestLogErrorCodeParametersExclusive     RequestLogErrorCode = "parameters_exclusive"
+	RequestLogErrorCodeInternalError           RequestLogErrorCode = "internal_error"
+	RequestLogErrorCodeServiceUnavailable      RequestLogErrorCode = "service_unavailable"
+	RequestLogErrorCodeExternalServiceError    RequestLogErrorCode = "external_service_error"
+	RequestLogErrorCodeTimeout                 RequestLogErrorCode = "timeout"
+	RequestLogErrorCodeConnectionError         RequestLogErrorCode = "connection_error"
+	RequestLogErrorCodeRequestTimeout          RequestLogErrorCode = "request_timeout"
+	RequestLogErrorCodeClientClosedRequest     RequestLogErrorCode = "client_closed_request"
+	RequestLogErrorCodeAPIVersionRequired      RequestLogErrorCode = "api_version_required"
+	RequestLogErrorCodeAPIVersionInvalid       RequestLogErrorCode = "api_version_invalid"
+	RequestLogErrorCodeAPIVersionTooOld        RequestLogErrorCode = "api_version_too_old"
+)
+
+// HTTP method.
+type RequestLogMethod string
+
+const (
+	RequestLogMethodGet     RequestLogMethod = "GET"
+	RequestLogMethodPost    RequestLogMethod = "POST"
+	RequestLogMethodPut     RequestLogMethod = "PUT"
+	RequestLogMethodPatch   RequestLogMethod = "PATCH"
+	RequestLogMethodDelete  RequestLogMethod = "DELETE"
+	RequestLogMethodHead    RequestLogMethod = "HEAD"
+	RequestLogMethodOptions RequestLogMethod = "OPTIONS"
+)
 
 // Resource type identifier.
 type RequestLogObject string

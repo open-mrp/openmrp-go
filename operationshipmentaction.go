@@ -236,7 +236,9 @@ type RateShopResult struct {
 	//   - `flat_rate`: the customer's shipping term applies a flat shipping rate, which
 	//     replaced every option's carrier rate.
 	//   - `none`: standard carrier rates apply with no exemption.
-	ExemptionType string `json:"exemption_type" api:"required"`
+	//
+	// Any of "freight_exempt", "minimum_order_met", "flat_rate", "none".
+	ExemptionType RateShopResultExemptionType `json:"exemption_type" api:"required"`
 	// Flat shipping amount applied to the options.
 	//
 	// Set when the customer's shipping term applies a flat rate, including when a met
@@ -265,6 +267,25 @@ func (r RateShopResult) RawJSON() string { return r.JSON.raw }
 func (r *RateShopResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Why a special freight outcome was applied to these options, if any.
+//
+//   - `freight_exempt`: the order is exempt from freight; no options are returned.
+//   - `minimum_order_met`: the customer's shipping term sets a free-shipping minimum
+//     order value and the order total exceeded it, so options are rated at zero. If
+//     the shipping term restricts free shipping to specific service levels, only
+//     those options are zeroed and the rest keep their carrier or flat rate.
+//   - `flat_rate`: the customer's shipping term applies a flat shipping rate, which
+//     replaced every option's carrier rate.
+//   - `none`: standard carrier rates apply with no exemption.
+type RateShopResultExemptionType string
+
+const (
+	RateShopResultExemptionTypeFreightExempt   RateShopResultExemptionType = "freight_exempt"
+	RateShopResultExemptionTypeMinimumOrderMet RateShopResultExemptionType = "minimum_order_met"
+	RateShopResultExemptionTypeFlatRate        RateShopResultExemptionType = "flat_rate"
+	RateShopResultExemptionTypeNone            RateShopResultExemptionType = "none"
+)
 
 // Resource type identifier.
 type RateShopResultObject string

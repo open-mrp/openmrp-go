@@ -287,7 +287,9 @@ type AssignConversationRequestParam struct {
 	//
 	// - `account_user`: an individual teammate takes the case.
 	// - `account_group`: a team takes the case, so anyone on it can pick it up.
-	AssigneeResourceType param.Opt[string] `json:"assignee_resource_type,omitzero"`
+	//
+	// Any of "account_user", "account_group".
+	AssigneeResourceType AssignConversationRequestAssigneeResourceType `json:"assignee_resource_type,omitzero"`
 	paramObj
 }
 
@@ -298,6 +300,17 @@ func (r AssignConversationRequestParam) MarshalJSON() (data []byte, err error) {
 func (r *AssignConversationRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// What kind of owner the case is being assigned to.
+//
+// - `account_user`: an individual teammate takes the case.
+// - `account_group`: a team takes the case, so anyone on it can pick it up.
+type AssignConversationRequestAssigneeResourceType string
+
+const (
+	AssignConversationRequestAssigneeResourceTypeAccountUser  AssignConversationRequestAssigneeResourceType = "account_user"
+	AssignConversationRequestAssigneeResourceTypeAccountGroup AssignConversationRequestAssigneeResourceType = "account_group"
+)
 
 // Request to advance the caller's read cursor in a conversation.
 //

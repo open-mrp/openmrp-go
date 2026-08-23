@@ -87,7 +87,7 @@ func TestAIRunListWithOptionalParams(t *testing.T) {
 		Include:           []string{"triggered_by"},
 		Limit:             openmrp.Int(0),
 		Q:                 openmrp.String("q"),
-		Status:            openmrp.String("status"),
+		Status:            openmrp.AIRunListParamsStatusPending,
 	})
 	if err != nil {
 		var apierr *openmrp.Error

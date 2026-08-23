@@ -31,7 +31,7 @@ func TestMessagingEmailInboxNewWithOptionalParams(t *testing.T) {
 			EmailDomainID:        "emdom_2rk3omr8vshb",
 			AgentConfigID:        openmrp.String("agdf_ah7tkyfxk8jl"),
 			AgentTriggerKeywords: []string{"invoice", "refund"},
-			AgentTriggerPolicy:   openmrp.String("keyword"),
+			AgentTriggerPolicy:   openmrp.CreateEmailInboxRequestAgentTriggerPolicyKeyword,
 			FromName:             openmrp.String("Acme Support"),
 			GroupID:              openmrp.String("group_id"),
 		},
@@ -91,10 +91,10 @@ func TestMessagingEmailInboxUpdateWithOptionalParams(t *testing.T) {
 		"eminb_2s9kobr9s7tp",
 		openmrp.MessagingEmailInboxUpdateParams{
 			UpdateEmailInboxRequest: openmrp.UpdateEmailInboxRequestParam{
-				Status:               "active",
+				Status:               openmrp.UpdateEmailInboxRequestStatusActive,
 				AgentConfigID:        openmrp.String("agdf_ah7tkyfxk8jl"),
 				AgentTriggerKeywords: []string{"invoice", "refund"},
-				AgentTriggerPolicy:   openmrp.String("keyword"),
+				AgentTriggerPolicy:   openmrp.UpdateEmailInboxRequestAgentTriggerPolicyKeyword,
 				FromName:             openmrp.String("Acme Support"),
 				GroupID:              openmrp.String("group_id"),
 			},

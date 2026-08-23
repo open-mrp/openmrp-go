@@ -910,8 +910,8 @@ const (
 type UpdateAgentStatusRequestParam struct {
 	// Account-level status to set for the agent.
 	//
-	// Either `active` or `inactive`.
-	Status string `json:"status" api:"required"`
+	// Any of "active", "inactive".
+	Status UpdateAgentStatusRequestStatus `json:"status,omitzero" api:"required"`
 	paramObj
 }
 
@@ -922,6 +922,14 @@ func (r UpdateAgentStatusRequestParam) MarshalJSON() (data []byte, err error) {
 func (r *UpdateAgentStatusRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Account-level status to set for the agent.
+type UpdateAgentStatusRequestStatus string
+
+const (
+	UpdateAgentStatusRequestStatusActive   UpdateAgentStatusRequestStatus = "active"
+	UpdateAgentStatusRequestStatusInactive UpdateAgentStatusRequestStatus = "inactive"
+)
 
 type AIAgentDeleteResponse struct {
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].

@@ -669,17 +669,17 @@ type AIRunListParams struct {
 	//
 	// Which fields are matched against the term varies by endpoint.
 	Q param.Opt[string] `query:"q,omitzero" json:"-"`
-	// Restricts results to runs in this status.
-	//
-	// One of `pending`, `running`, `awaiting_input`, `awaiting_approval`, `completed`,
-	// `failed`, or `cancelled`.
-	Status param.Opt[string] `query:"status,omitzero" json:"-"`
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
 	//
 	// Any of "triggered_by", "definition", "actions", "definition.config",
 	// "definition.tools", "definition.role".
 	Include []string `query:"include,omitzero" json:"-"`
+	// Restricts results to runs in this status.
+	//
+	// Any of "pending", "running", "completed", "failed", "cancelled",
+	// "awaiting_input", "awaiting_approval".
+	Status AIRunListParamsStatus `query:"status,omitzero" json:"-"`
 	paramObj
 }
 
@@ -690,3 +690,16 @@ func (r AIRunListParams) URLQuery() (v url.Values, err error) {
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
+
+// Restricts results to runs in this status.
+type AIRunListParamsStatus string
+
+const (
+	AIRunListParamsStatusPending          AIRunListParamsStatus = "pending"
+	AIRunListParamsStatusRunning          AIRunListParamsStatus = "running"
+	AIRunListParamsStatusCompleted        AIRunListParamsStatus = "completed"
+	AIRunListParamsStatusFailed           AIRunListParamsStatus = "failed"
+	AIRunListParamsStatusCancelled        AIRunListParamsStatus = "cancelled"
+	AIRunListParamsStatusAwaitingInput    AIRunListParamsStatus = "awaiting_input"
+	AIRunListParamsStatusAwaitingApproval AIRunListParamsStatus = "awaiting_approval"
+)

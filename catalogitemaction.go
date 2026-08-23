@@ -99,7 +99,9 @@ type BulkReconcileItemsRequestParam struct {
 	//
 	// - `addition`: adds the quantity to the item's current quantity.
 	// - `force`: sets the item's current quantity to exactly the given quantity.
-	ReconcileType string `json:"reconcile_type" api:"required"`
+	//
+	// Any of "addition", "force".
+	ReconcileType BulkReconcileItemsRequestReconcileType `json:"reconcile_type,omitzero" api:"required"`
 	paramObj
 }
 
@@ -110,6 +112,17 @@ func (r BulkReconcileItemsRequestParam) MarshalJSON() (data []byte, err error) {
 func (r *BulkReconcileItemsRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// How each item's quantity is applied to its current quantity.
+//
+// - `addition`: adds the quantity to the item's current quantity.
+// - `force`: sets the item's current quantity to exactly the given quantity.
+type BulkReconcileItemsRequestReconcileType string
+
+const (
+	BulkReconcileItemsRequestReconcileTypeAddition BulkReconcileItemsRequestReconcileType = "addition"
+	BulkReconcileItemsRequestReconcileTypeForce    BulkReconcileItemsRequestReconcileType = "force"
+)
 
 // The outcome of a bulk inventory reconciliation, reported as three separate
 // lists.

@@ -326,7 +326,9 @@ type CreateSalesOrderRequestParam struct {
 	// are added on top of these automatically.
 	Lines []CreateSalesOrderLineInputParam `json:"lines,omitzero" api:"required"`
 	// Fulfillment priority used to rank the order on the shop floor.
-	PriorityCode string `json:"priority_code" api:"required"`
+	//
+	// Any of "low", "normal", "high".
+	PriorityCode CreateSalesOrderRequestPriorityCode `json:"priority_code,omitzero" api:"required"`
 	// Ship-to address ID.
 	//
 	// Must reference an existing address on the order's owner or buyer account.
@@ -419,6 +421,15 @@ func (r CreateSalesOrderRequestParam) MarshalJSON() (data []byte, err error) {
 func (r *CreateSalesOrderRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Fulfillment priority used to rank the order on the shop floor.
+type CreateSalesOrderRequestPriorityCode string
+
+const (
+	CreateSalesOrderRequestPriorityCodeLow    CreateSalesOrderRequestPriorityCode = "low"
+	CreateSalesOrderRequestPriorityCodeNormal CreateSalesOrderRequestPriorityCode = "normal"
+	CreateSalesOrderRequestPriorityCodeHigh   CreateSalesOrderRequestPriorityCode = "high"
+)
 
 // Who is billed for freight.
 //
@@ -1611,8 +1622,6 @@ type UpdateSalesOrderRequestParam struct {
 	CustomerID param.Opt[string] `json:"customer_id,omitzero"`
 	// ID of the payment terms for the order.
 	PaymentTermID param.Opt[string] `json:"payment_term_id,omitzero"`
-	// New fulfillment priority for the order.
-	PriorityCode param.Opt[string] `json:"priority_code,omitzero"`
 	// Shipping address ID.
 	//
 	// Re-points the order to an existing address. To change an address's contents, use
@@ -1645,6 +1654,10 @@ type UpdateSalesOrderRequestParam struct {
 	// An empty list clears all contacts; omitting the field leaves existing contacts
 	// untouched.
 	InvoiceEmailContacts []SalesOrderEmailContactInputParam `json:"invoice_email_contacts,omitzero"`
+	// New fulfillment priority for the order.
+	//
+	// Any of "low", "normal", "high".
+	PriorityCode UpdateSalesOrderRequestPriorityCode `json:"priority_code,omitzero"`
 	paramObj
 }
 
@@ -1677,6 +1690,15 @@ type UpdateSalesOrderRequestCarrierBillingType string
 const (
 	UpdateSalesOrderRequestCarrierBillingTypeSender     UpdateSalesOrderRequestCarrierBillingType = "sender"
 	UpdateSalesOrderRequestCarrierBillingTypeThirdParty UpdateSalesOrderRequestCarrierBillingType = "third_party"
+)
+
+// New fulfillment priority for the order.
+type UpdateSalesOrderRequestPriorityCode string
+
+const (
+	UpdateSalesOrderRequestPriorityCodeLow    UpdateSalesOrderRequestPriorityCode = "low"
+	UpdateSalesOrderRequestPriorityCodeNormal UpdateSalesOrderRequestPriorityCode = "normal"
+	UpdateSalesOrderRequestPriorityCodeHigh   UpdateSalesOrderRequestPriorityCode = "high"
 )
 
 type SaleSalesOrderDeleteResponse struct {

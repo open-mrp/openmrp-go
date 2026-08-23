@@ -44,7 +44,7 @@ func TestSaleSalesOrderNewWithOptionalParams(t *testing.T) {
 					Value:             "value",
 				},
 			}},
-			PriorityCode:    "normal",
+			PriorityCode:    openmrp.CreateSalesOrderRequestPriorityCodeNormal,
 			ShipToAddressID: "ad_npqa5y43q26z",
 			AcknowledgementEmailContacts: []openmrp.SalesOrderEmailContactInputParam{{
 				AccountUserID: "acus_e5zu8bde0z3h",
@@ -140,7 +140,7 @@ func TestSaleSalesOrderUpdateWithOptionalParams(t *testing.T) {
 				Note:                 openmrp.String("Updated shipping instructions"),
 				OrderDiscountID:      openmrp.String("order_discount_id"),
 				PaymentTermID:        openmrp.String("payment_term_id"),
-				PriorityCode:         openmrp.String("normal"),
+				PriorityCode:         openmrp.UpdateSalesOrderRequestPriorityCodeNormal,
 				PromisedAt:           openmrp.Time(time.Now()),
 				SalesRepID:           openmrp.String("sales_rep_id"),
 				ServiceLevelID:       openmrp.String("service_level_id"),

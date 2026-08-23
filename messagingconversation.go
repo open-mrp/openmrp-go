@@ -1149,7 +1149,19 @@ type Message struct {
 	// A client can react to the specific code rather than just showing the body —
 	// `agent_spending_cap_reached`, for example, is a cue to offer raising the agent
 	// spending limit.
-	AgentErrorCode string `json:"agent_error_code" api:"required"`
+	//
+	// Any of "expired_token", "api_key_expired", "api_key_revoked",
+	// "invalid_credentials", "insufficient_permissions", "payment_required",
+	// "agent_spending_cap_reached", "validation_failed", "missing_field",
+	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
+	// "resource_conflict", "resource_gone", "idempotency_in_progress",
+	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
+	// "parameter_missing", "parameter_invalid", "parameter_unknown",
+	// "parameters_exclusive", "internal_error", "service_unavailable",
+	// "external_service_error", "timeout", "connection_error", "request_timeout",
+	// "client_closed_request", "api_version_required", "api_version_invalid",
+	// "api_version_too_old".
+	AgentErrorCode MessageAgentErrorCode `json:"agent_error_code" api:"required"`
 	// A single execution of an agent, from trigger through completion.
 	AgentRun AgentRun `json:"agent_run" api:"required"`
 	// Whether this message is an agent reply reporting that the agent's run failed.
@@ -1247,7 +1259,9 @@ type Message struct {
 	//
 	// `streaming` means the body is still being generated and keeps growing as
 	// realtime updates arrive; `complete` means it is final.
-	StreamingState string `json:"streaming_state" api:"required"`
+	//
+	// Any of "streaming", "complete".
+	StreamingState MessageStreamingState `json:"streaming_state" api:"required"`
 	// The email subject line.
 	//
 	// On an email-bridged case, this is the subject of the inbound email, or the
@@ -1303,6 +1317,49 @@ func (r Message) RawJSON() string { return r.JSON.raw }
 func (r *Message) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Machine-readable reason an agent reply failed.
+//
+// A client can react to the specific code rather than just showing the body —
+// `agent_spending_cap_reached`, for example, is a cue to offer raising the agent
+// spending limit.
+type MessageAgentErrorCode string
+
+const (
+	MessageAgentErrorCodeExpiredToken            MessageAgentErrorCode = "expired_token"
+	MessageAgentErrorCodeAPIKeyExpired           MessageAgentErrorCode = "api_key_expired"
+	MessageAgentErrorCodeAPIKeyRevoked           MessageAgentErrorCode = "api_key_revoked"
+	MessageAgentErrorCodeInvalidCredentials      MessageAgentErrorCode = "invalid_credentials"
+	MessageAgentErrorCodeInsufficientPermissions MessageAgentErrorCode = "insufficient_permissions"
+	MessageAgentErrorCodePaymentRequired         MessageAgentErrorCode = "payment_required"
+	MessageAgentErrorCodeAgentSpendingCapReached MessageAgentErrorCode = "agent_spending_cap_reached"
+	MessageAgentErrorCodeValidationFailed        MessageAgentErrorCode = "validation_failed"
+	MessageAgentErrorCodeMissingField            MessageAgentErrorCode = "missing_field"
+	MessageAgentErrorCodeInvalidFormat           MessageAgentErrorCode = "invalid_format"
+	MessageAgentErrorCodeMethodNotAllowed        MessageAgentErrorCode = "method_not_allowed"
+	MessageAgentErrorCodeResourceNotFound        MessageAgentErrorCode = "resource_not_found"
+	MessageAgentErrorCodeResourceExists          MessageAgentErrorCode = "resource_exists"
+	MessageAgentErrorCodeResourceConflict        MessageAgentErrorCode = "resource_conflict"
+	MessageAgentErrorCodeResourceGone            MessageAgentErrorCode = "resource_gone"
+	MessageAgentErrorCodeIdempotencyInProgress   MessageAgentErrorCode = "idempotency_in_progress"
+	MessageAgentErrorCodeLimitExceeded           MessageAgentErrorCode = "limit_exceeded"
+	MessageAgentErrorCodeRegistrationClosed      MessageAgentErrorCode = "registration_closed"
+	MessageAgentErrorCodeRateLimitExceeded       MessageAgentErrorCode = "rate_limit_exceeded"
+	MessageAgentErrorCodeParameterMissing        MessageAgentErrorCode = "parameter_missing"
+	MessageAgentErrorCodeParameterInvalid        MessageAgentErrorCode = "parameter_invalid"
+	MessageAgentErrorCodeParameterUnknown        MessageAgentErrorCode = "parameter_unknown"
+	MessageAgentErrorCodeParametersExclusive     MessageAgentErrorCode = "parameters_exclusive"
+	MessageAgentErrorCodeInternalError           MessageAgentErrorCode = "internal_error"
+	MessageAgentErrorCodeServiceUnavailable      MessageAgentErrorCode = "service_unavailable"
+	MessageAgentErrorCodeExternalServiceError    MessageAgentErrorCode = "external_service_error"
+	MessageAgentErrorCodeTimeout                 MessageAgentErrorCode = "timeout"
+	MessageAgentErrorCodeConnectionError         MessageAgentErrorCode = "connection_error"
+	MessageAgentErrorCodeRequestTimeout          MessageAgentErrorCode = "request_timeout"
+	MessageAgentErrorCodeClientClosedRequest     MessageAgentErrorCode = "client_closed_request"
+	MessageAgentErrorCodeAPIVersionRequired      MessageAgentErrorCode = "api_version_required"
+	MessageAgentErrorCodeAPIVersionInvalid       MessageAgentErrorCode = "api_version_invalid"
+	MessageAgentErrorCodeAPIVersionTooOld        MessageAgentErrorCode = "api_version_too_old"
+)
 
 // How the message reached its audience, or how a draft will be sent once it is
 // approved.
@@ -1367,6 +1424,17 @@ const (
 	MessageStatusRejected   MessageStatus = "rejected"
 	MessageStatusFailed     MessageStatus = "failed"
 	MessageStatusSuperseded MessageStatus = "superseded"
+)
+
+// The streaming state of an agent reply.
+//
+// `streaming` means the body is still being generated and keeps growing as
+// realtime updates arrive; `complete` means it is final.
+type MessageStreamingState string
+
+const (
+	MessageStreamingStateStreaming MessageStreamingState = "streaming"
+	MessageStreamingStateComplete  MessageStreamingState = "complete"
 )
 
 // Who can see this message.

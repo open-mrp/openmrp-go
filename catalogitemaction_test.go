@@ -32,7 +32,7 @@ func TestCatalogItemActionBulkReconcile(t *testing.T) {
 				SKU:      "ALM-2024-1001",
 				Unit:     "kg",
 			}},
-			ReconcileType: "addition",
+			ReconcileType: openmrp.BulkReconcileItemsRequestReconcileTypeAddition,
 		},
 	})
 	if err != nil {
