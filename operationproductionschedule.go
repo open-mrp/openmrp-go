@@ -1599,6 +1599,14 @@ type ProductionScheduleItemPolicy struct {
 	ProductionSchedule Entity `json:"production_schedule" api:"required"`
 	// Entity is a polymorphic reference to any resource in the system.
 	ProductionStep Entity `json:"production_step" api:"required"`
+	// The physical greige store at the end of each horizon week — the constraint stage
+	// on its own, which `projected_on_hand` cannot be decomposed back into.
+	//
+	// A week where this dips to `safety_stock_primary` is the week knitting is meant
+	// to replenish, even where `projected_on_hand` still reads full because the stock
+	// is held downstream as finished goods. Empty for a schedule generated before the
+	// greige buffer existed.
+	ProjectedGreigeOnHand []float64 `json:"projected_greige_on_hand" api:"required"`
 	// The echelon position at the end of each horizon week, after that week's
 	// campaigns land and its demand is drawn down.
 	//
@@ -1663,6 +1671,7 @@ type ProductionScheduleItemPolicy struct {
 		PrimaryMachine          respjson.Field
 		ProductionSchedule      respjson.Field
 		ProductionStep          respjson.Field
+		ProjectedGreigeOnHand   respjson.Field
 		ProjectedOnHand         respjson.Field
 		ReorderPoint            respjson.Field
 		SafetyStockDownstream   respjson.Field
