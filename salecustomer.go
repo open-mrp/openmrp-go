@@ -255,6 +255,19 @@ type CreateCustomerRequestParam struct {
 	//
 	// Any of "free_freight", "billed_freight".
 	FreightPolicy CreateCustomerRequestFreightPolicy `json:"freight_policy,omitzero"`
+	// How this customer's orders are produced.
+	//
+	//   - `make_to_stock`: their order history feeds the production-schedule forecast,
+	//     so stock is built ahead of their demand.
+	//   - `make_to_order`: their history is left out of the forecast; their orders are
+	//     produced only once placed, and fit into the schedule on their own ship-by
+	//     dates.
+	//
+	// Leave unset to inherit the customer's account group policy, then the
+	// make-to-stock default.
+	//
+	// Any of "make_to_stock", "make_to_order".
+	FulfillmentPolicy CreateCustomerRequestFulfillmentPolicy `json:"fulfillment_policy,omitzero"`
 	// The customer's account standing.
 	//
 	//   - `normal`: standard account with no restrictions.
@@ -329,6 +342,23 @@ type CreateCustomerRequestFreightPolicy string
 const (
 	CreateCustomerRequestFreightPolicyFreeFreight   CreateCustomerRequestFreightPolicy = "free_freight"
 	CreateCustomerRequestFreightPolicyBilledFreight CreateCustomerRequestFreightPolicy = "billed_freight"
+)
+
+// How this customer's orders are produced.
+//
+//   - `make_to_stock`: their order history feeds the production-schedule forecast,
+//     so stock is built ahead of their demand.
+//   - `make_to_order`: their history is left out of the forecast; their orders are
+//     produced only once placed, and fit into the schedule on their own ship-by
+//     dates.
+//
+// Leave unset to inherit the customer's account group policy, then the
+// make-to-stock default.
+type CreateCustomerRequestFulfillmentPolicy string
+
+const (
+	CreateCustomerRequestFulfillmentPolicyMakeToStock CreateCustomerRequestFulfillmentPolicy = "make_to_stock"
+	CreateCustomerRequestFulfillmentPolicyMakeToOrder CreateCustomerRequestFulfillmentPolicy = "make_to_order"
 )
 
 // The customer's account standing.
@@ -489,6 +519,19 @@ type UpdateCustomerRequestParam struct {
 	//
 	// Must be unique within your account.
 	Number param.Opt[string] `json:"number,omitzero"`
+	// How this customer's orders are produced.
+	//
+	//   - `make_to_stock`: their order history feeds the production-schedule forecast,
+	//     so stock is built ahead of their demand.
+	//   - `make_to_order`: their history is left out of the forecast; their orders are
+	//     produced only once placed, and fit into the schedule on their own ship-by
+	//     dates.
+	//
+	// Clearing it returns the customer to their account group policy, then the
+	// make-to-stock default.
+	//
+	// Any of "make_to_stock", "make_to_order".
+	FulfillmentPolicy UpdateCustomerRequestFulfillmentPolicy `json:"fulfillment_policy,omitzero"`
 	// Who pays the carrier for shipments.
 	//
 	// - `sender`: the shipper (you) pays the carrier.
@@ -607,6 +650,23 @@ type UpdateCustomerRequestFreightPolicy string
 const (
 	UpdateCustomerRequestFreightPolicyFreeFreight   UpdateCustomerRequestFreightPolicy = "free_freight"
 	UpdateCustomerRequestFreightPolicyBilledFreight UpdateCustomerRequestFreightPolicy = "billed_freight"
+)
+
+// How this customer's orders are produced.
+//
+//   - `make_to_stock`: their order history feeds the production-schedule forecast,
+//     so stock is built ahead of their demand.
+//   - `make_to_order`: their history is left out of the forecast; their orders are
+//     produced only once placed, and fit into the schedule on their own ship-by
+//     dates.
+//
+// Clearing it returns the customer to their account group policy, then the
+// make-to-stock default.
+type UpdateCustomerRequestFulfillmentPolicy string
+
+const (
+	UpdateCustomerRequestFulfillmentPolicyMakeToStock UpdateCustomerRequestFulfillmentPolicy = "make_to_stock"
+	UpdateCustomerRequestFulfillmentPolicyMakeToOrder UpdateCustomerRequestFulfillmentPolicy = "make_to_order"
 )
 
 // The customer's account standing.

@@ -585,6 +585,19 @@ const (
 // Values used to fill in a new sales order for this customer when the order does
 // not supply its own.
 type CustomerDefaults struct {
+	// How this customer's orders are produced.
+	//
+	//   - `make_to_stock`: their order history feeds the production-schedule forecast,
+	//     so stock is built ahead of their demand.
+	//   - `make_to_order`: their history is left out of the forecast; their orders are
+	//     produced only once placed, and fit into the schedule on their own ship-by
+	//     dates.
+	//
+	// With none set here the customer inherits its account group's policy, then falls
+	// back to make-to-stock.
+	//
+	// Any of "make_to_stock", "make_to_order".
+	FulfillmentPolicy CustomerDefaultsFulfillmentPolicy `json:"fulfillment_policy" api:"required"`
 	// Calendar days between an order being issued and it being due to ship.
 	//
 	// Sets each order's `ship_by_date` when it is issued. With none set here the
@@ -625,6 +638,7 @@ type CustomerDefaults struct {
 	ShippingTerm ShippingTerm `json:"shipping_term" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		FulfillmentPolicy respjson.Field
 		LeadTimeDays      respjson.Field
 		Object            respjson.Field
 		PaymentTerm       respjson.Field
@@ -642,6 +656,23 @@ func (r CustomerDefaults) RawJSON() string { return r.JSON.raw }
 func (r *CustomerDefaults) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// How this customer's orders are produced.
+//
+//   - `make_to_stock`: their order history feeds the production-schedule forecast,
+//     so stock is built ahead of their demand.
+//   - `make_to_order`: their history is left out of the forecast; their orders are
+//     produced only once placed, and fit into the schedule on their own ship-by
+//     dates.
+//
+// With none set here the customer inherits its account group's policy, then falls
+// back to make-to-stock.
+type CustomerDefaultsFulfillmentPolicy string
+
+const (
+	CustomerDefaultsFulfillmentPolicyMakeToStock CustomerDefaultsFulfillmentPolicy = "make_to_stock"
+	CustomerDefaultsFulfillmentPolicyMakeToOrder CustomerDefaultsFulfillmentPolicy = "make_to_order"
+)
 
 // Resource type identifier.
 type CustomerDefaultsObject string
