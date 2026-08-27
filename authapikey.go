@@ -185,8 +185,8 @@ type AccountBranding struct {
 	// Stored location of the account's customer-portal favicon.
 	//
 	// Favicons uploaded through the API are stored as an object key rather than a
-	// fetchable link, so use the Get Account Favicon URL endpoint to obtain a
-	// short-lived download URL.
+	// fetchable link, so use the Get Account Favicon URL endpoint to obtain a download
+	// URL.
 	FaviconURL string `json:"favicon_url" api:"required"`
 	// Instagram handle.
 	InstagramHandle string `json:"instagram_handle" api:"required"`
@@ -195,8 +195,8 @@ type AccountBranding struct {
 	// Stored location of the account's logo image.
 	//
 	// Logos uploaded through the API are stored as an object key rather than a
-	// fetchable link, so use the Get Account Logo URL endpoint to obtain a short-lived
-	// download URL.
+	// fetchable link, so use the Get Account Logo URL endpoint to obtain a download
+	// URL.
 	LogoURL string `json:"logo_url" api:"required"`
 	// Resource type identifier.
 	//
