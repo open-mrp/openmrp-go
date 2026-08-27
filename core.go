@@ -107,14 +107,15 @@ type Entity struct {
 	// Unlike `object` — which is always `entity` — this names the underlying resource
 	// the `id` points to.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -140,6 +141,7 @@ type Entity struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -199,8 +201,7 @@ type Entity struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	Type EntityType `json:"type" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -240,6 +241,7 @@ const (
 	EntityTypeEntity                               EntityType = "entity"
 	EntityTypeRecord                               EntityType = "record"
 	EntityTypeFreight                              EntityType = "freight"
+	EntityTypeCommitment                           EntityType = "commitment"
 	EntityTypeSalesOrderTotals                     EntityType = "sales_order_totals"
 	EntityTypeSalesOrderStageTotal                 EntityType = "sales_order_stage_total"
 	EntityTypeSalesOrderRelated                    EntityType = "sales_order_related"
@@ -351,6 +353,9 @@ const (
 	EntityTypeDeliveryBacklogBucket                EntityType = "delivery_backlog_bucket"
 	EntityTypeDeliveryLatenessBucket               EntityType = "delivery_lateness_bucket"
 	EntityTypeDeliveryBreakdown                    EntityType = "delivery_breakdown"
+	EntityTypeAnalyzeSalesBreakdownResponse        EntityType = "analyze_sales_breakdown_response"
+	EntityTypeSalesTotals                          EntityType = "sales_totals"
+	EntityTypeSalesBreakdown                       EntityType = "sales_breakdown"
 	EntityTypeScheduleOrderCoverage                EntityType = "schedule_order_coverage"
 	EntityTypeScheduleOrderCoverageLine            EntityType = "schedule_order_coverage_line"
 	EntityTypeScheduleDeviationType                EntityType = "schedule_deviation_type"
@@ -537,7 +542,6 @@ const (
 	EntityTypeShipmentRelated                      EntityType = "shipment_related"
 	EntityTypeInvoiceRelated                       EntityType = "invoice_related"
 	EntityTypePickRelated                          EntityType = "pick_related"
-	EntityTypePickShipmentsResponse                EntityType = "pick_shipments_response"
 	EntityTypePickTotals                           EntityType = "pick_totals"
 	EntityTypePickStageTotal                       EntityType = "pick_stage_total"
 )
@@ -612,14 +616,15 @@ type CoreGetSearchParams struct {
 	// read simply returns no results. Omit to search every searchable type you can
 	// read.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -645,6 +650,7 @@ type CoreGetSearchParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -704,8 +710,7 @@ type CoreGetSearchParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	Types []string `query:"types,omitzero" json:"-"`
 	paramObj
 }

@@ -1259,6 +1259,7 @@ Params Types:
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CheckoutSalesOrderResponse">CheckoutSalesOrderResponse</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Commitment">Commitment</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ComputedRate">ComputedRate</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CreatedBy">CreatedBy</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Freight">Freight</a>
@@ -1512,6 +1513,28 @@ Methods:
 - <code title="patch /v1/operations/departments/{id}">client.Operations.Departments.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationDepartmentService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationDepartmentUpdateParams">OperationDepartmentUpdateParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Department">Department</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /v1/operations/departments">client.Operations.Departments.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationDepartmentService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationDepartmentListParams">OperationDepartmentListParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListDepartment">ListDepartment</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="delete /v1/operations/departments/{id}">client.Operations.Departments.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationDepartmentService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationDepartmentDeleteResponse">OperationDepartmentDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## InventoryChangeLogs
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#InventoryChangeLog">InventoryChangeLog</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListInventoryChangeLog">ListInventoryChangeLog</a>
+
+Methods:
+
+- <code title="get /v1/operations/inventory-change-logs/{id}">client.Operations.InventoryChangeLogs.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogGetParams">OperationInventoryChangeLogGetParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#InventoryChangeLog">InventoryChangeLog</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /v1/operations/inventory-change-logs">client.Operations.InventoryChangeLogs.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogListParams">OperationInventoryChangeLogListParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListInventoryChangeLog">ListInventoryChangeLog</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+### Actions
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#FileDownload">FileDownload</a>
+
+Methods:
+
+- <code title="get /v1/operations/inventory-change-logs/actions/export">client.Operations.InventoryChangeLogs.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogActionService.Export">Export</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogActionExportParams">OperationInventoryChangeLogActionExportParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#FileDownload">FileDownload</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Machines
 
@@ -1789,6 +1812,52 @@ Methods:
 - <code title="post /v1/operations/operating-calendars/{id}/closures">client.Operations.OperatingCalendars.Closures.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureNewParams">OperationOperatingCalendarClosureNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperatingCalendarClosure">OperatingCalendarClosure</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /v1/operations/operating-calendars/{id}/closures">client.Operations.OperatingCalendars.Closures.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureListParams">OperationOperatingCalendarClosureListParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListOperatingCalendarClosure">ListOperatingCalendarClosure</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="delete /v1/operations/operating-calendars/{id}/closures/{closure_id}">client.Operations.OperatingCalendars.Closures.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, closureID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureDeleteParams">OperationOperatingCalendarClosureDeleteParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationOperatingCalendarClosureDeleteResponse">OperationOperatingCalendarClosureDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Picks
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListPick">ListPick</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListPickLine">ListPickLine</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Pick">Pick</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickLine">PickLine</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickRelated">PickRelated</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickStageTotal">PickStageTotal</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickTotals">PickTotals</a>
+
+Methods:
+
+- <code title="get /v1/operations/picks/{id}">client.Operations.Picks.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickGetParams">OperationPickGetParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Pick">Pick</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /v1/operations/picks">client.Operations.Picks.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickListParams">OperationPickListParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListPick">ListPick</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+### Actions
+
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PackPickRequestParam">PackPickRequestParam</a>
+
+Methods:
+
+- <code title="post /v1/operations/picks/{id}/actions/pack">client.Operations.Picks.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickActionService.Pack">Pack</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickActionPackParams">OperationPickActionPackParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Job">Job</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /v1/operations/picks/{id}/actions/pick">client.Operations.Picks.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickActionService.Pick">Pick</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Pick">Pick</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /v1/operations/picks/{id}/actions/void">client.Operations.Picks.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickActionService.Void">Void</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Pick">Pick</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+### Lines
+
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#UpdatePickLineRequestParam">UpdatePickLineRequestParam</a>
+
+Methods:
+
+- <code title="patch /v1/operations/picks/{pick_id}/lines/{id}">client.Operations.Picks.Lines.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickLineService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickLineUpdateParams">OperationPickLineUpdateParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickLine">PickLine</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+#### Actions
+
+Methods:
+
+- <code title="put /v1/operations/picks/{pick_id}/lines/{id}/actions/pick">client.Operations.Picks.Lines.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickLineActionService.Pick">Pick</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickLineActionPickParams">OperationPickLineActionPickParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickLine">PickLine</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /v1/operations/picks/{pick_id}/lines/{id}/actions/void">client.Operations.Picks.Lines.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickLineActionService.Void">Void</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationPickLineActionVoidParams">OperationPickLineActionVoidParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#PickLine">PickLine</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Locations
 

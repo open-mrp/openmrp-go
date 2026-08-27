@@ -155,14 +155,15 @@ type AuditEvent struct {
 	ResourceID string `json:"resource_id" api:"required"`
 	// Resource type of the audited entity.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -188,6 +189,7 @@ type AuditEvent struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -247,8 +249,7 @@ type AuditEvent struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	ResourceType AuditEventResourceType `json:"resource_type" api:"required"`
 	// Originating client IP address.
 	SourceIP string `json:"source_ip" api:"required"`
@@ -319,6 +320,7 @@ const (
 	AuditEventResourceTypeEntity                               AuditEventResourceType = "entity"
 	AuditEventResourceTypeRecord                               AuditEventResourceType = "record"
 	AuditEventResourceTypeFreight                              AuditEventResourceType = "freight"
+	AuditEventResourceTypeCommitment                           AuditEventResourceType = "commitment"
 	AuditEventResourceTypeSalesOrderTotals                     AuditEventResourceType = "sales_order_totals"
 	AuditEventResourceTypeSalesOrderStageTotal                 AuditEventResourceType = "sales_order_stage_total"
 	AuditEventResourceTypeSalesOrderRelated                    AuditEventResourceType = "sales_order_related"
@@ -430,6 +432,9 @@ const (
 	AuditEventResourceTypeDeliveryBacklogBucket                AuditEventResourceType = "delivery_backlog_bucket"
 	AuditEventResourceTypeDeliveryLatenessBucket               AuditEventResourceType = "delivery_lateness_bucket"
 	AuditEventResourceTypeDeliveryBreakdown                    AuditEventResourceType = "delivery_breakdown"
+	AuditEventResourceTypeAnalyzeSalesBreakdownResponse        AuditEventResourceType = "analyze_sales_breakdown_response"
+	AuditEventResourceTypeSalesTotals                          AuditEventResourceType = "sales_totals"
+	AuditEventResourceTypeSalesBreakdown                       AuditEventResourceType = "sales_breakdown"
 	AuditEventResourceTypeScheduleOrderCoverage                AuditEventResourceType = "schedule_order_coverage"
 	AuditEventResourceTypeScheduleOrderCoverageLine            AuditEventResourceType = "schedule_order_coverage_line"
 	AuditEventResourceTypeScheduleDeviationType                AuditEventResourceType = "schedule_deviation_type"
@@ -616,7 +621,6 @@ const (
 	AuditEventResourceTypeShipmentRelated                      AuditEventResourceType = "shipment_related"
 	AuditEventResourceTypeInvoiceRelated                       AuditEventResourceType = "invoice_related"
 	AuditEventResourceTypePickRelated                          AuditEventResourceType = "pick_related"
-	AuditEventResourceTypePickShipmentsResponse                AuditEventResourceType = "pick_shipments_response"
 	AuditEventResourceTypePickTotals                           AuditEventResourceType = "pick_totals"
 	AuditEventResourceTypePickStageTotal                       AuditEventResourceType = "pick_stage_total"
 )
@@ -754,14 +758,15 @@ const (
 type ListObjectType struct {
 	// Resources in this page.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -787,6 +792,7 @@ type ListObjectType struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -846,8 +852,7 @@ type ListObjectType struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	Data []string `json:"data" api:"required"`
 	// Resource type identifier.
 	//
@@ -959,14 +964,15 @@ type CoreAuditEventListParams struct {
 	// The full set of valid values is available from the List Audit Event Resource
 	// Types endpoint.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -992,6 +998,7 @@ type CoreAuditEventListParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -1051,8 +1058,7 @@ type CoreAuditEventListParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	ResourceTypes []string `query:"resource_types,omitzero" json:"-"`
 	// Scope results to a root record's entire history tree.
 	//
@@ -1061,14 +1067,15 @@ type CoreAuditEventListParams struct {
 	// picks, shipments, and invoices. Both `root_resource_type` and `root_resource_id`
 	// must be supplied together; supplying only one has no effect.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -1094,6 +1101,7 @@ type CoreAuditEventListParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -1153,8 +1161,7 @@ type CoreAuditEventListParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	RootResourceType CoreAuditEventListParamsRootResourceType `query:"root_resource_type,omitzero" json:"-"`
 	// Filter by the _target_ account the mutation was performed against (the event's
 	// `account`).
@@ -1189,6 +1196,7 @@ const (
 	CoreAuditEventListParamsRootResourceTypeEntity                               CoreAuditEventListParamsRootResourceType = "entity"
 	CoreAuditEventListParamsRootResourceTypeRecord                               CoreAuditEventListParamsRootResourceType = "record"
 	CoreAuditEventListParamsRootResourceTypeFreight                              CoreAuditEventListParamsRootResourceType = "freight"
+	CoreAuditEventListParamsRootResourceTypeCommitment                           CoreAuditEventListParamsRootResourceType = "commitment"
 	CoreAuditEventListParamsRootResourceTypeSalesOrderTotals                     CoreAuditEventListParamsRootResourceType = "sales_order_totals"
 	CoreAuditEventListParamsRootResourceTypeSalesOrderStageTotal                 CoreAuditEventListParamsRootResourceType = "sales_order_stage_total"
 	CoreAuditEventListParamsRootResourceTypeSalesOrderRelated                    CoreAuditEventListParamsRootResourceType = "sales_order_related"
@@ -1300,6 +1308,9 @@ const (
 	CoreAuditEventListParamsRootResourceTypeDeliveryBacklogBucket                CoreAuditEventListParamsRootResourceType = "delivery_backlog_bucket"
 	CoreAuditEventListParamsRootResourceTypeDeliveryLatenessBucket               CoreAuditEventListParamsRootResourceType = "delivery_lateness_bucket"
 	CoreAuditEventListParamsRootResourceTypeDeliveryBreakdown                    CoreAuditEventListParamsRootResourceType = "delivery_breakdown"
+	CoreAuditEventListParamsRootResourceTypeAnalyzeSalesBreakdownResponse        CoreAuditEventListParamsRootResourceType = "analyze_sales_breakdown_response"
+	CoreAuditEventListParamsRootResourceTypeSalesTotals                          CoreAuditEventListParamsRootResourceType = "sales_totals"
+	CoreAuditEventListParamsRootResourceTypeSalesBreakdown                       CoreAuditEventListParamsRootResourceType = "sales_breakdown"
 	CoreAuditEventListParamsRootResourceTypeScheduleOrderCoverage                CoreAuditEventListParamsRootResourceType = "schedule_order_coverage"
 	CoreAuditEventListParamsRootResourceTypeScheduleOrderCoverageLine            CoreAuditEventListParamsRootResourceType = "schedule_order_coverage_line"
 	CoreAuditEventListParamsRootResourceTypeScheduleDeviationType                CoreAuditEventListParamsRootResourceType = "schedule_deviation_type"
@@ -1486,7 +1497,6 @@ const (
 	CoreAuditEventListParamsRootResourceTypeShipmentRelated                      CoreAuditEventListParamsRootResourceType = "shipment_related"
 	CoreAuditEventListParamsRootResourceTypeInvoiceRelated                       CoreAuditEventListParamsRootResourceType = "invoice_related"
 	CoreAuditEventListParamsRootResourceTypePickRelated                          CoreAuditEventListParamsRootResourceType = "pick_related"
-	CoreAuditEventListParamsRootResourceTypePickShipmentsResponse                CoreAuditEventListParamsRootResourceType = "pick_shipments_response"
 	CoreAuditEventListParamsRootResourceTypePickTotals                           CoreAuditEventListParamsRootResourceType = "pick_totals"
 	CoreAuditEventListParamsRootResourceTypePickStageTotal                       CoreAuditEventListParamsRootResourceType = "pick_stage_total"
 )

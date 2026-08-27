@@ -250,14 +250,15 @@ type SendMessageRequestParam struct {
 	// Linking a record lets clients render the message as a reference to it. A link
 	// counts in place of text, so a message may consist of nothing but the link.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -283,6 +284,7 @@ type SendMessageRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -342,8 +344,7 @@ type SendMessageRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	LinkResourceType SendMessageRequestLinkResourceType `json:"link_resource_type,omitzero"`
 	// Account user ids explicitly @mentioned in the message.
 	//
@@ -416,6 +417,7 @@ const (
 	SendMessageRequestLinkResourceTypeEntity                               SendMessageRequestLinkResourceType = "entity"
 	SendMessageRequestLinkResourceTypeRecord                               SendMessageRequestLinkResourceType = "record"
 	SendMessageRequestLinkResourceTypeFreight                              SendMessageRequestLinkResourceType = "freight"
+	SendMessageRequestLinkResourceTypeCommitment                           SendMessageRequestLinkResourceType = "commitment"
 	SendMessageRequestLinkResourceTypeSalesOrderTotals                     SendMessageRequestLinkResourceType = "sales_order_totals"
 	SendMessageRequestLinkResourceTypeSalesOrderStageTotal                 SendMessageRequestLinkResourceType = "sales_order_stage_total"
 	SendMessageRequestLinkResourceTypeSalesOrderRelated                    SendMessageRequestLinkResourceType = "sales_order_related"
@@ -527,6 +529,9 @@ const (
 	SendMessageRequestLinkResourceTypeDeliveryBacklogBucket                SendMessageRequestLinkResourceType = "delivery_backlog_bucket"
 	SendMessageRequestLinkResourceTypeDeliveryLatenessBucket               SendMessageRequestLinkResourceType = "delivery_lateness_bucket"
 	SendMessageRequestLinkResourceTypeDeliveryBreakdown                    SendMessageRequestLinkResourceType = "delivery_breakdown"
+	SendMessageRequestLinkResourceTypeAnalyzeSalesBreakdownResponse        SendMessageRequestLinkResourceType = "analyze_sales_breakdown_response"
+	SendMessageRequestLinkResourceTypeSalesTotals                          SendMessageRequestLinkResourceType = "sales_totals"
+	SendMessageRequestLinkResourceTypeSalesBreakdown                       SendMessageRequestLinkResourceType = "sales_breakdown"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverage                SendMessageRequestLinkResourceType = "schedule_order_coverage"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverageLine            SendMessageRequestLinkResourceType = "schedule_order_coverage_line"
 	SendMessageRequestLinkResourceTypeScheduleDeviationType                SendMessageRequestLinkResourceType = "schedule_deviation_type"
@@ -713,7 +718,6 @@ const (
 	SendMessageRequestLinkResourceTypeShipmentRelated                      SendMessageRequestLinkResourceType = "shipment_related"
 	SendMessageRequestLinkResourceTypeInvoiceRelated                       SendMessageRequestLinkResourceType = "invoice_related"
 	SendMessageRequestLinkResourceTypePickRelated                          SendMessageRequestLinkResourceType = "pick_related"
-	SendMessageRequestLinkResourceTypePickShipmentsResponse                SendMessageRequestLinkResourceType = "pick_shipments_response"
 	SendMessageRequestLinkResourceTypePickTotals                           SendMessageRequestLinkResourceType = "pick_totals"
 	SendMessageRequestLinkResourceTypePickStageTotal                       SendMessageRequestLinkResourceType = "pick_stage_total"
 )

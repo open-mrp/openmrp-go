@@ -102,14 +102,15 @@ type AddConversationLinkRequestParam struct {
 	ResourceID string `json:"resource_id" api:"required"`
 	// The kind of business record to link.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -135,6 +136,7 @@ type AddConversationLinkRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -194,8 +196,7 @@ type AddConversationLinkRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	ResourceType AddConversationLinkRequestResourceType `json:"resource_type,omitzero" api:"required"`
 	paramObj
 }
@@ -217,6 +218,7 @@ const (
 	AddConversationLinkRequestResourceTypeEntity                               AddConversationLinkRequestResourceType = "entity"
 	AddConversationLinkRequestResourceTypeRecord                               AddConversationLinkRequestResourceType = "record"
 	AddConversationLinkRequestResourceTypeFreight                              AddConversationLinkRequestResourceType = "freight"
+	AddConversationLinkRequestResourceTypeCommitment                           AddConversationLinkRequestResourceType = "commitment"
 	AddConversationLinkRequestResourceTypeSalesOrderTotals                     AddConversationLinkRequestResourceType = "sales_order_totals"
 	AddConversationLinkRequestResourceTypeSalesOrderStageTotal                 AddConversationLinkRequestResourceType = "sales_order_stage_total"
 	AddConversationLinkRequestResourceTypeSalesOrderRelated                    AddConversationLinkRequestResourceType = "sales_order_related"
@@ -328,6 +330,9 @@ const (
 	AddConversationLinkRequestResourceTypeDeliveryBacklogBucket                AddConversationLinkRequestResourceType = "delivery_backlog_bucket"
 	AddConversationLinkRequestResourceTypeDeliveryLatenessBucket               AddConversationLinkRequestResourceType = "delivery_lateness_bucket"
 	AddConversationLinkRequestResourceTypeDeliveryBreakdown                    AddConversationLinkRequestResourceType = "delivery_breakdown"
+	AddConversationLinkRequestResourceTypeAnalyzeSalesBreakdownResponse        AddConversationLinkRequestResourceType = "analyze_sales_breakdown_response"
+	AddConversationLinkRequestResourceTypeSalesTotals                          AddConversationLinkRequestResourceType = "sales_totals"
+	AddConversationLinkRequestResourceTypeSalesBreakdown                       AddConversationLinkRequestResourceType = "sales_breakdown"
 	AddConversationLinkRequestResourceTypeScheduleOrderCoverage                AddConversationLinkRequestResourceType = "schedule_order_coverage"
 	AddConversationLinkRequestResourceTypeScheduleOrderCoverageLine            AddConversationLinkRequestResourceType = "schedule_order_coverage_line"
 	AddConversationLinkRequestResourceTypeScheduleDeviationType                AddConversationLinkRequestResourceType = "schedule_deviation_type"
@@ -514,7 +519,6 @@ const (
 	AddConversationLinkRequestResourceTypeShipmentRelated                      AddConversationLinkRequestResourceType = "shipment_related"
 	AddConversationLinkRequestResourceTypeInvoiceRelated                       AddConversationLinkRequestResourceType = "invoice_related"
 	AddConversationLinkRequestResourceTypePickRelated                          AddConversationLinkRequestResourceType = "pick_related"
-	AddConversationLinkRequestResourceTypePickShipmentsResponse                AddConversationLinkRequestResourceType = "pick_shipments_response"
 	AddConversationLinkRequestResourceTypePickTotals                           AddConversationLinkRequestResourceType = "pick_totals"
 	AddConversationLinkRequestResourceTypePickStageTotal                       AddConversationLinkRequestResourceType = "pick_stage_total"
 )

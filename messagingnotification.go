@@ -580,14 +580,15 @@ type SendNotificationRequestParam struct {
 	// the recipient can open; supplying only one of the two produces a notification
 	// with no link.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -613,6 +614,7 @@ type SendNotificationRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -672,8 +674,7 @@ type SendNotificationRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	LinkResourceType SendNotificationRequestLinkResourceType `json:"link_resource_type,omitzero"`
 	// How prominently the notification should be surfaced, from `low` through
 	// `urgent`.
@@ -721,6 +722,7 @@ const (
 	SendNotificationRequestLinkResourceTypeEntity                               SendNotificationRequestLinkResourceType = "entity"
 	SendNotificationRequestLinkResourceTypeRecord                               SendNotificationRequestLinkResourceType = "record"
 	SendNotificationRequestLinkResourceTypeFreight                              SendNotificationRequestLinkResourceType = "freight"
+	SendNotificationRequestLinkResourceTypeCommitment                           SendNotificationRequestLinkResourceType = "commitment"
 	SendNotificationRequestLinkResourceTypeSalesOrderTotals                     SendNotificationRequestLinkResourceType = "sales_order_totals"
 	SendNotificationRequestLinkResourceTypeSalesOrderStageTotal                 SendNotificationRequestLinkResourceType = "sales_order_stage_total"
 	SendNotificationRequestLinkResourceTypeSalesOrderRelated                    SendNotificationRequestLinkResourceType = "sales_order_related"
@@ -832,6 +834,9 @@ const (
 	SendNotificationRequestLinkResourceTypeDeliveryBacklogBucket                SendNotificationRequestLinkResourceType = "delivery_backlog_bucket"
 	SendNotificationRequestLinkResourceTypeDeliveryLatenessBucket               SendNotificationRequestLinkResourceType = "delivery_lateness_bucket"
 	SendNotificationRequestLinkResourceTypeDeliveryBreakdown                    SendNotificationRequestLinkResourceType = "delivery_breakdown"
+	SendNotificationRequestLinkResourceTypeAnalyzeSalesBreakdownResponse        SendNotificationRequestLinkResourceType = "analyze_sales_breakdown_response"
+	SendNotificationRequestLinkResourceTypeSalesTotals                          SendNotificationRequestLinkResourceType = "sales_totals"
+	SendNotificationRequestLinkResourceTypeSalesBreakdown                       SendNotificationRequestLinkResourceType = "sales_breakdown"
 	SendNotificationRequestLinkResourceTypeScheduleOrderCoverage                SendNotificationRequestLinkResourceType = "schedule_order_coverage"
 	SendNotificationRequestLinkResourceTypeScheduleOrderCoverageLine            SendNotificationRequestLinkResourceType = "schedule_order_coverage_line"
 	SendNotificationRequestLinkResourceTypeScheduleDeviationType                SendNotificationRequestLinkResourceType = "schedule_deviation_type"
@@ -1018,7 +1023,6 @@ const (
 	SendNotificationRequestLinkResourceTypeShipmentRelated                      SendNotificationRequestLinkResourceType = "shipment_related"
 	SendNotificationRequestLinkResourceTypeInvoiceRelated                       SendNotificationRequestLinkResourceType = "invoice_related"
 	SendNotificationRequestLinkResourceTypePickRelated                          SendNotificationRequestLinkResourceType = "pick_related"
-	SendNotificationRequestLinkResourceTypePickShipmentsResponse                SendNotificationRequestLinkResourceType = "pick_shipments_response"
 	SendNotificationRequestLinkResourceTypePickTotals                           SendNotificationRequestLinkResourceType = "pick_totals"
 	SendNotificationRequestLinkResourceTypePickStageTotal                       SendNotificationRequestLinkResourceType = "pick_stage_total"
 )

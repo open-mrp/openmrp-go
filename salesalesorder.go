@@ -223,6 +223,132 @@ const (
 	CheckoutSalesOrderResponseObjectCheckoutSalesOrder CheckoutSalesOrderResponseObject = "checkout_sales_order"
 )
 
+// Commitment describes when a record is due to ship: what was asked for, what that
+// resolved to, and which rule decided.
+//
+// It is a generic, reusable sub-resource shared by anything carrying a ship-by
+// commitment — a sales order, the pick that fulfills it, or a preview of an order
+// that does not exist yet.
+//
+// The three inputs are alternative answers to the same question and at most one is
+// ever set; `lead_time_source` reports which of them, or which level of the
+// customer chain, produced the date. They are written flat on the create and
+// update bodies, the way a carrier is written as `carrier_id` and read back under
+// `freight`.
+type Commitment struct {
+	// Days the customer's receiving calendar and the plant's shipping calendar pulled
+	// the ship-by date back, beyond what carrier transit accounted for.
+	//
+	// Zero means every date along the way already fell on an open day. This is what
+	// explains a ship-by date that is earlier than transit alone would suggest.
+	CalendarAdjustmentDays int64 `json:"calendar_adjustment_days" api:"required"`
+	// When freight leaving on the ship-by date would reach the customer: transit
+	// walked forward from it and landed on a day their dock receives.
+	//
+	// Reported by the commitment preview, which is asked what a set of inputs would
+	// produce and so computes the arrival too. A record carries the commitment it was
+	// stamped with, not a projection, and leaves this null.
+	EstimatedDeliveryDate time.Time `json:"estimated_delivery_date" api:"required" format:"date-time"`
+	// Calendar days between issue and the ship-by date.
+	LeadTimeDays int64 `json:"lead_time_days" api:"required"`
+	// Days between issue and the ship-by date, set on this record alone in place of
+	// the customer's standing lead time.
+	LeadTimeOverrideDays int64 `json:"lead_time_override_days" api:"required"`
+	// Which rule produced the ship-by date.
+	//
+	// Any of "customer", "parent_customer", "account_group", "account", "manual",
+	// "order_lead_time", "order_ship_by".
+	LeadTimeSource CommitmentLeadTimeSource `json:"lead_time_source" api:"required"`
+	// Resource type identifier.
+	//
+	// Any of "commitment".
+	Object CommitmentObject `json:"object" api:"required"`
+	// Date delivery was promised to the customer, if one was committed.
+	PromisedAt time.Time `json:"promised_at" api:"required" format:"date-time"`
+	// When the record is contractually due to ship.
+	//
+	// Stamped at issue. With a promised delivery date, this is that date less the
+	// carrier's transit for the order's lane and less any day the customer cannot
+	// receive on — when the order has to leave to arrive when promised. Otherwise it
+	// comes from a lead time, whether the order's own or the one on the customer, its
+	// parent account, its account group, or the account.
+	//
+	// Always a day the plant actually ships on, whichever rule produced it, and
+	// carries the plant's pickup cutoff as its time of day when the shipping calendar
+	// sets one — the moment freight has to be tendered by, not just the day. Midnight
+	// UTC means no cutoff is configured rather than a deadline at midnight.
+	//
+	// Recomputed while the order is still open whenever something it was derived from
+	// moves — the basis above, or the carrier, service level, or ship-to address the
+	// transit was quoted on. Renegotiating a customer's standing lead time or adding a
+	// holiday to a calendar does not reach back into commitments already made. Cleared
+	// if the order is unissued.
+	ShipByDate time.Time `json:"ship_by_date" api:"required" format:"date-time"`
+	// The ship date pinned by hand, bypassing transit and the customer's receiving
+	// days.
+	ShipByOverrideDate time.Time `json:"ship_by_override_date" api:"required" format:"date-time"`
+	// Business days the carrier needs to cover this lane, subtracted from the promised
+	// delivery date to reach the ship-by date.
+	//
+	// Only set when a delivery date was promised and the lane could be priced. Without
+	// it the ship-by date falls back to the promised date itself.
+	TransitDays int64 `json:"transit_days" api:"required"`
+	// Where the transit estimate came from.
+	//
+	// Any of "carrier_lane", "service_level".
+	TransitSource CommitmentTransitSource `json:"transit_source" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		CalendarAdjustmentDays respjson.Field
+		EstimatedDeliveryDate  respjson.Field
+		LeadTimeDays           respjson.Field
+		LeadTimeOverrideDays   respjson.Field
+		LeadTimeSource         respjson.Field
+		Object                 respjson.Field
+		PromisedAt             respjson.Field
+		ShipByDate             respjson.Field
+		ShipByOverrideDate     respjson.Field
+		TransitDays            respjson.Field
+		TransitSource          respjson.Field
+		ExtraFields            map[string]respjson.Field
+		raw                    string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r Commitment) RawJSON() string { return r.JSON.raw }
+func (r *Commitment) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Which rule produced the ship-by date.
+type CommitmentLeadTimeSource string
+
+const (
+	CommitmentLeadTimeSourceCustomer       CommitmentLeadTimeSource = "customer"
+	CommitmentLeadTimeSourceParentCustomer CommitmentLeadTimeSource = "parent_customer"
+	CommitmentLeadTimeSourceAccountGroup   CommitmentLeadTimeSource = "account_group"
+	CommitmentLeadTimeSourceAccount        CommitmentLeadTimeSource = "account"
+	CommitmentLeadTimeSourceManual         CommitmentLeadTimeSource = "manual"
+	CommitmentLeadTimeSourceOrderLeadTime  CommitmentLeadTimeSource = "order_lead_time"
+	CommitmentLeadTimeSourceOrderShipBy    CommitmentLeadTimeSource = "order_ship_by"
+)
+
+// Resource type identifier.
+type CommitmentObject string
+
+const (
+	CommitmentObjectCommitment CommitmentObject = "commitment"
+)
+
+// Where the transit estimate came from.
+type CommitmentTransitSource string
+
+const (
+	CommitmentTransitSourceCarrierLane  CommitmentTransitSource = "carrier_lane"
+	CommitmentTransitSourceServiceLevel CommitmentTransitSource = "service_level"
+)
+
 // A rate calculated on demand rather than stored.
 //
 // The same shape as a rate minus the fields only a persisted row can have: it
@@ -1053,12 +1179,19 @@ type SalesOrder struct {
 	// A saved address that can be used for billing and shipping on sales orders,
 	// invoices, and shipments.
 	BillToAddress Address `json:"bill_to_address" api:"required"`
-	// Days the customer's receiving calendar and the plant's shipping calendar pulled
-	// the ship-by date back, beyond what carrier transit accounted for.
+	// Commitment describes when a record is due to ship: what was asked for, what that
+	// resolved to, and which rule decided.
 	//
-	// Zero means every date along the way already fell on an open day. This is what
-	// explains a ship-by date that is earlier than transit alone would suggest.
-	CalendarAdjustmentDays int64 `json:"calendar_adjustment_days" api:"required"`
+	// It is a generic, reusable sub-resource shared by anything carrying a ship-by
+	// commitment — a sales order, the pick that fulfills it, or a preview of an order
+	// that does not exist yet.
+	//
+	// The three inputs are alternative answers to the same question and at most one is
+	// ever set; `lead_time_source` reports which of them, or which level of the
+	// customer chain, produced the date. They are written flat on the create and
+	// update bodies, the way a carrier is written as `carrier_id` and read back under
+	// `freight`.
+	Commitment Commitment `json:"commitment" api:"required"`
 	// When the order was fulfilled and closed.
 	CompletedAt time.Time `json:"completed_at" api:"required" format:"date-time"`
 	// A sales order's email recipients, grouped by the notification they receive.
@@ -1088,16 +1221,6 @@ type SalesOrder struct {
 	Freight Freight `json:"freight" api:"required"`
 	// When the order was issued (moved out of `estimate`).
 	IssuedAt time.Time `json:"issued_at" api:"required" format:"date-time"`
-	// Calendar days between issue and the ship-by date.
-	LeadTimeDays int64 `json:"lead_time_days" api:"required"`
-	// Days between issue and the ship-by date, set on this order alone in place of the
-	// customer's standing lead time.
-	LeadTimeOverrideDays int64 `json:"lead_time_override_days" api:"required"`
-	// Which rule produced the ship-by date.
-	//
-	// Any of "customer", "parent_customer", "account_group", "account", "manual",
-	// "order_lead_time", "order_ship_by".
-	LeadTimeSource SalesOrderLeadTimeSource `json:"lead_time_source" api:"required"`
 	// Number of lines on this order.
 	LineCount int64 `json:"line_count" api:"required"`
 	// A single page of resources, together with the metadata needed to page through
@@ -1133,8 +1256,6 @@ type SalesOrder struct {
 	//
 	// Any of "low", "normal", "high".
 	Priority SalesOrderPriority `json:"priority" api:"required"`
-	// Date promised to the customer for delivery, if one was committed.
-	PromisedAt time.Time `json:"promised_at" api:"required" format:"date-time"`
 	// The fulfillment records produced from a sales order.
 	//
 	// The group itself is returned only when at least one of its members has been
@@ -1143,28 +1264,6 @@ type SalesOrder struct {
 	// Reference to an actor — the user, API key, agent, or group identity associated
 	// with an action.
 	SalesRep Actor `json:"sales_rep" api:"required"`
-	// The ship-by date at the plant's pickup cutoff — the moment freight has to be
-	// tendered by, not just the day.
-	//
-	// Only set when the account's shipping calendar carries a cutoff time.
-	ShipByCutoffAt time.Time `json:"ship_by_cutoff_at" api:"required" format:"date-time"`
-	// Date this order is contractually due to ship.
-	//
-	// Stamped when the order is issued. With a promised delivery date, this is that
-	// date less the carrier's transit for the order's lane and less any day the
-	// customer cannot receive on — the day the order has to leave to arrive when
-	// promised. Otherwise it comes from a lead time, whether this order's own or the
-	// one on the customer, its parent account, its account group, or the account.
-	//
-	// Always a day the plant actually ships on, whichever rule produced it.
-	//
-	// It is not recomputed afterwards, so neither renegotiating a customer's lead
-	// time, nor a later carrier estimate, nor a holiday added to a calendar moves
-	// commitments already made. Cleared if the order is unissued.
-	ShipByDate time.Time `json:"ship_by_date" api:"required" format:"date-time"`
-	// The ship date pinned on this order, bypassing transit and the customer's
-	// receiving days.
-	ShipByOverrideDate time.Time `json:"ship_by_override_date" api:"required" format:"date-time"`
 	// A saved address that can be used for billing and shipping on sales orders,
 	// invoices, and shipments.
 	ShipToAddress Address `json:"ship_to_address" api:"required"`
@@ -1193,16 +1292,6 @@ type SalesOrder struct {
 	// stage reports both the money that has reached it and its progress against the
 	// ordered baseline.
 	Totals SalesOrderTotals `json:"totals" api:"required"`
-	// Business days the carrier needs to cover this order's lane, subtracted from the
-	// promised delivery date to reach the ship-by date.
-	//
-	// Only set when a delivery date was promised and the lane could be priced. Without
-	// it the ship-by date falls back to the promised date itself.
-	TransitDays int64 `json:"transit_days" api:"required"`
-	// Where the transit estimate came from.
-	//
-	// Any of "carrier_lane", "service_level".
-	TransitSource SalesOrderTransitSource `json:"transit_source" api:"required"`
 	// Last updated timestamp.
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -1210,7 +1299,7 @@ type SalesOrder struct {
 		ID                          respjson.Field
 		AcknowledgmentStatus        respjson.Field
 		BillToAddress               respjson.Field
-		CalendarAdjustmentDays      respjson.Field
+		Commitment                  respjson.Field
 		CompletedAt                 respjson.Field
 		Contacts                    respjson.Field
 		CreatedAt                   respjson.Field
@@ -1221,9 +1310,6 @@ type SalesOrder struct {
 		FirstShipAt                 respjson.Field
 		Freight                     respjson.Field
 		IssuedAt                    respjson.Field
-		LeadTimeDays                respjson.Field
-		LeadTimeOverrideDays        respjson.Field
-		LeadTimeSource              respjson.Field
 		LineCount                   respjson.Field
 		Lines                       respjson.Field
 		Note                        respjson.Field
@@ -1234,18 +1320,12 @@ type SalesOrder struct {
 		PaymentStatus               respjson.Field
 		PaymentTerm                 respjson.Field
 		Priority                    respjson.Field
-		PromisedAt                  respjson.Field
 		Related                     respjson.Field
 		SalesRep                    respjson.Field
-		ShipByCutoffAt              respjson.Field
-		ShipByDate                  respjson.Field
-		ShipByOverrideDate          respjson.Field
 		ShipToAddress               respjson.Field
 		ShippingTerm                respjson.Field
 		Status                      respjson.Field
 		Totals                      respjson.Field
-		TransitDays                 respjson.Field
-		TransitSource               respjson.Field
 		UpdatedAt                   respjson.Field
 		ExtraFields                 map[string]respjson.Field
 		raw                         string
@@ -1268,19 +1348,6 @@ type SalesOrderAcknowledgmentStatus string
 const (
 	SalesOrderAcknowledgmentStatusNotSent SalesOrderAcknowledgmentStatus = "not_sent"
 	SalesOrderAcknowledgmentStatusSent    SalesOrderAcknowledgmentStatus = "sent"
-)
-
-// Which rule produced the ship-by date.
-type SalesOrderLeadTimeSource string
-
-const (
-	SalesOrderLeadTimeSourceCustomer       SalesOrderLeadTimeSource = "customer"
-	SalesOrderLeadTimeSourceParentCustomer SalesOrderLeadTimeSource = "parent_customer"
-	SalesOrderLeadTimeSourceAccountGroup   SalesOrderLeadTimeSource = "account_group"
-	SalesOrderLeadTimeSourceAccount        SalesOrderLeadTimeSource = "account"
-	SalesOrderLeadTimeSourceManual         SalesOrderLeadTimeSource = "manual"
-	SalesOrderLeadTimeSourceOrderLeadTime  SalesOrderLeadTimeSource = "order_lead_time"
-	SalesOrderLeadTimeSourceOrderShipBy    SalesOrderLeadTimeSource = "order_ship_by"
 )
 
 // Resource type identifier.
@@ -1324,14 +1391,6 @@ const (
 	SalesOrderStatusEstimate  SalesOrderStatus = "estimate"
 	SalesOrderStatusIssued    SalesOrderStatus = "issued"
 	SalesOrderStatusFulfilled SalesOrderStatus = "fulfilled"
-)
-
-// Where the transit estimate came from.
-type SalesOrderTransitSource string
-
-const (
-	SalesOrderTransitSourceCarrierLane  SalesOrderTransitSource = "carrier_lane"
-	SalesOrderTransitSourceServiceLevel SalesOrderTransitSource = "service_level"
 )
 
 // A user subscribed to one of a sales order's email notifications.

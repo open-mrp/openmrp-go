@@ -31,6 +31,8 @@ type OperationService struct {
 	Carriers OperationCarrierService
 	// List and manage departments.
 	Departments OperationDepartmentService
+	// List and export inventory change logs.
+	InventoryChangeLogs OperationInventoryChangeLogService
 	// List and manage machines.
 	Machines OperationMachineService
 	// Log and review machine stoppages. Downtime is the source of OEE availability and
@@ -51,6 +53,8 @@ type OperationService struct {
 	// holidays and shutdowns either side is closed for. Every ship-by date is resolved
 	// against them, so an order is never committed to a day nobody can act on.
 	OperatingCalendars OperationOperatingCalendarService
+	// List, view, pick, void, and pack picks and pick lines.
+	Picks OperationPickService
 	// List and manage locations.
 	Locations OperationLocationService
 	// List and manage locations.
@@ -69,6 +73,7 @@ func NewOperationService(opts ...option.RequestOption) (r OperationService) {
 	r.ShippingTerms = NewOperationShippingTermService(opts...)
 	r.Carriers = NewOperationCarrierService(opts...)
 	r.Departments = NewOperationDepartmentService(opts...)
+	r.InventoryChangeLogs = NewOperationInventoryChangeLogService(opts...)
 	r.Machines = NewOperationMachineService(opts...)
 	r.MachineDowntimeEvents = NewOperationMachineDowntimeEventService(opts...)
 	r.DemandOverrides = NewOperationDemandOverrideService(opts...)
@@ -76,6 +81,7 @@ func NewOperationService(opts ...option.RequestOption) (r OperationService) {
 	r.ProductionScheduleSettings = NewOperationProductionScheduleSettingService(opts...)
 	r.FulfillmentRecommendations = NewOperationFulfillmentRecommendationService(opts...)
 	r.OperatingCalendars = NewOperationOperatingCalendarService(opts...)
+	r.Picks = NewOperationPickService(opts...)
 	r.Locations = NewOperationLocationService(opts...)
 	r.LocationTypes = NewOperationLocationTypeService(opts...)
 	r.Shipments = NewOperationShipmentService(opts...)

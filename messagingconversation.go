@@ -541,14 +541,15 @@ type CreateConversationRequestParam struct {
 	// An anchored conversation is returned when conversations are listed for that
 	// record, which is how a discussion shows up on an order or invoice.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -574,6 +575,7 @@ type CreateConversationRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -633,8 +635,7 @@ type CreateConversationRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	TopicResourceType CreateConversationRequestTopicResourceType `json:"topic_resource_type,omitzero"`
 	paramObj
 }
@@ -674,6 +675,7 @@ const (
 	CreateConversationRequestTopicResourceTypeEntity                               CreateConversationRequestTopicResourceType = "entity"
 	CreateConversationRequestTopicResourceTypeRecord                               CreateConversationRequestTopicResourceType = "record"
 	CreateConversationRequestTopicResourceTypeFreight                              CreateConversationRequestTopicResourceType = "freight"
+	CreateConversationRequestTopicResourceTypeCommitment                           CreateConversationRequestTopicResourceType = "commitment"
 	CreateConversationRequestTopicResourceTypeSalesOrderTotals                     CreateConversationRequestTopicResourceType = "sales_order_totals"
 	CreateConversationRequestTopicResourceTypeSalesOrderStageTotal                 CreateConversationRequestTopicResourceType = "sales_order_stage_total"
 	CreateConversationRequestTopicResourceTypeSalesOrderRelated                    CreateConversationRequestTopicResourceType = "sales_order_related"
@@ -785,6 +787,9 @@ const (
 	CreateConversationRequestTopicResourceTypeDeliveryBacklogBucket                CreateConversationRequestTopicResourceType = "delivery_backlog_bucket"
 	CreateConversationRequestTopicResourceTypeDeliveryLatenessBucket               CreateConversationRequestTopicResourceType = "delivery_lateness_bucket"
 	CreateConversationRequestTopicResourceTypeDeliveryBreakdown                    CreateConversationRequestTopicResourceType = "delivery_breakdown"
+	CreateConversationRequestTopicResourceTypeAnalyzeSalesBreakdownResponse        CreateConversationRequestTopicResourceType = "analyze_sales_breakdown_response"
+	CreateConversationRequestTopicResourceTypeSalesTotals                          CreateConversationRequestTopicResourceType = "sales_totals"
+	CreateConversationRequestTopicResourceTypeSalesBreakdown                       CreateConversationRequestTopicResourceType = "sales_breakdown"
 	CreateConversationRequestTopicResourceTypeScheduleOrderCoverage                CreateConversationRequestTopicResourceType = "schedule_order_coverage"
 	CreateConversationRequestTopicResourceTypeScheduleOrderCoverageLine            CreateConversationRequestTopicResourceType = "schedule_order_coverage_line"
 	CreateConversationRequestTopicResourceTypeScheduleDeviationType                CreateConversationRequestTopicResourceType = "schedule_deviation_type"
@@ -971,7 +976,6 @@ const (
 	CreateConversationRequestTopicResourceTypeShipmentRelated                      CreateConversationRequestTopicResourceType = "shipment_related"
 	CreateConversationRequestTopicResourceTypeInvoiceRelated                       CreateConversationRequestTopicResourceType = "invoice_related"
 	CreateConversationRequestTopicResourceTypePickRelated                          CreateConversationRequestTopicResourceType = "pick_related"
-	CreateConversationRequestTopicResourceTypePickShipmentsResponse                CreateConversationRequestTopicResourceType = "pick_shipments_response"
 	CreateConversationRequestTopicResourceTypePickTotals                           CreateConversationRequestTopicResourceType = "pick_totals"
 	CreateConversationRequestTopicResourceTypePickStageTotal                       CreateConversationRequestTopicResourceType = "pick_stage_total"
 )
@@ -1814,14 +1818,15 @@ type MessagingConversationListParams struct {
 	// Matches both conversations anchored to the record and conversations that merely
 	// link it, which is what powers the "discussions on this record" view.
 	//
-	// Any of "account", "actor", "entity", "record", "freight", "sales_order_totals",
-	// "sales_order_stage_total", "sales_order_related", "order_contact", "user",
-	// "address", "api_key", "created_api_key", "refresh_token", "list", "sandbox",
-	// "registration_session", "pricing_plan", "account_plan", "plan_change",
-	// "enterprise_inquiry", "request_log", "audit_event", "audit_field_change",
-	// "role", "unit", "account_affiliation", "agent_definition", "available_tool",
-	// "agent_definition_tool", "agent_account_status", "agent_run", "agent_action",
-	// "agent_run_step", "agent_token_usage", "agent_memory", "notification",
+	// Any of "account", "actor", "entity", "record", "freight", "commitment",
+	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
+	// "order_contact", "user", "address", "api_key", "created_api_key",
+	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
+	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
+	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
+	// "agent_definition", "available_tool", "agent_definition_tool",
+	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
+	// "agent_token_usage", "agent_memory", "notification",
 	// "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
@@ -1847,6 +1852,7 @@ type MessagingConversationListParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
 	// "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
@@ -1906,8 +1912,7 @@ type MessagingConversationListParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_shipments_response", "pick_totals",
-	// "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
 	TopicResourceType MessagingConversationListParamsTopicResourceType `query:"topic_resource_type,omitzero" json:"-"`
 	// Filter by conversation type.
 	//
@@ -1973,6 +1978,7 @@ const (
 	MessagingConversationListParamsTopicResourceTypeEntity                               MessagingConversationListParamsTopicResourceType = "entity"
 	MessagingConversationListParamsTopicResourceTypeRecord                               MessagingConversationListParamsTopicResourceType = "record"
 	MessagingConversationListParamsTopicResourceTypeFreight                              MessagingConversationListParamsTopicResourceType = "freight"
+	MessagingConversationListParamsTopicResourceTypeCommitment                           MessagingConversationListParamsTopicResourceType = "commitment"
 	MessagingConversationListParamsTopicResourceTypeSalesOrderTotals                     MessagingConversationListParamsTopicResourceType = "sales_order_totals"
 	MessagingConversationListParamsTopicResourceTypeSalesOrderStageTotal                 MessagingConversationListParamsTopicResourceType = "sales_order_stage_total"
 	MessagingConversationListParamsTopicResourceTypeSalesOrderRelated                    MessagingConversationListParamsTopicResourceType = "sales_order_related"
@@ -2084,6 +2090,9 @@ const (
 	MessagingConversationListParamsTopicResourceTypeDeliveryBacklogBucket                MessagingConversationListParamsTopicResourceType = "delivery_backlog_bucket"
 	MessagingConversationListParamsTopicResourceTypeDeliveryLatenessBucket               MessagingConversationListParamsTopicResourceType = "delivery_lateness_bucket"
 	MessagingConversationListParamsTopicResourceTypeDeliveryBreakdown                    MessagingConversationListParamsTopicResourceType = "delivery_breakdown"
+	MessagingConversationListParamsTopicResourceTypeAnalyzeSalesBreakdownResponse        MessagingConversationListParamsTopicResourceType = "analyze_sales_breakdown_response"
+	MessagingConversationListParamsTopicResourceTypeSalesTotals                          MessagingConversationListParamsTopicResourceType = "sales_totals"
+	MessagingConversationListParamsTopicResourceTypeSalesBreakdown                       MessagingConversationListParamsTopicResourceType = "sales_breakdown"
 	MessagingConversationListParamsTopicResourceTypeScheduleOrderCoverage                MessagingConversationListParamsTopicResourceType = "schedule_order_coverage"
 	MessagingConversationListParamsTopicResourceTypeScheduleOrderCoverageLine            MessagingConversationListParamsTopicResourceType = "schedule_order_coverage_line"
 	MessagingConversationListParamsTopicResourceTypeScheduleDeviationType                MessagingConversationListParamsTopicResourceType = "schedule_deviation_type"
@@ -2270,7 +2279,6 @@ const (
 	MessagingConversationListParamsTopicResourceTypeShipmentRelated                      MessagingConversationListParamsTopicResourceType = "shipment_related"
 	MessagingConversationListParamsTopicResourceTypeInvoiceRelated                       MessagingConversationListParamsTopicResourceType = "invoice_related"
 	MessagingConversationListParamsTopicResourceTypePickRelated                          MessagingConversationListParamsTopicResourceType = "pick_related"
-	MessagingConversationListParamsTopicResourceTypePickShipmentsResponse                MessagingConversationListParamsTopicResourceType = "pick_shipments_response"
 	MessagingConversationListParamsTopicResourceTypePickTotals                           MessagingConversationListParamsTopicResourceType = "pick_totals"
 	MessagingConversationListParamsTopicResourceTypePickStageTotal                       MessagingConversationListParamsTopicResourceType = "pick_stage_total"
 )
