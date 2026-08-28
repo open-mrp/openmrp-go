@@ -359,9 +359,10 @@ type QuoteSalesOrderCommitmentRequestParam struct {
 	BuyerAccountID param.Opt[string] `json:"buyer_account_id,omitzero"`
 	// Carrier for the shipment.
 	CarrierID param.Opt[string] `json:"carrier_id,omitzero"`
-	// When the order would be issued. Defaults to now, since a lead time is measured
-	// from issue and an order built today but issued next week commits to next week's
-	// date.
+	// When the order would be issued. Defaults to the date sales_order_id was issued
+	// on, or to now for an order that has not been issued — a lead time is measured
+	// from issue, so an order built today but issued next week commits to next week's
+	// date, and re-committing one issued last week still counts from last week.
 	IssuedAt param.Opt[time.Time] `json:"issued_at,omitzero" format:"date-time"`
 	// Days between issue and the order being due to ship, in place of the customer's
 	// standing lead time.
