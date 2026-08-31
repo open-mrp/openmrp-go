@@ -60,7 +60,8 @@ func (r *OperationInventoryChangeLogService) Get(ctx context.Context, id string,
 // Returns a paginated list of inventory change logs, newest first.
 //
 // Filters combine with AND, while the values within a single filter combine with
-// OR.
+// OR. The `q` search term matches changes affecting items whose SKU contains it,
+// as a case-insensitive substring.
 //
 // This endpoint requires the permission: `inventory_logs:read`.
 func (r *OperationInventoryChangeLogService) List(ctx context.Context, query OperationInventoryChangeLogListParams, opts ...option.RequestOption) (res *ListInventoryChangeLog, err error) {
@@ -226,6 +227,10 @@ type OperationInventoryChangeLogListParams struct {
 	EndsAt param.Opt[time.Time] `query:"ends_at,omitzero" format:"date-time" json:"-"`
 	// Maximum number of results to return in a single page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Free-text search term used to filter results.
+	//
+	// Which fields are matched against the term varies by endpoint.
+	Q param.Opt[string] `query:"q,omitzero" json:"-"`
 	// Restricts results to change logs created on or after this timestamp.
 	StartsAt param.Opt[time.Time] `query:"starts_at,omitzero" format:"date-time" json:"-"`
 	// Restricts results to these action types.

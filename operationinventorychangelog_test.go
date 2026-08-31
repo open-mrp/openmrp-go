@@ -62,6 +62,7 @@ func TestOperationInventoryChangeLogListWithOptionalParams(t *testing.T) {
 		Include:          []string{"item"},
 		ItemIDs:          []string{"string"},
 		Limit:            openmrp.Int(0),
+		Q:                openmrp.String("q"),
 		StartsAt:         openmrp.Time(time.Now()),
 	})
 	if err != nil {
