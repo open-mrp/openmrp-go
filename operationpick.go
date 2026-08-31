@@ -62,8 +62,9 @@ func (r *OperationPickService) Get(ctx context.Context, id string, query Operati
 
 // Returns a paginated list of picks, soonest ship-by date first.
 //
-// The `q` search term matches the pick number, the sales order number, the
-// customer PO number, and the customer's name or number.
+// The `q` search term matches the pick number (which is the order number) and the
+// customer PO number. To narrow by customer, use `customer_ids` rather than
+// searching for a customer name.
 //
 // This endpoint requires the permissions: `picks:read`, `customers:read`,
 // `suppliers:read`.
