@@ -584,14 +584,15 @@ type CreateConversationRequestParam struct {
 	// "unit_group_unit", "consumption", "customer_product_line_access", "customer",
 	// "frequently_ordered_product", "priority", "delivery", "delivery_line",
 	// "sales_order", "location", "location_type", "lot", "email_log", "email_domain",
-	// "email_inbox", "portal_domain", "dns_record", "inventory_change_log", "invoice",
-	// "invoice_summary", "invoice_line", "invoice_allocation", "invoice_for_payment",
-	// "shipment", "shipment_summary", "shipment_line", "shipping_case",
-	// "shipping_case_label_url", "settlement", "settlement_summary",
-	// "role_permission", "registration_flow", "registration_flow_option",
-	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
+	// "email_inbox", "email_sender", "portal_domain", "dns_record",
+	// "inventory_change_log", "invoice", "invoice_summary", "invoice_line",
+	// "invoice_allocation", "invoice_for_payment", "shipment", "shipment_summary",
+	// "shipment_line", "shipping_case", "shipping_case_label_url", "settlement",
+	// "settlement_summary", "role_permission", "registration_flow",
+	// "registration_flow_option", "transaction", "transaction_summary",
+	// "transaction_method", "transaction_type", "transaction_allocation",
+	// "usage_item", "account_usage_response", "subscription_info",
+	// "billing_portal_session_response", "switch_plan_response",
 	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
 	// "webhook_response", "address_suggestion", "address_components",
 	// "address_details_result", "validated_address", "plan_limit",
@@ -816,6 +817,7 @@ const (
 	CreateConversationRequestTopicResourceTypeEmailLog                             CreateConversationRequestTopicResourceType = "email_log"
 	CreateConversationRequestTopicResourceTypeEmailDomain                          CreateConversationRequestTopicResourceType = "email_domain"
 	CreateConversationRequestTopicResourceTypeEmailInbox                           CreateConversationRequestTopicResourceType = "email_inbox"
+	CreateConversationRequestTopicResourceTypeEmailSender                          CreateConversationRequestTopicResourceType = "email_sender"
 	CreateConversationRequestTopicResourceTypePortalDomain                         CreateConversationRequestTopicResourceType = "portal_domain"
 	CreateConversationRequestTopicResourceTypeDNSRecord                            CreateConversationRequestTopicResourceType = "dns_record"
 	CreateConversationRequestTopicResourceTypeInventoryChangeLog                   CreateConversationRequestTopicResourceType = "inventory_change_log"
@@ -1861,14 +1863,15 @@ type MessagingConversationListParams struct {
 	// "unit_group_unit", "consumption", "customer_product_line_access", "customer",
 	// "frequently_ordered_product", "priority", "delivery", "delivery_line",
 	// "sales_order", "location", "location_type", "lot", "email_log", "email_domain",
-	// "email_inbox", "portal_domain", "dns_record", "inventory_change_log", "invoice",
-	// "invoice_summary", "invoice_line", "invoice_allocation", "invoice_for_payment",
-	// "shipment", "shipment_summary", "shipment_line", "shipping_case",
-	// "shipping_case_label_url", "settlement", "settlement_summary",
-	// "role_permission", "registration_flow", "registration_flow_option",
-	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
+	// "email_inbox", "email_sender", "portal_domain", "dns_record",
+	// "inventory_change_log", "invoice", "invoice_summary", "invoice_line",
+	// "invoice_allocation", "invoice_for_payment", "shipment", "shipment_summary",
+	// "shipment_line", "shipping_case", "shipping_case_label_url", "settlement",
+	// "settlement_summary", "role_permission", "registration_flow",
+	// "registration_flow_option", "transaction", "transaction_summary",
+	// "transaction_method", "transaction_type", "transaction_allocation",
+	// "usage_item", "account_usage_response", "subscription_info",
+	// "billing_portal_session_response", "switch_plan_response",
 	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
 	// "webhook_response", "address_suggestion", "address_components",
 	// "address_details_result", "validated_address", "plan_limit",
@@ -2119,6 +2122,7 @@ const (
 	MessagingConversationListParamsTopicResourceTypeEmailLog                             MessagingConversationListParamsTopicResourceType = "email_log"
 	MessagingConversationListParamsTopicResourceTypeEmailDomain                          MessagingConversationListParamsTopicResourceType = "email_domain"
 	MessagingConversationListParamsTopicResourceTypeEmailInbox                           MessagingConversationListParamsTopicResourceType = "email_inbox"
+	MessagingConversationListParamsTopicResourceTypeEmailSender                          MessagingConversationListParamsTopicResourceType = "email_sender"
 	MessagingConversationListParamsTopicResourceTypePortalDomain                         MessagingConversationListParamsTopicResourceType = "portal_domain"
 	MessagingConversationListParamsTopicResourceTypeDNSRecord                            MessagingConversationListParamsTopicResourceType = "dns_record"
 	MessagingConversationListParamsTopicResourceTypeInventoryChangeLog                   MessagingConversationListParamsTopicResourceType = "inventory_change_log"

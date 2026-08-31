@@ -1037,6 +1037,23 @@ Methods:
 - <code title="get /v1/messaging/email-inboxes">client.Messaging.EmailInboxes.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailInboxService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailInboxListParams">MessagingEmailInboxListParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListEmailInbox">ListEmailInbox</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="delete /v1/messaging/email-inboxes/{id}">client.Messaging.EmailInboxes.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailInboxService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailInboxDeleteResponse">MessagingEmailInboxDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+## EmailSender
+
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SetEmailSenderRequestParam">SetEmailSenderRequestParam</a>
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#EmailSender">EmailSender</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailSenderDeleteResponse">MessagingEmailSenderDeleteResponse</a>
+
+Methods:
+
+- <code title="put /v1/messaging/email-sender">client.Messaging.EmailSender.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailSenderService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailSenderUpdateParams">MessagingEmailSenderUpdateParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#EmailSender">EmailSender</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /v1/messaging/email-sender">client.Messaging.EmailSender.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailSenderService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#EmailSender">EmailSender</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="delete /v1/messaging/email-sender">client.Messaging.EmailSender.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailSenderService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingEmailSenderDeleteResponse">MessagingEmailSenderDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # Sales
 
 ## AccountGroups

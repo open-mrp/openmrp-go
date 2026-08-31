@@ -47,6 +47,9 @@ type MessagingService struct {
 	// Provision and manage routable email inboxes that bind inbound mail to chat
 	// conversations and send agent replies.
 	EmailInboxes MessagingEmailInboxService
+	// Choose the address your order, invoice, and statement emails are sent from, on a
+	// domain you have verified.
+	EmailSender MessagingEmailSenderService
 }
 
 // NewMessagingService generates a new service that applies the given options to
@@ -64,6 +67,7 @@ func NewMessagingService(opts ...option.RequestOption) (r MessagingService) {
 	r.Preferences = NewMessagingPreferenceService(opts...)
 	r.EmailDomains = NewMessagingEmailDomainService(opts...)
 	r.EmailInboxes = NewMessagingEmailInboxService(opts...)
+	r.EmailSender = NewMessagingEmailSenderService(opts...)
 	return
 }
 

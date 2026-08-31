@@ -144,6 +144,17 @@ type EmailDomain struct {
 	DkimTokens []string `json:"dkim_tokens" api:"required"`
 	// The fully-qualified domain name (e.g. `support.acme.com`).
 	Domain string `json:"domain" api:"required"`
+	// The subdomain used as the envelope return path for mail sent from this domain.
+	//
+	// Publishing the two records below makes the return path match the sender address.
+	// Until you do, mail clients show your mail as coming from your address "via
+	// amazonses.com".
+	MailFromDomain string `json:"mail_from_domain" api:"required"`
+	// The MX record to publish on `mail_from_domain`, for delivery of bounces and
+	// complaints.
+	MailFromMxRecord string `json:"mail_from_mx_record" api:"required"`
+	// The SPF record to publish as a TXT record on `mail_from_domain`.
+	MailFromSpfRecord string `json:"mail_from_spf_record" api:"required"`
 	// Resource type identifier.
 	//
 	// Any of "email_domain".
@@ -164,16 +175,19 @@ type EmailDomain struct {
 	VerifiedAt time.Time `json:"verified_at" api:"required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID          respjson.Field
-		CreatedAt   respjson.Field
-		DkimTokens  respjson.Field
-		Domain      respjson.Field
-		Object      respjson.Field
-		Status      respjson.Field
-		UpdatedAt   respjson.Field
-		VerifiedAt  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
+		ID                respjson.Field
+		CreatedAt         respjson.Field
+		DkimTokens        respjson.Field
+		Domain            respjson.Field
+		MailFromDomain    respjson.Field
+		MailFromMxRecord  respjson.Field
+		MailFromSpfRecord respjson.Field
+		Object            respjson.Field
+		Status            respjson.Field
+		UpdatedAt         respjson.Field
+		VerifiedAt        respjson.Field
+		ExtraFields       map[string]respjson.Field
+		raw               string
 	} `json:"-"`
 }
 
