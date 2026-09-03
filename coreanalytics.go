@@ -1181,7 +1181,7 @@ type OeeDepartment struct {
 	Anomalies []string `json:"anomalies" api:"required"`
 	// Logged downtime charged against availability, in seconds.
 	AvailabilityLossSeconds float64 `json:"availability_loss_seconds" api:"required"`
-	// Run time divided by scheduled time.
+	// Run time (capped at scheduled) divided by scheduled time.
 	AvailabilityPct float64 `json:"availability_pct" api:"required"`
 	// Time spent changing over between products, in seconds.
 	ChangeoverSeconds float64 `json:"changeover_seconds" api:"required"`
@@ -1207,18 +1207,27 @@ type OeeDepartment struct {
 	NotScheduledSeconds float64 `json:"not_scheduled_seconds" api:"required"`
 	// Availability multiplied by performance multiplied by quality.
 	OeePct float64 `json:"oee_pct" api:"required"`
+	// The scheduled machines' measured run time (first-to-last scan per machine per
+	// day), in seconds. Performance's denominator.
+	OperatingTimeSeconds float64 `json:"operating_time_seconds" api:"required"`
+	// Measured run time beyond the scheduled window, in seconds. A schedule-adherence
+	// signal reported apart from OEE, so overtime is not counted as extra
+	// availability.
+	OverrunSeconds float64 `json:"overrun_seconds" api:"required"`
 	// Logged downtime charged against performance, in seconds.
 	PerformanceLossSeconds float64 `json:"performance_loss_seconds" api:"required"`
-	// Standard seconds earned divided by run time: how fast the department ran against
-	// the designed speed of its production steps.
+	// Standard seconds earned divided by measured operating time: how fast the
+	// department ran against the designed speed of its production steps.
 	PerformancePct float64 `json:"performance_pct" api:"required"`
 	// Logged downtime charged against quality, in seconds.
 	QualityLossSeconds float64 `json:"quality_loss_seconds" api:"required"`
 	// Good units divided by total units produced.
 	QualityPct float64 `json:"quality_pct" api:"required"`
-	// Scheduled time net of availability losses, in seconds.
+	// Operating time counted toward availability: measured run time capped at
+	// scheduled time, in seconds.
 	RunTimeSeconds float64 `json:"run_time_seconds" api:"required"`
-	// Planned time net of not-scheduled downtime, in seconds.
+	// Planned production time net of not-scheduled downtime, in seconds.
+	// Availability's denominator.
 	ScheduledSeconds float64 `json:"scheduled_seconds" api:"required"`
 	// The number of seconds units.
 	SecondsUnits float64 `json:"seconds_units" api:"required"`
@@ -1242,6 +1251,8 @@ type OeeDepartment struct {
 		MeasurementStatus       respjson.Field
 		NotScheduledSeconds     respjson.Field
 		OeePct                  respjson.Field
+		OperatingTimeSeconds    respjson.Field
+		OverrunSeconds          respjson.Field
 		PerformanceLossSeconds  respjson.Field
 		PerformancePct          respjson.Field
 		QualityLossSeconds      respjson.Field
@@ -1356,7 +1367,7 @@ const (
 type OeeTrendPeriod struct {
 	// Logged downtime charged against availability, in seconds.
 	AvailabilityLossSeconds float64 `json:"availability_loss_seconds" api:"required"`
-	// Run time divided by scheduled time.
+	// Run time (capped at scheduled) divided by scheduled time.
 	AvailabilityPct float64 `json:"availability_pct" api:"required"`
 	// Number of downtime events overlapping this period.
 	DowntimeEventCount int64 `json:"downtime_event_count" api:"required"`
@@ -1374,13 +1385,21 @@ type OeeTrendPeriod struct {
 	NotScheduledSeconds float64 `json:"not_scheduled_seconds" api:"required"`
 	// Availability multiplied by performance multiplied by quality.
 	OeePct float64 `json:"oee_pct" api:"required"`
-	// Standard seconds earned divided by run time.
+	// The scheduled machines' measured run time, in seconds. Performance's
+	// denominator.
+	OperatingTimeSeconds float64 `json:"operating_time_seconds" api:"required"`
+	// Measured run time beyond the scheduled window, in seconds, reported apart from
+	// OEE.
+	OverrunSeconds float64 `json:"overrun_seconds" api:"required"`
+	// Standard seconds earned divided by measured operating time.
 	PerformancePct float64 `json:"performance_pct" api:"required"`
 	// Good units divided by total units produced.
 	QualityPct float64 `json:"quality_pct" api:"required"`
-	// Scheduled time net of availability losses, in seconds.
+	// Operating time counted toward availability: measured run time capped at
+	// scheduled time, in seconds.
 	RunTimeSeconds float64 `json:"run_time_seconds" api:"required"`
-	// Planned time net of not-scheduled downtime, in seconds.
+	// Planned production time net of not-scheduled downtime, in seconds.
+	// Availability's denominator.
 	ScheduledSeconds float64 `json:"scheduled_seconds" api:"required"`
 	// The number of seconds units.
 	SecondsUnits float64 `json:"seconds_units" api:"required"`
@@ -1402,6 +1421,8 @@ type OeeTrendPeriod struct {
 		MeasurementStatus       respjson.Field
 		NotScheduledSeconds     respjson.Field
 		OeePct                  respjson.Field
+		OperatingTimeSeconds    respjson.Field
+		OverrunSeconds          respjson.Field
 		PerformancePct          respjson.Field
 		QualityPct              respjson.Field
 		RunTimeSeconds          respjson.Field
