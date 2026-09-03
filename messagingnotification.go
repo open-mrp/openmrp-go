@@ -231,7 +231,8 @@ type Notification struct {
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
 	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered".
-	Category NotificationCategory `json:"category" api:"required"`
+	Category    NotificationCategory `json:"category" api:"required"`
+	ChangeCount int64                `json:"change_count" api:"required"`
 	// Creation timestamp.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// When the notification was dismissed.
@@ -275,6 +276,7 @@ type Notification struct {
 		ID          respjson.Field
 		Body        respjson.Field
 		Category    respjson.Field
+		ChangeCount respjson.Field
 		CreatedAt   respjson.Field
 		DismissedAt respjson.Field
 		Object      respjson.Field
