@@ -1198,7 +1198,7 @@ type OeeDepartment struct {
 	GoodUnits float64 `json:"good_units" api:"required"`
 	// Whether availability was measured from logged downtime or estimated from
 	// runtime. A department with no logged downtime computes as perfectly available,
-	// so an estimate is labelled rather than presented as a measurement.
+	// so an estimate is labeled rather than presented as a measurement.
 	//
 	// Any of "measured", "estimated".
 	MeasurementStatus OeeDepartmentMeasurementStatus `json:"measurement_status" api:"required"`
@@ -1275,7 +1275,7 @@ func (r *OeeDepartment) UnmarshalJSON(data []byte) error {
 
 // Whether availability was measured from logged downtime or estimated from
 // runtime. A department with no logged downtime computes as perfectly available,
-// so an estimate is labelled rather than presented as a measurement.
+// so an estimate is labeled rather than presented as a measurement.
 type OeeDepartmentMeasurementStatus string
 
 const (

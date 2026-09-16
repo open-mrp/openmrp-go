@@ -583,12 +583,12 @@ type CreateConversationRequestParam struct {
 	// "production_schedule_item_policy", "child_account", "unit_group",
 	// "unit_group_unit", "consumption", "customer_product_line_access", "customer",
 	// "frequently_ordered_product", "priority", "delivery", "delivery_line",
-	// "sales_order", "location", "location_type", "lot", "email_log", "email_domain",
-	// "email_inbox", "email_sender", "portal_domain", "dns_record",
-	// "inventory_change_log", "invoice", "invoice_summary", "invoice_line",
-	// "invoice_allocation", "invoice_for_payment", "shipment", "shipment_summary",
-	// "shipment_line", "shipping_case", "shipping_case_label_url", "settlement",
-	// "settlement_summary", "role_permission", "registration_flow",
+	// "delivery_related", "sales_order", "location", "location_type", "lot",
+	// "email_log", "email_domain", "email_inbox", "email_sender", "portal_domain",
+	// "dns_record", "inventory_change_log", "invoice", "invoice_summary",
+	// "invoice_line", "invoice_allocation", "invoice_for_payment", "shipment",
+	// "shipment_summary", "shipment_line", "shipping_case", "shipping_case_label_url",
+	// "settlement", "settlement_summary", "role_permission", "registration_flow",
 	// "registration_flow_option", "transaction", "transaction_summary",
 	// "transaction_method", "transaction_type", "transaction_allocation",
 	// "usage_item", "account_usage_response", "subscription_info",
@@ -605,31 +605,33 @@ type CreateConversationRequestParam struct {
 	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
 	// "material", "supplier_material", "part", "permission_group", "permission",
 	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "supplier", "supplier_summary",
-	// "receivable_entry", "receiving_order", "receiving_order_line", "email_contact",
-	// "allocation_entry", "open_credit_entry", "volume_discount",
-	// "volume_discount_tier", "analyze_deliveries_response",
-	// "analyze_manufacturing_response", "analyze_manufacturing_batch_response",
-	// "analyze_quarterly_orders_response", "analyze_new_customers_response",
-	// "analyze_demand_forecast_response", "analyze_oee_response",
-	// "analyze_oee_trend_response", "analyze_schedule_attainment_response",
-	// "catalog_product_line", "catalog_category", "catalog_product",
-	// "catalog_property", "catalog_attribute", "dc_location", "edi_run",
-	// "inventory_item", "analyze_weeks_of_sales_response",
+	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
+	// "receivable_entry", "receiving_order", "receiving_order_line",
+	// "receiving_order_totals", "receiving_order_stage_total",
+	// "receiving_order_related", "email_contact", "allocation_entry",
+	// "open_credit_entry", "volume_discount", "volume_discount_tier",
+	// "analyze_deliveries_response", "analyze_manufacturing_response",
+	// "analyze_manufacturing_batch_response", "analyze_quarterly_orders_response",
+	// "analyze_new_customers_response", "analyze_demand_forecast_response",
+	// "analyze_oee_response", "analyze_oee_trend_response",
+	// "analyze_schedule_attainment_response", "catalog_product_line",
+	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
+	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
 	// "created_by", "message", "account_photo_upload_result",
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
-	// "check_duplicate_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "check_duplicate_result", "item_costs", "item_trends", "reconciled_item_result",
+	// "skipped_item_result", "reconcile_error_result", "item_trend_point",
+	// "tenancy_pending_registration", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -810,6 +812,7 @@ const (
 	CreateConversationRequestTopicResourceTypePriority                             CreateConversationRequestTopicResourceType = "priority"
 	CreateConversationRequestTopicResourceTypeDelivery                             CreateConversationRequestTopicResourceType = "delivery"
 	CreateConversationRequestTopicResourceTypeDeliveryLine                         CreateConversationRequestTopicResourceType = "delivery_line"
+	CreateConversationRequestTopicResourceTypeDeliveryRelated                      CreateConversationRequestTopicResourceType = "delivery_related"
 	CreateConversationRequestTopicResourceTypeSalesOrder                           CreateConversationRequestTopicResourceType = "sales_order"
 	CreateConversationRequestTopicResourceTypeLocation                             CreateConversationRequestTopicResourceType = "location"
 	CreateConversationRequestTopicResourceTypeLocationType                         CreateConversationRequestTopicResourceType = "location_type"
@@ -889,11 +892,14 @@ const (
 	CreateConversationRequestTopicResourceTypeMap                                  CreateConversationRequestTopicResourceType = "map"
 	CreateConversationRequestTopicResourceTypePurchaseOrder                        CreateConversationRequestTopicResourceType = "purchase_order"
 	CreateConversationRequestTopicResourceTypePurchaseOrderLine                    CreateConversationRequestTopicResourceType = "purchase_order_line"
+	CreateConversationRequestTopicResourceTypePurchaseOrderRelated                 CreateConversationRequestTopicResourceType = "purchase_order_related"
 	CreateConversationRequestTopicResourceTypeSupplier                             CreateConversationRequestTopicResourceType = "supplier"
-	CreateConversationRequestTopicResourceTypeSupplierSummary                      CreateConversationRequestTopicResourceType = "supplier_summary"
 	CreateConversationRequestTopicResourceTypeReceivableEntry                      CreateConversationRequestTopicResourceType = "receivable_entry"
 	CreateConversationRequestTopicResourceTypeReceivingOrder                       CreateConversationRequestTopicResourceType = "receiving_order"
 	CreateConversationRequestTopicResourceTypeReceivingOrderLine                   CreateConversationRequestTopicResourceType = "receiving_order_line"
+	CreateConversationRequestTopicResourceTypeReceivingOrderTotals                 CreateConversationRequestTopicResourceType = "receiving_order_totals"
+	CreateConversationRequestTopicResourceTypeReceivingOrderStageTotal             CreateConversationRequestTopicResourceType = "receiving_order_stage_total"
+	CreateConversationRequestTopicResourceTypeReceivingOrderRelated                CreateConversationRequestTopicResourceType = "receiving_order_related"
 	CreateConversationRequestTopicResourceTypeEmailContact                         CreateConversationRequestTopicResourceType = "email_contact"
 	CreateConversationRequestTopicResourceTypeAllocationEntry                      CreateConversationRequestTopicResourceType = "allocation_entry"
 	CreateConversationRequestTopicResourceTypeOpenCreditEntry                      CreateConversationRequestTopicResourceType = "open_credit_entry"
@@ -935,6 +941,11 @@ const (
 	CreateConversationRequestTopicResourceTypeUserPhotoURL                         CreateConversationRequestTopicResourceType = "user_photo_url"
 	CreateConversationRequestTopicResourceTypeBatchLot                             CreateConversationRequestTopicResourceType = "batch_lot"
 	CreateConversationRequestTopicResourceTypeCheckDuplicateResult                 CreateConversationRequestTopicResourceType = "check_duplicate_result"
+	CreateConversationRequestTopicResourceTypeItemCosts                            CreateConversationRequestTopicResourceType = "item_costs"
+	CreateConversationRequestTopicResourceTypeItemTrends                           CreateConversationRequestTopicResourceType = "item_trends"
+	CreateConversationRequestTopicResourceTypeReconciledItemResult                 CreateConversationRequestTopicResourceType = "reconciled_item_result"
+	CreateConversationRequestTopicResourceTypeSkippedItemResult                    CreateConversationRequestTopicResourceType = "skipped_item_result"
+	CreateConversationRequestTopicResourceTypeReconcileErrorResult                 CreateConversationRequestTopicResourceType = "reconcile_error_result"
 	CreateConversationRequestTopicResourceTypeItemTrendPoint                       CreateConversationRequestTopicResourceType = "item_trend_point"
 	CreateConversationRequestTopicResourceTypeTenancyPendingRegistration           CreateConversationRequestTopicResourceType = "tenancy_pending_registration"
 	CreateConversationRequestTopicResourceTypeInvoiceAllocationEntry               CreateConversationRequestTopicResourceType = "invoice_allocation_entry"
@@ -1862,12 +1873,12 @@ type MessagingConversationListParams struct {
 	// "production_schedule_item_policy", "child_account", "unit_group",
 	// "unit_group_unit", "consumption", "customer_product_line_access", "customer",
 	// "frequently_ordered_product", "priority", "delivery", "delivery_line",
-	// "sales_order", "location", "location_type", "lot", "email_log", "email_domain",
-	// "email_inbox", "email_sender", "portal_domain", "dns_record",
-	// "inventory_change_log", "invoice", "invoice_summary", "invoice_line",
-	// "invoice_allocation", "invoice_for_payment", "shipment", "shipment_summary",
-	// "shipment_line", "shipping_case", "shipping_case_label_url", "settlement",
-	// "settlement_summary", "role_permission", "registration_flow",
+	// "delivery_related", "sales_order", "location", "location_type", "lot",
+	// "email_log", "email_domain", "email_inbox", "email_sender", "portal_domain",
+	// "dns_record", "inventory_change_log", "invoice", "invoice_summary",
+	// "invoice_line", "invoice_allocation", "invoice_for_payment", "shipment",
+	// "shipment_summary", "shipment_line", "shipping_case", "shipping_case_label_url",
+	// "settlement", "settlement_summary", "role_permission", "registration_flow",
 	// "registration_flow_option", "transaction", "transaction_summary",
 	// "transaction_method", "transaction_type", "transaction_allocation",
 	// "usage_item", "account_usage_response", "subscription_info",
@@ -1884,31 +1895,33 @@ type MessagingConversationListParams struct {
 	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
 	// "material", "supplier_material", "part", "permission_group", "permission",
 	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "supplier", "supplier_summary",
-	// "receivable_entry", "receiving_order", "receiving_order_line", "email_contact",
-	// "allocation_entry", "open_credit_entry", "volume_discount",
-	// "volume_discount_tier", "analyze_deliveries_response",
-	// "analyze_manufacturing_response", "analyze_manufacturing_batch_response",
-	// "analyze_quarterly_orders_response", "analyze_new_customers_response",
-	// "analyze_demand_forecast_response", "analyze_oee_response",
-	// "analyze_oee_trend_response", "analyze_schedule_attainment_response",
-	// "catalog_product_line", "catalog_category", "catalog_product",
-	// "catalog_property", "catalog_attribute", "dc_location", "edi_run",
-	// "inventory_item", "analyze_weeks_of_sales_response",
+	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
+	// "receivable_entry", "receiving_order", "receiving_order_line",
+	// "receiving_order_totals", "receiving_order_stage_total",
+	// "receiving_order_related", "email_contact", "allocation_entry",
+	// "open_credit_entry", "volume_discount", "volume_discount_tier",
+	// "analyze_deliveries_response", "analyze_manufacturing_response",
+	// "analyze_manufacturing_batch_response", "analyze_quarterly_orders_response",
+	// "analyze_new_customers_response", "analyze_demand_forecast_response",
+	// "analyze_oee_response", "analyze_oee_trend_response",
+	// "analyze_schedule_attainment_response", "catalog_product_line",
+	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
+	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
 	// "created_by", "message", "account_photo_upload_result",
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
-	// "check_duplicate_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "check_duplicate_result", "item_costs", "item_trends", "reconciled_item_result",
+	// "skipped_item_result", "reconcile_error_result", "item_trend_point",
+	// "tenancy_pending_registration", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -2115,6 +2128,7 @@ const (
 	MessagingConversationListParamsTopicResourceTypePriority                             MessagingConversationListParamsTopicResourceType = "priority"
 	MessagingConversationListParamsTopicResourceTypeDelivery                             MessagingConversationListParamsTopicResourceType = "delivery"
 	MessagingConversationListParamsTopicResourceTypeDeliveryLine                         MessagingConversationListParamsTopicResourceType = "delivery_line"
+	MessagingConversationListParamsTopicResourceTypeDeliveryRelated                      MessagingConversationListParamsTopicResourceType = "delivery_related"
 	MessagingConversationListParamsTopicResourceTypeSalesOrder                           MessagingConversationListParamsTopicResourceType = "sales_order"
 	MessagingConversationListParamsTopicResourceTypeLocation                             MessagingConversationListParamsTopicResourceType = "location"
 	MessagingConversationListParamsTopicResourceTypeLocationType                         MessagingConversationListParamsTopicResourceType = "location_type"
@@ -2194,11 +2208,14 @@ const (
 	MessagingConversationListParamsTopicResourceTypeMap                                  MessagingConversationListParamsTopicResourceType = "map"
 	MessagingConversationListParamsTopicResourceTypePurchaseOrder                        MessagingConversationListParamsTopicResourceType = "purchase_order"
 	MessagingConversationListParamsTopicResourceTypePurchaseOrderLine                    MessagingConversationListParamsTopicResourceType = "purchase_order_line"
+	MessagingConversationListParamsTopicResourceTypePurchaseOrderRelated                 MessagingConversationListParamsTopicResourceType = "purchase_order_related"
 	MessagingConversationListParamsTopicResourceTypeSupplier                             MessagingConversationListParamsTopicResourceType = "supplier"
-	MessagingConversationListParamsTopicResourceTypeSupplierSummary                      MessagingConversationListParamsTopicResourceType = "supplier_summary"
 	MessagingConversationListParamsTopicResourceTypeReceivableEntry                      MessagingConversationListParamsTopicResourceType = "receivable_entry"
 	MessagingConversationListParamsTopicResourceTypeReceivingOrder                       MessagingConversationListParamsTopicResourceType = "receiving_order"
 	MessagingConversationListParamsTopicResourceTypeReceivingOrderLine                   MessagingConversationListParamsTopicResourceType = "receiving_order_line"
+	MessagingConversationListParamsTopicResourceTypeReceivingOrderTotals                 MessagingConversationListParamsTopicResourceType = "receiving_order_totals"
+	MessagingConversationListParamsTopicResourceTypeReceivingOrderStageTotal             MessagingConversationListParamsTopicResourceType = "receiving_order_stage_total"
+	MessagingConversationListParamsTopicResourceTypeReceivingOrderRelated                MessagingConversationListParamsTopicResourceType = "receiving_order_related"
 	MessagingConversationListParamsTopicResourceTypeEmailContact                         MessagingConversationListParamsTopicResourceType = "email_contact"
 	MessagingConversationListParamsTopicResourceTypeAllocationEntry                      MessagingConversationListParamsTopicResourceType = "allocation_entry"
 	MessagingConversationListParamsTopicResourceTypeOpenCreditEntry                      MessagingConversationListParamsTopicResourceType = "open_credit_entry"
@@ -2240,6 +2257,11 @@ const (
 	MessagingConversationListParamsTopicResourceTypeUserPhotoURL                         MessagingConversationListParamsTopicResourceType = "user_photo_url"
 	MessagingConversationListParamsTopicResourceTypeBatchLot                             MessagingConversationListParamsTopicResourceType = "batch_lot"
 	MessagingConversationListParamsTopicResourceTypeCheckDuplicateResult                 MessagingConversationListParamsTopicResourceType = "check_duplicate_result"
+	MessagingConversationListParamsTopicResourceTypeItemCosts                            MessagingConversationListParamsTopicResourceType = "item_costs"
+	MessagingConversationListParamsTopicResourceTypeItemTrends                           MessagingConversationListParamsTopicResourceType = "item_trends"
+	MessagingConversationListParamsTopicResourceTypeReconciledItemResult                 MessagingConversationListParamsTopicResourceType = "reconciled_item_result"
+	MessagingConversationListParamsTopicResourceTypeSkippedItemResult                    MessagingConversationListParamsTopicResourceType = "skipped_item_result"
+	MessagingConversationListParamsTopicResourceTypeReconcileErrorResult                 MessagingConversationListParamsTopicResourceType = "reconcile_error_result"
 	MessagingConversationListParamsTopicResourceTypeItemTrendPoint                       MessagingConversationListParamsTopicResourceType = "item_trend_point"
 	MessagingConversationListParamsTopicResourceTypeTenancyPendingRegistration           MessagingConversationListParamsTopicResourceType = "tenancy_pending_registration"
 	MessagingConversationListParamsTopicResourceTypeInvoiceAllocationEntry               MessagingConversationListParamsTopicResourceType = "invoice_allocation_entry"

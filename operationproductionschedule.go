@@ -237,7 +237,7 @@ func (r *OperationProductionScheduleService) GetFinishedPolicies(ctx context.Con
 // lines are where that pooling is undone, against each finished SKU's own stock
 // position, its own orders, and the hours the rest of the factory has that week.
 //
-// Levelled, not merely allocated. Work that does not fit a week moves to the next
+// Leveled, not merely allocated. Work that does not fit a week moves to the next
 // one rather than being dropped, so the plan never asks the second stage for more
 // hours than it has. Two things bound it, and they are reported separately in the
 // schedule's diagnostics because they call for opposite responses: a SKU held back
@@ -315,7 +315,7 @@ type GenerateProductionScheduleRequestParam struct {
 	HorizonWeeks param.Opt[int64] `json:"horizon_weeks,omitzero"`
 	// Human-readable label for the version, such as the week it was cut for.
 	//
-	// Purely for recognising the version in a list; versions are numbered
+	// Purely for recognizing the version in a list; versions are numbered
 	// automatically and the number is what identifies them.
 	Name param.Opt[string] `json:"name,omitzero"`
 	// The instant to plan against, which is what stock, demand history and active
@@ -2053,8 +2053,8 @@ type ScheduleDiagnostics struct {
 	// introduces.
 	//
 	// Calibrated from measured production against `average_inputs_added`, so the
-	// modelled changeover lands on the time the floor actually reports rather than on
-	// a fixed allowance.
+	// modeled changeover lands on the time the floor actually reports rather than on a
+	// fixed allowance.
 	ChangeoverSlopeMinutes float64 `json:"changeover_slope_minutes" api:"required"`
 	// Machines the constraint department contributed to this solve.
 	ConstraintMachineCount int64 `json:"constraint_machine_count" api:"required"`
@@ -2155,7 +2155,7 @@ type ScheduleFinishingDiagnostics struct {
 	// Finished goods that wanted building across the whole horizon and never had
 	// greige to build from.
 	GreigeStarvedSKUs []string `json:"greige_starved_skus" api:"required"`
-	// Finished goods with no measured finishing rate, which cannot be levelled because
+	// Finished goods with no measured finishing rate, which cannot be leveled because
 	// the hours they cost are unknown.
 	ItemsWithoutRunRate []string `json:"items_without_run_rate" api:"required"`
 	// How many finishing lines the plan holds.

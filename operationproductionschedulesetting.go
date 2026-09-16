@@ -120,7 +120,7 @@ type ProductionScheduleSettings struct {
 	CapacityHeadroomPct float64 `json:"capacity_headroom_pct" api:"required"`
 	// Typical changeover duration.
 	//
-	// Changeover time is modelled as rising with the number of new inputs a product
+	// Changeover time is modeled as rising with the number of new inputs a product
 	// introduces, between the minimum and maximum below. The slope is calibrated from
 	// production history so the model reproduces this average across the transitions
 	// actually observed, which is why the value belongs at the changeover time the
@@ -432,7 +432,7 @@ type UpdateProductionScheduleSettingsRequestParam struct {
 	CapacityHeadroomPct float64 `json:"capacity_headroom_pct" api:"required"`
 	// Typical changeover duration.
 	//
-	// Changeover time is modelled as rising with the number of new inputs a product
+	// Changeover time is modeled as rising with the number of new inputs a product
 	// introduces, between the minimum and maximum below. The slope is calibrated from
 	// production history so the model reproduces this average across the transitions
 	// actually observed; set it to the changeover time the floor typically reports

@@ -87,8 +87,8 @@ type OperationPickLineUpdateParams struct {
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
 	//
-	// Any of "sales_order_line", "sales_order_line.product", "quantity",
-	// "quantity.unit", "ordered_quantity", "ordered_quantity.unit".
+	// Any of "sales_order_line", "sales_order_line.product", "quantity.unit",
+	// "ordered_quantity.unit".
 	Include []string `query:"include,omitzero" json:"-"`
 	// Request to update a pick line's picked quantity.
 	UpdatePickLineRequest UpdatePickLineRequestParam

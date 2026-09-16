@@ -163,7 +163,7 @@ type CreateProductionScheduleLineRequestParam struct {
 	// Machine hours the campaign will take.
 	//
 	// Left unset, it is estimated from the rate this version was solved with for this
-	// item, so the week's utilisation still reflects the added work. An item the
+	// item, so the week's utilization still reflects the added work. An item the
 	// version holds no policy for estimates to zero.
 	RunHours param.Opt[float64] `json:"run_hours,omitzero"`
 	// Why the campaign was added.
@@ -263,7 +263,7 @@ type ProductionScheduleLine struct {
 	//
 	// Any of "production_schedule_line".
 	Object ProductionScheduleLineObject `json:"object" api:"required"`
-	// Modelled changeover time before the campaign.
+	// Modeled changeover time before the campaign.
 	PlannedChangeoverMinutes float64 `json:"planned_changeover_minutes" api:"required"`
 	// Units in one lot, which is the batch size the week is released to the floor in.
 	PlannedLotUnits float64 `json:"planned_lot_units" api:"required"`

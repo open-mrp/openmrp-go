@@ -288,12 +288,17 @@ const (
 type ReconcileErrorResult struct {
 	// Error message.
 	Error string `json:"error" api:"required"`
-	// Item SKU.
-	SKU string `json:"sku" api:"required"`
+	// Entity is a polymorphic reference to any resource in the system.
+	Item Entity `json:"item" api:"required"`
+	// Resource type identifier.
+	//
+	// Any of "reconcile_error_result".
+	Object ReconcileErrorResultObject `json:"object" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Error       respjson.Field
-		SKU         respjson.Field
+		Item        respjson.Field
+		Object      respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -305,25 +310,42 @@ func (r *ReconcileErrorResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Resource type identifier.
+type ReconcileErrorResultObject string
+
+const (
+	ReconcileErrorResultObjectReconcileErrorResult ReconcileErrorResultObject = "reconcile_error_result"
+)
+
 // An item whose on-hand quantity was successfully reconciled.
 //
 // Both quantities are expressed in the item's own base unit, not in the unit
-// submitted with the request.
+// submitted with the request, and both arrive with that unit resolved.
 type ReconciledItemResult struct {
-	// Item ID.
-	ItemID string `json:"item_id" api:"required"`
-	// Quantity after the reconciliation, as a decimal string.
-	NewQuantity string `json:"new_quantity" api:"required" format:"decimal"`
-	// Quantity before the reconciliation, as a decimal string.
-	PreviousQuantity string `json:"previous_quantity" api:"required" format:"decimal"`
-	// Item SKU.
-	SKU string `json:"sku" api:"required"`
+	// Entity is a polymorphic reference to any resource in the system.
+	Item Entity `json:"item" api:"required"`
+	// An amount calculated on demand rather than stored.
+	//
+	// The same shape as a quantity minus the ID, because nothing was written: it is
+	// derived per request, such as a total rolled up across invoiced lines for one
+	// analysis.
+	NewQuantity ComputedQuantity `json:"new_quantity" api:"required"`
+	// Resource type identifier.
+	//
+	// Any of "reconciled_item_result".
+	Object ReconciledItemResultObject `json:"object" api:"required"`
+	// An amount calculated on demand rather than stored.
+	//
+	// The same shape as a quantity minus the ID, because nothing was written: it is
+	// derived per request, such as a total rolled up across invoiced lines for one
+	// analysis.
+	PreviousQuantity ComputedQuantity `json:"previous_quantity" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ItemID           respjson.Field
+		Item             respjson.Field
 		NewQuantity      respjson.Field
+		Object           respjson.Field
 		PreviousQuantity respjson.Field
-		SKU              respjson.Field
 		ExtraFields      map[string]respjson.Field
 		raw              string
 	} `json:"-"`
@@ -335,14 +357,30 @@ func (r *ReconciledItemResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Resource type identifier.
+type ReconciledItemResultObject string
+
+const (
+	ReconciledItemResultObjectReconciledItemResult ReconciledItemResultObject = "reconciled_item_result"
+)
+
 // A submitted row that was skipped rather than reconciled.
+//
+// A skipped row is reported by the SKU it was submitted under rather than as an
+// item reference, because the usual reason to skip one is that no item carries
+// that SKU — there is nothing to point at.
 type SkippedItemResult struct {
+	// Resource type identifier.
+	//
+	// Any of "skipped_item_result".
+	Object SkippedItemResultObject `json:"object" api:"required"`
 	// Human-readable reason the item was skipped.
 	Reason string `json:"reason" api:"required"`
-	// Item SKU.
+	// Item SKU, as submitted.
 	SKU string `json:"sku" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		Object      respjson.Field
 		Reason      respjson.Field
 		SKU         respjson.Field
 		ExtraFields map[string]respjson.Field
@@ -355,6 +393,13 @@ func (r SkippedItemResult) RawJSON() string { return r.JSON.raw }
 func (r *SkippedItemResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Resource type identifier.
+type SkippedItemResultObject string
+
+const (
+	SkippedItemResultObjectSkippedItemResult SkippedItemResultObject = "skipped_item_result"
+)
 
 type CatalogItemActionBulkReconcileParams struct {
 	// Request to reconcile inventory for many items at once.
