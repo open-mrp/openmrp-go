@@ -232,6 +232,10 @@ type OperationInventoryChangeLogListParams struct {
 	// Which fields are matched against the term varies by endpoint.
 	Q param.Opt[string] `query:"q,omitzero" json:"-"`
 	// Restricts results to change logs created on or after this timestamp.
+	//
+	// Defaults to 90 days before `ends_at`, or before now when `ends_at` is also
+	// omitted, unless `item_ids` is given — an item's history is returned whole. Pass
+	// an earlier timestamp to search further back.
 	StartsAt param.Opt[time.Time] `query:"starts_at,omitzero" format:"date-time" json:"-"`
 	// Restricts results to these action types.
 	//

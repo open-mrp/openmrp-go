@@ -943,6 +943,10 @@ type CoreAuditEventListParams struct {
 	// Only applied when paired with `root_resource_type`.
 	RootResourceID param.Opt[string] `query:"root_resource_id,omitzero" json:"-"`
 	// Restricts results to audit events on or after this timestamp.
+	//
+	// Defaults to 24 hours before `ends_at`, or before now when `ends_at` is also
+	// omitted, unless `resource_ids` or the root resource is given — a record's
+	// history is returned whole. Pass an earlier timestamp to search further back.
 	StartsAt param.Opt[time.Time] `query:"starts_at,omitzero" format:"date-time" json:"-"`
 	// Filter by the mutation type recorded on the event.
 	//

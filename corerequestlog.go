@@ -443,6 +443,9 @@ type CoreRequestLogListParams struct {
 	// Which fields are matched against the term varies by endpoint.
 	Q param.Opt[string] `query:"q,omitzero" json:"-"`
 	// Restricts results to request logs on or after this timestamp.
+	//
+	// Defaults to 24 hours before `ends_at`, or before now when `ends_at` is also
+	// omitted. Pass an earlier timestamp to search further back.
 	StartsAt param.Opt[time.Time] `query:"starts_at,omitzero" format:"date-time" json:"-"`
 	// Filter by the _acting_ account: the account the actor belongs to (the log's
 	// `account.id`).

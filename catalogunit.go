@@ -104,7 +104,9 @@ func (r *CatalogUnitService) List(ctx context.Context, query CatalogUnitListPara
 // Deletes a unit owned by your account.
 //
 // The unit is also removed from every unit group it belongs to. System units,
-// which are shared across all accounts, cannot be deleted.
+// which are shared across all accounts, cannot be deleted, and neither can a unit
+// that is a unit group's base unit — change the group's base unit or delete the
+// group first — or one that any quantity or price is recorded in.
 //
 // This endpoint requires the permission: `units:delete`.
 func (r *CatalogUnitService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *CatalogUnitDeleteResponse, err error) {
