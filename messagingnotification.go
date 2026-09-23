@@ -230,7 +230,8 @@ type Notification struct {
 	//   - `customer.registered`: a buyer completed registration on your customer portal.
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
-	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered".
+	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
+	// "production_run.updated".
 	Category    NotificationCategory `json:"category" api:"required"`
 	ChangeCount int64                `json:"change_count" api:"required"`
 	// Creation timestamp.
@@ -315,14 +316,15 @@ func (r *Notification) UnmarshalJSON(data []byte) error {
 type NotificationCategory string
 
 const (
-	NotificationCategoryChatMessage        NotificationCategory = "chat.message"
-	NotificationCategoryChatMention        NotificationCategory = "chat.mention"
-	NotificationCategoryChatAdded          NotificationCategory = "chat.added"
-	NotificationCategoryOrderUpdated       NotificationCategory = "order.updated"
-	NotificationCategoryAgentRunCompleted  NotificationCategory = "agent.run_completed"
-	NotificationCategoryAgentAlert         NotificationCategory = "agent.alert"
-	NotificationCategorySystemBroadcast    NotificationCategory = "system.broadcast"
-	NotificationCategoryCustomerRegistered NotificationCategory = "customer.registered"
+	NotificationCategoryChatMessage          NotificationCategory = "chat.message"
+	NotificationCategoryChatMention          NotificationCategory = "chat.mention"
+	NotificationCategoryChatAdded            NotificationCategory = "chat.added"
+	NotificationCategoryOrderUpdated         NotificationCategory = "order.updated"
+	NotificationCategoryAgentRunCompleted    NotificationCategory = "agent.run_completed"
+	NotificationCategoryAgentAlert           NotificationCategory = "agent.alert"
+	NotificationCategorySystemBroadcast      NotificationCategory = "system.broadcast"
+	NotificationCategoryCustomerRegistered   NotificationCategory = "customer.registered"
+	NotificationCategoryProductionRunUpdated NotificationCategory = "production_run.updated"
 )
 
 // Resource type identifier.
@@ -566,7 +568,8 @@ type SendNotificationRequestParam struct {
 	// where it fits.
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
-	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered".
+	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
+	// "production_run.updated".
 	Category SendNotificationRequestCategory `json:"category,omitzero" api:"required"`
 	// Who a notification is aimed at.
 	Target NotificationTargetInputParam `json:"target,omitzero" api:"required"`
@@ -704,14 +707,15 @@ func (r *SendNotificationRequestParam) UnmarshalJSON(data []byte) error {
 type SendNotificationRequestCategory string
 
 const (
-	SendNotificationRequestCategoryChatMessage        SendNotificationRequestCategory = "chat.message"
-	SendNotificationRequestCategoryChatMention        SendNotificationRequestCategory = "chat.mention"
-	SendNotificationRequestCategoryChatAdded          SendNotificationRequestCategory = "chat.added"
-	SendNotificationRequestCategoryOrderUpdated       SendNotificationRequestCategory = "order.updated"
-	SendNotificationRequestCategoryAgentRunCompleted  SendNotificationRequestCategory = "agent.run_completed"
-	SendNotificationRequestCategoryAgentAlert         SendNotificationRequestCategory = "agent.alert"
-	SendNotificationRequestCategorySystemBroadcast    SendNotificationRequestCategory = "system.broadcast"
-	SendNotificationRequestCategoryCustomerRegistered SendNotificationRequestCategory = "customer.registered"
+	SendNotificationRequestCategoryChatMessage          SendNotificationRequestCategory = "chat.message"
+	SendNotificationRequestCategoryChatMention          SendNotificationRequestCategory = "chat.mention"
+	SendNotificationRequestCategoryChatAdded            SendNotificationRequestCategory = "chat.added"
+	SendNotificationRequestCategoryOrderUpdated         SendNotificationRequestCategory = "order.updated"
+	SendNotificationRequestCategoryAgentRunCompleted    SendNotificationRequestCategory = "agent.run_completed"
+	SendNotificationRequestCategoryAgentAlert           SendNotificationRequestCategory = "agent.alert"
+	SendNotificationRequestCategorySystemBroadcast      SendNotificationRequestCategory = "system.broadcast"
+	SendNotificationRequestCategoryCustomerRegistered   SendNotificationRequestCategory = "customer.registered"
+	SendNotificationRequestCategoryProductionRunUpdated SendNotificationRequestCategory = "production_run.updated"
 )
 
 // Type of the resource the notification should link to, such as `sales_order`.
@@ -1104,7 +1108,8 @@ type MessagingNotificationListParams struct {
 	// `order.updated`.
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
-	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered".
+	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
+	// "production_run.updated".
 	Category MessagingNotificationListParamsCategory `query:"category,omitzero" json:"-"`
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
@@ -1148,14 +1153,15 @@ func (r MessagingNotificationListParams) URLQuery() (v url.Values, err error) {
 type MessagingNotificationListParamsCategory string
 
 const (
-	MessagingNotificationListParamsCategoryChatMessage        MessagingNotificationListParamsCategory = "chat.message"
-	MessagingNotificationListParamsCategoryChatMention        MessagingNotificationListParamsCategory = "chat.mention"
-	MessagingNotificationListParamsCategoryChatAdded          MessagingNotificationListParamsCategory = "chat.added"
-	MessagingNotificationListParamsCategoryOrderUpdated       MessagingNotificationListParamsCategory = "order.updated"
-	MessagingNotificationListParamsCategoryAgentRunCompleted  MessagingNotificationListParamsCategory = "agent.run_completed"
-	MessagingNotificationListParamsCategoryAgentAlert         MessagingNotificationListParamsCategory = "agent.alert"
-	MessagingNotificationListParamsCategorySystemBroadcast    MessagingNotificationListParamsCategory = "system.broadcast"
-	MessagingNotificationListParamsCategoryCustomerRegistered MessagingNotificationListParamsCategory = "customer.registered"
+	MessagingNotificationListParamsCategoryChatMessage          MessagingNotificationListParamsCategory = "chat.message"
+	MessagingNotificationListParamsCategoryChatMention          MessagingNotificationListParamsCategory = "chat.mention"
+	MessagingNotificationListParamsCategoryChatAdded            MessagingNotificationListParamsCategory = "chat.added"
+	MessagingNotificationListParamsCategoryOrderUpdated         MessagingNotificationListParamsCategory = "order.updated"
+	MessagingNotificationListParamsCategoryAgentRunCompleted    MessagingNotificationListParamsCategory = "agent.run_completed"
+	MessagingNotificationListParamsCategoryAgentAlert           MessagingNotificationListParamsCategory = "agent.alert"
+	MessagingNotificationListParamsCategorySystemBroadcast      MessagingNotificationListParamsCategory = "system.broadcast"
+	MessagingNotificationListParamsCategoryCustomerRegistered   MessagingNotificationListParamsCategory = "customer.registered"
+	MessagingNotificationListParamsCategoryProductionRunUpdated MessagingNotificationListParamsCategory = "production_run.updated"
 )
 
 // Return only notifications in this lifecycle state.
