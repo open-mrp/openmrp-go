@@ -35,7 +35,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/open-mrp/openmrp-go@v0.24.1'
+go get -u 'github.com/open-mrp/openmrp-go@v0.25.0'
 ```
 
 <!-- x-release-please-end -->
