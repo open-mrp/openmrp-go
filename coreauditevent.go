@@ -189,8 +189,8 @@ type AuditEvent struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -435,9 +435,10 @@ const (
 	AuditEventResourceTypeDeliveryBacklogBucket                AuditEventResourceType = "delivery_backlog_bucket"
 	AuditEventResourceTypeDeliveryLatenessBucket               AuditEventResourceType = "delivery_lateness_bucket"
 	AuditEventResourceTypeDeliveryBreakdown                    AuditEventResourceType = "delivery_breakdown"
-	AuditEventResourceTypeAnalyzeSalesBreakdownResponse        AuditEventResourceType = "analyze_sales_breakdown_response"
+	AuditEventResourceTypeAnalyzeSalesSummaryResponse          AuditEventResourceType = "analyze_sales_summary_response"
 	AuditEventResourceTypeSalesTotals                          AuditEventResourceType = "sales_totals"
 	AuditEventResourceTypeSalesBreakdown                       AuditEventResourceType = "sales_breakdown"
+	AuditEventResourceTypeSalesInvoice                         AuditEventResourceType = "sales_invoice"
 	AuditEventResourceTypeScheduleOrderCoverage                AuditEventResourceType = "schedule_order_coverage"
 	AuditEventResourceTypeScheduleOrderCoverageLine            AuditEventResourceType = "schedule_order_coverage_line"
 	AuditEventResourceTypeScheduleDeviationType                AuditEventResourceType = "schedule_deviation_type"
@@ -805,8 +806,8 @@ type ListObjectType struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -1018,8 +1019,8 @@ type CoreAuditEventListParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -1124,8 +1125,8 @@ type CoreAuditEventListParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -1334,9 +1335,10 @@ const (
 	CoreAuditEventListParamsRootResourceTypeDeliveryBacklogBucket                CoreAuditEventListParamsRootResourceType = "delivery_backlog_bucket"
 	CoreAuditEventListParamsRootResourceTypeDeliveryLatenessBucket               CoreAuditEventListParamsRootResourceType = "delivery_lateness_bucket"
 	CoreAuditEventListParamsRootResourceTypeDeliveryBreakdown                    CoreAuditEventListParamsRootResourceType = "delivery_breakdown"
-	CoreAuditEventListParamsRootResourceTypeAnalyzeSalesBreakdownResponse        CoreAuditEventListParamsRootResourceType = "analyze_sales_breakdown_response"
+	CoreAuditEventListParamsRootResourceTypeAnalyzeSalesSummaryResponse          CoreAuditEventListParamsRootResourceType = "analyze_sales_summary_response"
 	CoreAuditEventListParamsRootResourceTypeSalesTotals                          CoreAuditEventListParamsRootResourceType = "sales_totals"
 	CoreAuditEventListParamsRootResourceTypeSalesBreakdown                       CoreAuditEventListParamsRootResourceType = "sales_breakdown"
+	CoreAuditEventListParamsRootResourceTypeSalesInvoice                         CoreAuditEventListParamsRootResourceType = "sales_invoice"
 	CoreAuditEventListParamsRootResourceTypeScheduleOrderCoverage                CoreAuditEventListParamsRootResourceType = "schedule_order_coverage"
 	CoreAuditEventListParamsRootResourceTypeScheduleOrderCoverageLine            CoreAuditEventListParamsRootResourceType = "schedule_order_coverage_line"
 	CoreAuditEventListParamsRootResourceTypeScheduleDeviationType                CoreAuditEventListParamsRootResourceType = "schedule_deviation_type"

@@ -575,8 +575,8 @@ type CreateConversationRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -790,9 +790,10 @@ const (
 	CreateConversationRequestTopicResourceTypeDeliveryBacklogBucket                CreateConversationRequestTopicResourceType = "delivery_backlog_bucket"
 	CreateConversationRequestTopicResourceTypeDeliveryLatenessBucket               CreateConversationRequestTopicResourceType = "delivery_lateness_bucket"
 	CreateConversationRequestTopicResourceTypeDeliveryBreakdown                    CreateConversationRequestTopicResourceType = "delivery_breakdown"
-	CreateConversationRequestTopicResourceTypeAnalyzeSalesBreakdownResponse        CreateConversationRequestTopicResourceType = "analyze_sales_breakdown_response"
+	CreateConversationRequestTopicResourceTypeAnalyzeSalesSummaryResponse          CreateConversationRequestTopicResourceType = "analyze_sales_summary_response"
 	CreateConversationRequestTopicResourceTypeSalesTotals                          CreateConversationRequestTopicResourceType = "sales_totals"
 	CreateConversationRequestTopicResourceTypeSalesBreakdown                       CreateConversationRequestTopicResourceType = "sales_breakdown"
+	CreateConversationRequestTopicResourceTypeSalesInvoice                         CreateConversationRequestTopicResourceType = "sales_invoice"
 	CreateConversationRequestTopicResourceTypeScheduleOrderCoverage                CreateConversationRequestTopicResourceType = "schedule_order_coverage"
 	CreateConversationRequestTopicResourceTypeScheduleOrderCoverageLine            CreateConversationRequestTopicResourceType = "schedule_order_coverage_line"
 	CreateConversationRequestTopicResourceTypeScheduleDeviationType                CreateConversationRequestTopicResourceType = "schedule_deviation_type"
@@ -1865,8 +1866,8 @@ type MessagingConversationListParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -2106,9 +2107,10 @@ const (
 	MessagingConversationListParamsTopicResourceTypeDeliveryBacklogBucket                MessagingConversationListParamsTopicResourceType = "delivery_backlog_bucket"
 	MessagingConversationListParamsTopicResourceTypeDeliveryLatenessBucket               MessagingConversationListParamsTopicResourceType = "delivery_lateness_bucket"
 	MessagingConversationListParamsTopicResourceTypeDeliveryBreakdown                    MessagingConversationListParamsTopicResourceType = "delivery_breakdown"
-	MessagingConversationListParamsTopicResourceTypeAnalyzeSalesBreakdownResponse        MessagingConversationListParamsTopicResourceType = "analyze_sales_breakdown_response"
+	MessagingConversationListParamsTopicResourceTypeAnalyzeSalesSummaryResponse          MessagingConversationListParamsTopicResourceType = "analyze_sales_summary_response"
 	MessagingConversationListParamsTopicResourceTypeSalesTotals                          MessagingConversationListParamsTopicResourceType = "sales_totals"
 	MessagingConversationListParamsTopicResourceTypeSalesBreakdown                       MessagingConversationListParamsTopicResourceType = "sales_breakdown"
+	MessagingConversationListParamsTopicResourceTypeSalesInvoice                         MessagingConversationListParamsTopicResourceType = "sales_invoice"
 	MessagingConversationListParamsTopicResourceTypeScheduleOrderCoverage                MessagingConversationListParamsTopicResourceType = "schedule_order_coverage"
 	MessagingConversationListParamsTopicResourceTypeScheduleOrderCoverageLine            MessagingConversationListParamsTopicResourceType = "schedule_order_coverage_line"
 	MessagingConversationListParamsTopicResourceTypeScheduleDeviationType                MessagingConversationListParamsTopicResourceType = "schedule_deviation_type"

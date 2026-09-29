@@ -284,8 +284,8 @@ type SendMessageRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -532,9 +532,10 @@ const (
 	SendMessageRequestLinkResourceTypeDeliveryBacklogBucket                SendMessageRequestLinkResourceType = "delivery_backlog_bucket"
 	SendMessageRequestLinkResourceTypeDeliveryLatenessBucket               SendMessageRequestLinkResourceType = "delivery_lateness_bucket"
 	SendMessageRequestLinkResourceTypeDeliveryBreakdown                    SendMessageRequestLinkResourceType = "delivery_breakdown"
-	SendMessageRequestLinkResourceTypeAnalyzeSalesBreakdownResponse        SendMessageRequestLinkResourceType = "analyze_sales_breakdown_response"
+	SendMessageRequestLinkResourceTypeAnalyzeSalesSummaryResponse          SendMessageRequestLinkResourceType = "analyze_sales_summary_response"
 	SendMessageRequestLinkResourceTypeSalesTotals                          SendMessageRequestLinkResourceType = "sales_totals"
 	SendMessageRequestLinkResourceTypeSalesBreakdown                       SendMessageRequestLinkResourceType = "sales_breakdown"
+	SendMessageRequestLinkResourceTypeSalesInvoice                         SendMessageRequestLinkResourceType = "sales_invoice"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverage                SendMessageRequestLinkResourceType = "schedule_order_coverage"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverageLine            SendMessageRequestLinkResourceType = "schedule_order_coverage_line"
 	SendMessageRequestLinkResourceTypeScheduleDeviationType                SendMessageRequestLinkResourceType = "schedule_deviation_type"

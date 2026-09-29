@@ -619,8 +619,8 @@ type SendNotificationRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -843,9 +843,10 @@ const (
 	SendNotificationRequestLinkResourceTypeDeliveryBacklogBucket                SendNotificationRequestLinkResourceType = "delivery_backlog_bucket"
 	SendNotificationRequestLinkResourceTypeDeliveryLatenessBucket               SendNotificationRequestLinkResourceType = "delivery_lateness_bucket"
 	SendNotificationRequestLinkResourceTypeDeliveryBreakdown                    SendNotificationRequestLinkResourceType = "delivery_breakdown"
-	SendNotificationRequestLinkResourceTypeAnalyzeSalesBreakdownResponse        SendNotificationRequestLinkResourceType = "analyze_sales_breakdown_response"
+	SendNotificationRequestLinkResourceTypeAnalyzeSalesSummaryResponse          SendNotificationRequestLinkResourceType = "analyze_sales_summary_response"
 	SendNotificationRequestLinkResourceTypeSalesTotals                          SendNotificationRequestLinkResourceType = "sales_totals"
 	SendNotificationRequestLinkResourceTypeSalesBreakdown                       SendNotificationRequestLinkResourceType = "sales_breakdown"
+	SendNotificationRequestLinkResourceTypeSalesInvoice                         SendNotificationRequestLinkResourceType = "sales_invoice"
 	SendNotificationRequestLinkResourceTypeScheduleOrderCoverage                SendNotificationRequestLinkResourceType = "schedule_order_coverage"
 	SendNotificationRequestLinkResourceTypeScheduleOrderCoverageLine            SendNotificationRequestLinkResourceType = "schedule_order_coverage_line"
 	SendNotificationRequestLinkResourceTypeScheduleDeviationType                SendNotificationRequestLinkResourceType = "schedule_deviation_type"

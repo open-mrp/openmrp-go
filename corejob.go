@@ -141,8 +141,8 @@ type Job struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -384,9 +384,10 @@ const (
 	JobResourceTypeDeliveryBacklogBucket                JobResourceType = "delivery_backlog_bucket"
 	JobResourceTypeDeliveryLatenessBucket               JobResourceType = "delivery_lateness_bucket"
 	JobResourceTypeDeliveryBreakdown                    JobResourceType = "delivery_breakdown"
-	JobResourceTypeAnalyzeSalesBreakdownResponse        JobResourceType = "analyze_sales_breakdown_response"
+	JobResourceTypeAnalyzeSalesSummaryResponse          JobResourceType = "analyze_sales_summary_response"
 	JobResourceTypeSalesTotals                          JobResourceType = "sales_totals"
 	JobResourceTypeSalesBreakdown                       JobResourceType = "sales_breakdown"
+	JobResourceTypeSalesInvoice                         JobResourceType = "sales_invoice"
 	JobResourceTypeScheduleOrderCoverage                JobResourceType = "schedule_order_coverage"
 	JobResourceTypeScheduleOrderCoverageLine            JobResourceType = "schedule_order_coverage_line"
 	JobResourceTypeScheduleDeviationType                JobResourceType = "schedule_deviation_type"

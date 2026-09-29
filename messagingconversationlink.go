@@ -136,8 +136,8 @@ type AddConversationLinkRequestParam struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -333,9 +333,10 @@ const (
 	AddConversationLinkRequestResourceTypeDeliveryBacklogBucket                AddConversationLinkRequestResourceType = "delivery_backlog_bucket"
 	AddConversationLinkRequestResourceTypeDeliveryLatenessBucket               AddConversationLinkRequestResourceType = "delivery_lateness_bucket"
 	AddConversationLinkRequestResourceTypeDeliveryBreakdown                    AddConversationLinkRequestResourceType = "delivery_breakdown"
-	AddConversationLinkRequestResourceTypeAnalyzeSalesBreakdownResponse        AddConversationLinkRequestResourceType = "analyze_sales_breakdown_response"
+	AddConversationLinkRequestResourceTypeAnalyzeSalesSummaryResponse          AddConversationLinkRequestResourceType = "analyze_sales_summary_response"
 	AddConversationLinkRequestResourceTypeSalesTotals                          AddConversationLinkRequestResourceType = "sales_totals"
 	AddConversationLinkRequestResourceTypeSalesBreakdown                       AddConversationLinkRequestResourceType = "sales_breakdown"
+	AddConversationLinkRequestResourceTypeSalesInvoice                         AddConversationLinkRequestResourceType = "sales_invoice"
 	AddConversationLinkRequestResourceTypeScheduleOrderCoverage                AddConversationLinkRequestResourceType = "schedule_order_coverage"
 	AddConversationLinkRequestResourceTypeScheduleOrderCoverageLine            AddConversationLinkRequestResourceType = "schedule_order_coverage_line"
 	AddConversationLinkRequestResourceTypeScheduleDeviationType                AddConversationLinkRequestResourceType = "schedule_deviation_type"

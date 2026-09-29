@@ -141,8 +141,8 @@ type Entity struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
@@ -356,9 +356,10 @@ const (
 	EntityTypeDeliveryBacklogBucket                EntityType = "delivery_backlog_bucket"
 	EntityTypeDeliveryLatenessBucket               EntityType = "delivery_lateness_bucket"
 	EntityTypeDeliveryBreakdown                    EntityType = "delivery_breakdown"
-	EntityTypeAnalyzeSalesBreakdownResponse        EntityType = "analyze_sales_breakdown_response"
+	EntityTypeAnalyzeSalesSummaryResponse          EntityType = "analyze_sales_summary_response"
 	EntityTypeSalesTotals                          EntityType = "sales_totals"
 	EntityTypeSalesBreakdown                       EntityType = "sales_breakdown"
+	EntityTypeSalesInvoice                         EntityType = "sales_invoice"
 	EntityTypeScheduleOrderCoverage                EntityType = "schedule_order_coverage"
 	EntityTypeScheduleOrderCoverageLine            EntityType = "schedule_order_coverage_line"
 	EntityTypeScheduleDeviationType                EntityType = "schedule_deviation_type"
@@ -663,8 +664,8 @@ type CoreGetSearchParams struct {
 	// "production_schedule_item_setting", "fulfillment_recommendation",
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_breakdown_response", "sales_totals", "sales_breakdown",
-	// "schedule_order_coverage", "schedule_order_coverage_line",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
 	// "schedule_deviation_type", "schedule_at_risk_order",
 	// "production_schedule_finished_policy", "production_schedule_finishing_line",
 	// "production_schedule_week_release", "production_schedule_week_release_preview",
