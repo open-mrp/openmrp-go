@@ -285,23 +285,23 @@ type SendMessageRequestParam struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "schedule_order_coverage", "schedule_order_coverage_line",
-	// "schedule_deviation_type", "schedule_at_risk_order",
-	// "production_schedule_finished_policy", "production_schedule_finishing_line",
-	// "production_schedule_week_release", "production_schedule_week_release_preview",
-	// "production_schedule_item_policy", "child_account", "unit_group",
-	// "unit_group_unit", "consumption", "customer_product_line_access", "customer",
-	// "frequently_ordered_product", "priority", "delivery", "delivery_line",
-	// "delivery_related", "sales_order", "location", "location_type", "lot",
-	// "email_log", "email_domain", "email_inbox", "email_sender", "portal_domain",
-	// "dns_record", "inventory_change_log", "invoice", "invoice_summary",
-	// "invoice_line", "invoice_allocation", "invoice_for_payment", "shipment",
-	// "shipment_summary", "shipment_line", "shipping_case", "shipping_case_label_url",
-	// "settlement", "settlement_summary", "role_permission", "registration_flow",
-	// "registration_flow_option", "transaction", "transaction_summary",
-	// "transaction_method", "transaction_type", "transaction_allocation",
-	// "usage_item", "account_usage_response", "subscription_info",
-	// "billing_portal_session_response", "switch_plan_response",
+	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "schedule_order_coverage_line", "schedule_deviation_type",
+	// "schedule_at_risk_order", "production_schedule_finished_policy",
+	// "production_schedule_finishing_line", "production_schedule_week_release",
+	// "production_schedule_week_release_preview", "production_schedule_item_policy",
+	// "child_account", "unit_group", "unit_group_unit", "consumption",
+	// "customer_product_line_access", "customer", "frequently_ordered_product",
+	// "priority", "delivery", "delivery_line", "delivery_related", "sales_order",
+	// "location", "location_type", "lot", "email_log", "email_domain", "email_inbox",
+	// "email_sender", "portal_domain", "dns_record", "inventory_change_log",
+	// "invoice", "invoice_summary", "invoice_line", "invoice_allocation",
+	// "invoice_for_payment", "shipment", "shipment_summary", "shipment_line",
+	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
+	// "role_permission", "registration_flow", "registration_flow_option",
+	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
+	// "transaction_allocation", "usage_item", "account_usage_response",
+	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
 	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
 	// "webhook_response", "address_suggestion", "address_components",
 	// "address_details_result", "validated_address", "plan_limit",
@@ -536,6 +536,7 @@ const (
 	SendMessageRequestLinkResourceTypeSalesTotals                          SendMessageRequestLinkResourceType = "sales_totals"
 	SendMessageRequestLinkResourceTypeSalesBreakdown                       SendMessageRequestLinkResourceType = "sales_breakdown"
 	SendMessageRequestLinkResourceTypeSalesInvoice                         SendMessageRequestLinkResourceType = "sales_invoice"
+	SendMessageRequestLinkResourceTypeNewCustomer                          SendMessageRequestLinkResourceType = "new_customer"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverage                SendMessageRequestLinkResourceType = "schedule_order_coverage"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverageLine            SendMessageRequestLinkResourceType = "schedule_order_coverage_line"
 	SendMessageRequestLinkResourceTypeScheduleDeviationType                SendMessageRequestLinkResourceType = "schedule_deviation_type"
