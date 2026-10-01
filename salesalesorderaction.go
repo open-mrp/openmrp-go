@@ -291,6 +291,46 @@ func (r *IssueSalesOrderRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// A single page of resources, together with the metadata needed to page through
+// the rest of the result set.
+type ListProductionRunBatchSummary struct {
+	// Resources in this page.
+	Data []ProductionRunBatchSummary `json:"data" api:"required"`
+	// Resource type identifier.
+	//
+	// Any of "list".
+	Object ListProductionRunBatchSummaryObject `json:"object" api:"required"`
+	// PageInfo describes where the current page sits within a paginated result set and
+	// how to move to the adjacent pages.
+	//
+	// Page a list by following the URLs below rather than assembling cursors yourself.
+	// For a top-level list endpoint the URL repeats the original request's query
+	// string with only the cursor swapped, so following it preserves the same filters,
+	// search term, and page size.
+	PageInfo PageInfo `json:"page_info" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Data        respjson.Field
+		Object      respjson.Field
+		PageInfo    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r ListProductionRunBatchSummary) RawJSON() string { return r.JSON.raw }
+func (r *ListProductionRunBatchSummary) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Resource type identifier.
+type ListProductionRunBatchSummaryObject string
+
+const (
+	ListProductionRunBatchSummaryObjectList ListProductionRunBatchSummaryObject = "list"
+)
+
 // A production run: the group of shop-floor batches that are executed together,
 // tracked from the first batch scan through to completion.
 type ProductionRun struct {
@@ -298,6 +338,9 @@ type ProductionRun struct {
 	ID string `json:"id" api:"required"`
 	// Number of batches currently recorded against this run.
 	BatchCount int64 `json:"batch_count" api:"required"`
+	// A single page of resources, together with the metadata needed to page through
+	// the rest of the result set.
+	BatchSummaries ListProductionRunBatchSummary `json:"batch_summaries" api:"required"`
 	// Time the run finished production.
 	//
 	// Set automatically once every batch in the run has been scanned or deleted. From
@@ -331,6 +374,7 @@ type ProductionRun struct {
 	JSON struct {
 		ID              respjson.Field
 		BatchCount      respjson.Field
+		BatchSummaries  respjson.Field
 		CompletedAt     respjson.Field
 		CreatedAt       respjson.Field
 		Number          respjson.Field
@@ -354,6 +398,45 @@ type ProductionRunObject string
 
 const (
 	ProductionRunObjectProductionRun ProductionRunObject = "production_run"
+)
+
+// The batches of one item, counted in one unit, that a production run holds.
+type ProductionRunBatchSummary struct {
+	// Number of batches in the total.
+	BatchCount int64 `json:"batch_count" api:"required"`
+	// Entity is a polymorphic reference to any resource in the system.
+	Item Entity `json:"item" api:"required"`
+	// Resource type identifier.
+	//
+	// Any of "production_run_batch_summary".
+	Object ProductionRunBatchSummaryObject `json:"object" api:"required"`
+	// Total quantity of the batches, as a decimal string.
+	QuantityValue string `json:"quantity_value" api:"required" format:"decimal"`
+	// Entity is a polymorphic reference to any resource in the system.
+	Unit Entity `json:"unit" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		BatchCount    respjson.Field
+		Item          respjson.Field
+		Object        respjson.Field
+		QuantityValue respjson.Field
+		Unit          respjson.Field
+		ExtraFields   map[string]respjson.Field
+		raw           string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r ProductionRunBatchSummary) RawJSON() string { return r.JSON.raw }
+func (r *ProductionRunBatchSummary) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Resource type identifier.
+type ProductionRunBatchSummaryObject string
+
+const (
+	ProductionRunBatchSummaryObjectProductionRunBatchSummary ProductionRunBatchSummaryObject = "production_run_batch_summary"
 )
 
 // Request to preview the ship-by date a set of commitment inputs would produce.

@@ -1319,7 +1319,9 @@ Params Types:
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CommitmentQuoteStep">CommitmentQuoteStep</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListProductionRunBatchSummary">ListProductionRunBatchSummary</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ProductionRun">ProductionRun</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ProductionRunBatchSummary">ProductionRunBatchSummary</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#QuoteSalesOrderCommitmentResponse">QuoteSalesOrderCommitmentResponse</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#QuoteSalesOrderFreightResponse">QuoteSalesOrderFreightResponse</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SaleSalesOrderActionBulkDeleteResponse">SaleSalesOrderActionBulkDeleteResponse</a>
