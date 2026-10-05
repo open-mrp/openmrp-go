@@ -217,14 +217,16 @@ const (
 
 // Request to partially update a department.
 type UpdateDepartmentRequestParam struct {
+	// Free-form notes about the department.
+	//
+	// Send `null` to clear.
+	Notes param.Opt[string] `json:"notes,omitzero"`
 	// ID of the location where this department operates.
 	LocationID param.Opt[string] `json:"location_id,omitzero"`
 	// Display name of the department.
 	//
 	// Must be unique within your account; maximum 255 characters.
 	Name param.Opt[string] `json:"name,omitzero"`
-	// Free-form notes about the department.
-	Notes param.Opt[string] `json:"notes,omitzero"`
 	// A rate, expressed as a value together with the units of its numerator and
 	// denominator (for example, `25.00` `$` per `hr`).
 	LaborRate DepartmentRateInputParam `json:"labor_rate,omitzero"`

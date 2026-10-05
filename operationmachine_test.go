@@ -117,9 +117,10 @@ func TestOperationMachineListWithOptionalParams(t *testing.T) {
 		option.WithBearerToken("My Bearer Token"),
 	)
 	_, err := client.Operations.Machines.List(context.TODO(), openmrp.OperationMachineListParams{
-		Cursor: openmrp.String("cursor"),
-		Limit:  openmrp.Int(0),
-		Q:      openmrp.String("q"),
+		Cursor:  openmrp.String("cursor"),
+		Include: []string{"department"},
+		Limit:   openmrp.Int(0),
+		Q:       openmrp.String("q"),
 	})
 	if err != nil {
 		var apierr *openmrp.Error

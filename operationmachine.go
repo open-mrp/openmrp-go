@@ -148,12 +148,14 @@ func (r *CreateMachineRequestParam) UnmarshalJSON(data []byte) error {
 
 // Request to partially update a machine.
 type UpdateMachineRequestParam struct {
+	// Free-form notes about the machine.
+	//
+	// Send `null` to clear.
+	Notes param.Opt[string] `json:"notes,omitzero"`
 	// Display name of the machine.
 	//
 	// Must be unique within your account; maximum 255 characters.
 	Name param.Opt[string] `json:"name,omitzero"`
-	// Free-form notes about the machine.
-	Notes param.Opt[string] `json:"notes,omitzero"`
 	// Serial number of the machine.
 	//
 	// Maximum 255 characters.
@@ -268,6 +270,11 @@ type OperationMachineListParams struct {
 	//
 	// Which fields are matched against the term varies by endpoint.
 	Q param.Opt[string] `query:"q,omitzero" json:"-"`
+	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
+	// `null`.
+	//
+	// Any of "department".
+	Include []string `query:"include,omitzero" json:"-"`
 	paramObj
 }
 
