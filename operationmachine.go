@@ -89,7 +89,8 @@ func (r *OperationMachineService) Update(ctx context.Context, id string, params 
 // Returns a paginated list of machines in your account, most recently created
 // first.
 //
-// The search term matches the machine name.
+// The search term matches the start of the machine name, and a machine named
+// exactly the term is listed first.
 //
 // This endpoint requires the permission: `machines:read`.
 func (r *OperationMachineService) List(ctx context.Context, query OperationMachineListParams, opts ...option.RequestOption) (res *ListMachine, err error) {
