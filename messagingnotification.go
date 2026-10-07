@@ -662,7 +662,7 @@ type SendNotificationRequestParam struct {
 	// "analyze_oee_response", "analyze_oee_trend_response",
 	// "analyze_schedule_attainment_response", "catalog_product_line",
 	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
-	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
+	// "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
@@ -985,8 +985,6 @@ const (
 	SendNotificationRequestLinkResourceTypeCatalogProduct                       SendNotificationRequestLinkResourceType = "catalog_product"
 	SendNotificationRequestLinkResourceTypeCatalogProperty                      SendNotificationRequestLinkResourceType = "catalog_property"
 	SendNotificationRequestLinkResourceTypeCatalogAttribute                     SendNotificationRequestLinkResourceType = "catalog_attribute"
-	SendNotificationRequestLinkResourceTypeDcLocation                           SendNotificationRequestLinkResourceType = "dc_location"
-	SendNotificationRequestLinkResourceTypeEdiRun                               SendNotificationRequestLinkResourceType = "edi_run"
 	SendNotificationRequestLinkResourceTypeInventoryItem                        SendNotificationRequestLinkResourceType = "inventory_item"
 	SendNotificationRequestLinkResourceTypeAnalyzeWeeksOfSalesResponse          SendNotificationRequestLinkResourceType = "analyze_weeks_of_sales_response"
 	SendNotificationRequestLinkResourceTypeBulkReconcileItemsResponse           SendNotificationRequestLinkResourceType = "bulk_reconcile_items_response"

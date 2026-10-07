@@ -183,7 +183,7 @@ type Entity struct {
 	// "analyze_oee_response", "analyze_oee_trend_response",
 	// "analyze_schedule_attainment_response", "catalog_product_line",
 	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
-	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
+	// "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
@@ -496,8 +496,6 @@ const (
 	EntityTypeCatalogProduct                       EntityType = "catalog_product"
 	EntityTypeCatalogProperty                      EntityType = "catalog_property"
 	EntityTypeCatalogAttribute                     EntityType = "catalog_attribute"
-	EntityTypeDcLocation                           EntityType = "dc_location"
-	EntityTypeEdiRun                               EntityType = "edi_run"
 	EntityTypeInventoryItem                        EntityType = "inventory_item"
 	EntityTypeAnalyzeWeeksOfSalesResponse          EntityType = "analyze_weeks_of_sales_response"
 	EntityTypeBulkReconcileItemsResponse           EntityType = "bulk_reconcile_items_response"
@@ -723,7 +721,7 @@ type CoreGetSearchParams struct {
 	// "analyze_oee_response", "analyze_oee_trend_response",
 	// "analyze_schedule_attainment_response", "catalog_product_line",
 	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
-	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
+	// "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",

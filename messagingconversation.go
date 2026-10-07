@@ -674,7 +674,7 @@ type CreateConversationRequestParam struct {
 	// "analyze_oee_response", "analyze_oee_trend_response",
 	// "analyze_schedule_attainment_response", "catalog_product_line",
 	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
-	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
+	// "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
@@ -987,8 +987,6 @@ const (
 	CreateConversationRequestTopicResourceTypeCatalogProduct                       CreateConversationRequestTopicResourceType = "catalog_product"
 	CreateConversationRequestTopicResourceTypeCatalogProperty                      CreateConversationRequestTopicResourceType = "catalog_property"
 	CreateConversationRequestTopicResourceTypeCatalogAttribute                     CreateConversationRequestTopicResourceType = "catalog_attribute"
-	CreateConversationRequestTopicResourceTypeDcLocation                           CreateConversationRequestTopicResourceType = "dc_location"
-	CreateConversationRequestTopicResourceTypeEdiRun                               CreateConversationRequestTopicResourceType = "edi_run"
 	CreateConversationRequestTopicResourceTypeInventoryItem                        CreateConversationRequestTopicResourceType = "inventory_item"
 	CreateConversationRequestTopicResourceTypeAnalyzeWeeksOfSalesResponse          CreateConversationRequestTopicResourceType = "analyze_weeks_of_sales_response"
 	CreateConversationRequestTopicResourceTypeBulkReconcileItemsResponse           CreateConversationRequestTopicResourceType = "bulk_reconcile_items_response"
@@ -1983,7 +1981,7 @@ type MessagingConversationListParams struct {
 	// "analyze_oee_response", "analyze_oee_trend_response",
 	// "analyze_schedule_attainment_response", "catalog_product_line",
 	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
-	// "dc_location", "edi_run", "inventory_item", "analyze_weeks_of_sales_response",
+	// "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
 	// "sys_property_value", "territory", "tenancy", "checkout_session",
 	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
@@ -2322,8 +2320,6 @@ const (
 	MessagingConversationListParamsTopicResourceTypeCatalogProduct                       MessagingConversationListParamsTopicResourceType = "catalog_product"
 	MessagingConversationListParamsTopicResourceTypeCatalogProperty                      MessagingConversationListParamsTopicResourceType = "catalog_property"
 	MessagingConversationListParamsTopicResourceTypeCatalogAttribute                     MessagingConversationListParamsTopicResourceType = "catalog_attribute"
-	MessagingConversationListParamsTopicResourceTypeDcLocation                           MessagingConversationListParamsTopicResourceType = "dc_location"
-	MessagingConversationListParamsTopicResourceTypeEdiRun                               MessagingConversationListParamsTopicResourceType = "edi_run"
 	MessagingConversationListParamsTopicResourceTypeInventoryItem                        MessagingConversationListParamsTopicResourceType = "inventory_item"
 	MessagingConversationListParamsTopicResourceTypeAnalyzeWeeksOfSalesResponse          MessagingConversationListParamsTopicResourceType = "analyze_weeks_of_sales_response"
 	MessagingConversationListParamsTopicResourceTypeBulkReconcileItemsResponse           MessagingConversationListParamsTopicResourceType = "bulk_reconcile_items_response"

@@ -392,11 +392,6 @@ type Customer struct {
 	// Values used to fill in a new sales order for this customer when the order does
 	// not supply its own.
 	Defaults CustomerDefaults `json:"defaults" api:"required"`
-	// Whether EDI (Electronic Data Interchange) is enabled for exchanging orders and
-	// documents with this customer.
-	//
-	// Any of "enabled", "disabled".
-	EdiStatus CustomerEdiStatus `json:"edi_status" api:"required"`
 	// Customer freight and carrier settings.
 	FreightPreferences CustomerFreightPreferences `json:"freight_preferences" api:"required"`
 	// The customer's business name, as shown throughout the app and on documents.
@@ -467,7 +462,6 @@ type Customer struct {
 		CreatedAt               respjson.Field
 		CreditLimit             respjson.Field
 		Defaults                respjson.Field
-		EdiStatus               respjson.Field
 		FreightPreferences      respjson.Field
 		Name                    respjson.Field
 		Note                    respjson.Field
@@ -509,15 +503,6 @@ type CustomerCommissionPolicy string
 const (
 	CustomerCommissionPolicyCommissionApplied CustomerCommissionPolicy = "commission_applied"
 	CustomerCommissionPolicyCommissionExempt  CustomerCommissionPolicy = "commission_exempt"
-)
-
-// Whether EDI (Electronic Data Interchange) is enabled for exchanging orders and
-// documents with this customer.
-type CustomerEdiStatus string
-
-const (
-	CustomerEdiStatusEnabled  CustomerEdiStatus = "enabled"
-	CustomerEdiStatusDisabled CustomerEdiStatus = "disabled"
 )
 
 // Resource type identifier.

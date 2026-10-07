@@ -246,11 +246,6 @@ type CreateCustomerRequestParam struct {
 	//
 	// Any of "low", "normal", "high".
 	DefaultPriority CreateCustomerRequestDefaultPriority `json:"default_priority,omitzero"`
-	// Whether EDI (Electronic Data Interchange) is enabled for exchanging orders and
-	// documents with this customer.
-	//
-	// Any of "enabled", "disabled".
-	EdiStatus CreateCustomerRequestEdiStatus `json:"edi_status,omitzero"`
 	// Whether this customer is billed for freight on their orders.
 	//
 	// - `free_freight`: the customer is not billed for freight.
@@ -325,15 +320,6 @@ const (
 	CreateCustomerRequestDefaultPriorityLow    CreateCustomerRequestDefaultPriority = "low"
 	CreateCustomerRequestDefaultPriorityNormal CreateCustomerRequestDefaultPriority = "normal"
 	CreateCustomerRequestDefaultPriorityHigh   CreateCustomerRequestDefaultPriority = "high"
-)
-
-// Whether EDI (Electronic Data Interchange) is enabled for exchanging orders and
-// documents with this customer.
-type CreateCustomerRequestEdiStatus string
-
-const (
-	CreateCustomerRequestEdiStatusEnabled  CreateCustomerRequestEdiStatus = "enabled"
-	CreateCustomerRequestEdiStatusDisabled CreateCustomerRequestEdiStatus = "disabled"
 )
 
 // Whether this customer is billed for freight on their orders.
@@ -567,11 +553,6 @@ type UpdateCustomerRequestParam struct {
 	//
 	// Any of "low", "normal", "high".
 	DefaultPriority UpdateCustomerRequestDefaultPriority `json:"default_priority,omitzero"`
-	// Whether EDI (Electronic Data Interchange) is enabled for exchanging orders and
-	// documents with this customer.
-	//
-	// Any of "enabled", "disabled".
-	EdiStatus UpdateCustomerRequestEdiStatus `json:"edi_status,omitzero"`
 	// Whether this customer is billed for freight on their orders.
 	//
 	// - `free_freight`: the customer is not billed for freight.
@@ -633,15 +614,6 @@ const (
 	UpdateCustomerRequestDefaultPriorityLow    UpdateCustomerRequestDefaultPriority = "low"
 	UpdateCustomerRequestDefaultPriorityNormal UpdateCustomerRequestDefaultPriority = "normal"
 	UpdateCustomerRequestDefaultPriorityHigh   UpdateCustomerRequestDefaultPriority = "high"
-)
-
-// Whether EDI (Electronic Data Interchange) is enabled for exchanging orders and
-// documents with this customer.
-type UpdateCustomerRequestEdiStatus string
-
-const (
-	UpdateCustomerRequestEdiStatusEnabled  UpdateCustomerRequestEdiStatus = "enabled"
-	UpdateCustomerRequestEdiStatusDisabled UpdateCustomerRequestEdiStatus = "disabled"
 )
 
 // Whether this customer is billed for freight on their orders.
