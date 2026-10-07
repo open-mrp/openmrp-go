@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"slices"
+	"time"
 
 	"github.com/open-mrp/openmrp-go/internal/apijson"
 	"github.com/open-mrp/openmrp-go/internal/apiquery"
@@ -101,6 +102,26 @@ func (r *MessagingMessageActionService) Reject(ctx context.Context, id string, b
 	return res, err
 }
 
+// Moves a message you scheduled to a new send time, optionally revising what it
+// says, and returns it.
+//
+// The message keeps its id and is sent once, at the new time; the time it had
+// before no longer applies. You can only reschedule a message you scheduled
+// yourself, and only until its send time arrives — once it is due, sent or
+// canceled the request fails.
+//
+// This endpoint requires the permission: `messaging:update`.
+func (r *MessagingMessageActionService) Reschedule(ctx context.Context, id string, params MessagingMessageActionRescheduleParams, opts ...option.RequestOption) (res *Message, err error) {
+	opts = slices.Concat(r.options, opts)
+	if id == "" {
+		err = errors.New("missing required id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("v1/messaging/messages/%s/actions/reschedule", url.PathEscape(id))
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
 // Request to approve a customer-reply draft and send it to the customer.
 //
 // The property ClientMessageID is required.
@@ -115,6 +136,27 @@ func (r ApproveSendDraftRequestParam) MarshalJSON() (data []byte, err error) {
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *ApproveSendDraftRequestParam) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Request to move a scheduled message to a new send time.
+//
+// The property ScheduledAt is required.
+type RescheduleMessageRequestParam struct {
+	// When the message should now be sent. Must be in the future.
+	ScheduledAt time.Time `json:"scheduled_at" api:"required" format:"date-time"`
+	// The revised message body, replacing what it said before.
+	//
+	// Leaving it out keeps the current body.
+	Body param.Opt[string] `json:"body,omitzero"`
+	paramObj
+}
+
+func (r RescheduleMessageRequestParam) MarshalJSON() (data []byte, err error) {
+	type shadow RescheduleMessageRequestParam
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *RescheduleMessageRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -184,6 +226,36 @@ type MessagingMessageActionRejectParams struct {
 // URLQuery serializes [MessagingMessageActionRejectParams]'s query parameters as
 // `url.Values`.
 func (r MessagingMessageActionRejectParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type MessagingMessageActionRescheduleParams struct {
+	// Request to move a scheduled message to a new send time.
+	RescheduleMessageRequest RescheduleMessageRequestParam
+	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
+	// `null`.
+	//
+	// Any of "sender", "author", "resource", "attachments", "attachments.resource",
+	// "conversation", "conversation.participants", "conversation.last_message",
+	// "reply_to", "reply_to.sender", "reply_to.author", "reply_to.attachments",
+	// "agent_run".
+	Include []string `query:"include,omitzero" json:"-"`
+	paramObj
+}
+
+func (r MessagingMessageActionRescheduleParams) MarshalJSON() (data []byte, err error) {
+	return shimjson.Marshal(r.RescheduleMessageRequest)
+}
+func (r *MessagingMessageActionRescheduleParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// URLQuery serializes [MessagingMessageActionRescheduleParams]'s query parameters
+// as `url.Values`.
+func (r MessagingMessageActionRescheduleParams) URLQuery() (v url.Values, err error) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,

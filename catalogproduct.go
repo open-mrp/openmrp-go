@@ -64,8 +64,11 @@ func (r *CatalogProductService) New(ctx context.Context, params CatalogProductNe
 
 // Returns a product by ID.
 //
-// This endpoint requires the permissions: `items:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `items:read`.
 func (r *CatalogProductService) Get(ctx context.Context, id string, query CatalogProductGetParams, opts ...option.RequestOption) (res *Product, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -108,8 +111,11 @@ func (r *CatalogProductService) Update(ctx context.Context, id string, params Ca
 // item; when it is supplied, products whose SKU matches are returned ahead of the
 // rest.
 //
-// This endpoint requires the permissions: `items:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `items:read`.
 func (r *CatalogProductService) List(ctx context.Context, query CatalogProductListParams, opts ...option.RequestOption) (res *ListProduct, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/products"
@@ -433,6 +439,14 @@ type UpdateProductRequestParam struct {
 	//
 	// Send `null` to clear.
 	Notes param.Opt[string] `json:"notes,omitzero"`
+	// ID of the item category to move the product to.
+	//
+	// The move is the one Change Item Category makes: the category has to be a product
+	// category and has to carry the properties of every attribute the product already
+	// has, and the product's rate units switch to the category's base unit while their
+	// numbers stay as they were. It is applied before the other fields in the request,
+	// so a `unit_price` sent alongside is written after it.
+	CategoryID param.Opt[string] `json:"category_id,omitzero"`
 	// New stock keeping unit code for the product's item.
 	//
 	// Must be unique within the account; the update fails with a conflict error if

@@ -60,7 +60,13 @@ func (r *SaleCustomerService) New(ctx context.Context, params SaleCustomerNewPar
 
 // Returns a customer by ID.
 //
-// This endpoint requires the permissions: `customers:read`, `suppliers:read`.
+// A customer or supplier portal retrieves only its own account; any other customer
+// is reported as not found.
+//
+// Acting in a supplier's account requires `suppliers:read` instead of the
+// permission this endpoint requires in your own account.
+//
+// This endpoint requires the permission: `customers:read`.
 func (r *SaleCustomerService) Get(ctx context.Context, id string, query SaleCustomerGetParams, opts ...option.RequestOption) (res *Customer, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {

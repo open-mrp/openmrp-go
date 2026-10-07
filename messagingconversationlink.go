@@ -137,7 +137,8 @@ type AddConversationLinkRequestParam struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -200,7 +201,10 @@ type AddConversationLinkRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	ResourceType AddConversationLinkRequestResourceType `json:"resource_type,omitzero" api:"required"`
 	paramObj
 }
@@ -338,6 +342,10 @@ const (
 	AddConversationLinkRequestResourceTypeSalesTotals                          AddConversationLinkRequestResourceType = "sales_totals"
 	AddConversationLinkRequestResourceTypeSalesBreakdown                       AddConversationLinkRequestResourceType = "sales_breakdown"
 	AddConversationLinkRequestResourceTypeSalesInvoice                         AddConversationLinkRequestResourceType = "sales_invoice"
+	AddConversationLinkRequestResourceTypeOpenOrdersSummary                    AddConversationLinkRequestResourceType = "open_orders_summary"
+	AddConversationLinkRequestResourceTypeOpenOrderProduct                     AddConversationLinkRequestResourceType = "open_order_product"
+	AddConversationLinkRequestResourceTypeOpenOrder                            AddConversationLinkRequestResourceType = "open_order"
+	AddConversationLinkRequestResourceTypeOpenOrderLine                        AddConversationLinkRequestResourceType = "open_order_line"
 	AddConversationLinkRequestResourceTypeNewCustomer                          AddConversationLinkRequestResourceType = "new_customer"
 	AddConversationLinkRequestResourceTypeScheduleOrderCoverage                AddConversationLinkRequestResourceType = "schedule_order_coverage"
 	AddConversationLinkRequestResourceTypeScheduleOrderCoverageLine            AddConversationLinkRequestResourceType = "schedule_order_coverage_line"
@@ -538,6 +546,12 @@ const (
 	AddConversationLinkRequestResourceTypePickRelated                          AddConversationLinkRequestResourceType = "pick_related"
 	AddConversationLinkRequestResourceTypePickTotals                           AddConversationLinkRequestResourceType = "pick_totals"
 	AddConversationLinkRequestResourceTypePickStageTotal                       AddConversationLinkRequestResourceType = "pick_stage_total"
+	AddConversationLinkRequestResourceTypeAnalyzeProductionCostsResponse       AddConversationLinkRequestResourceType = "analyze_production_costs_response"
+	AddConversationLinkRequestResourceTypeProductionCost                       AddConversationLinkRequestResourceType = "production_cost"
+	AddConversationLinkRequestResourceTypeProductionCostTotals                 AddConversationLinkRequestResourceType = "production_cost_totals"
+	AddConversationLinkRequestResourceTypeProductionCostDepartment             AddConversationLinkRequestResourceType = "production_cost_department"
+	AddConversationLinkRequestResourceTypeProductionCostCategory               AddConversationLinkRequestResourceType = "production_cost_category"
+	AddConversationLinkRequestResourceTypeProductionCostDepartmentCategory     AddConversationLinkRequestResourceType = "production_cost_department_category"
 )
 
 // A reference from a conversation to a business record it concerns, such as an

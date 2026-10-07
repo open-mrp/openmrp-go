@@ -906,6 +906,9 @@ type ProductionSchedule struct {
 	PublishedBy Actor `json:"published_by" api:"required"`
 	// The planning assumptions used, frozen at generation so the plan stays
 	// explainable after settings change.
+	//
+	// A cost among them, such as `changeover_labor_rate`, is null unless the caller
+	// holds `costs:read`; customer and supplier portal users never see it.
 	SettingsSnapshot map[string]any `json:"settings_snapshot" api:"required"`
 	// Version of the solver that produced the plan.
 	SolverVersion string `json:"solver_version" api:"required"`
@@ -1567,6 +1570,9 @@ type ProductionScheduleItemPolicy struct {
 	// Any of "make_to_stock", "make_to_order".
 	FulfillmentPolicy ProductionScheduleItemPolicyFulfillmentPolicy `json:"fulfillment_policy" api:"required"`
 	// Annual cost of holding one unit.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	HoldingCost float64 `json:"holding_cost" api:"required"`
 	// Entity is a polymorphic reference to any resource in the system.
 	Item Entity `json:"item" api:"required"`
@@ -1622,6 +1628,9 @@ type ProductionScheduleItemPolicy struct {
 	// How long one unit occupies the constraint.
 	SecondsPerUnit float64 `json:"seconds_per_unit" api:"required"`
 	// Cost of one changeover.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	SetupCost float64 `json:"setup_cost" api:"required"`
 	// Summed weekly variability of the finished goods this item becomes.
 	SigmaDownstreamSum float64 `json:"sigma_downstream_sum" api:"required"`
@@ -1638,6 +1647,9 @@ type ProductionScheduleItemPolicy struct {
 	// meaningful apart.
 	UnitAbbreviation string `json:"unit_abbreviation" api:"required"`
 	// Standard cost per unit.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	UnitCost float64 `json:"unit_cost" api:"required"`
 	// Last updated timestamp.
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`

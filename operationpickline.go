@@ -47,6 +47,9 @@ func NewOperationPickLineService(opts ...option.RequestOption) (r OperationPickL
 // Use this to record a short or partial pick; Pick Pick Line fills in the full
 // outstanding quantity instead.
 //
+// Returns a validation error if the line has already been packed, since its
+// quantity is what the shipment carries.
+//
 // This endpoint requires the permission: `picks:update`.
 func (r *OperationPickLineService) Update(ctx context.Context, id string, params OperationPickLineUpdateParams, opts ...option.RequestOption) (res *PickLine, err error) {
 	opts = slices.Concat(r.options, opts)

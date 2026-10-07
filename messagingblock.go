@@ -105,9 +105,30 @@ type AccountUser struct {
 	//
 	// Independent of the `sales_rep` role type, which still scopes analytics and hides
 	// cost. Users with the `sales_rep` role are always eligible.
+	//
+	// Null to customer and supplier portal users, like the rest of your commission
+	// settings.
 	IsCommissionEligible bool `json:"is_commission_eligible" api:"required"`
 	// When the user last accessed this account.
+	//
+	// Null to customer and supplier portal users: it is your own team's activity.
 	LastUsedAt time.Time `json:"last_used_at" api:"required" format:"date-time"`
+	// The notifications you send this user about the customer or supplier account they
+	// belong to.
+	//
+	// Set when the account you are acting in is a customer or supplier account you
+	// manage, and an empty list when none are enabled; turn them on and off with
+	// `preferences` on create and update. `null` for your own account's users, and
+	// where an account user is embedded in another resource.
+	//
+	//   - `order_acknowledgement`: the confirmation email sent when an order is placed
+	//     for the customer.
+	//   - `invoice`: invoice emails for the customer's orders.
+	//   - `purchase_order_submission`: a copy of each purchase order you submit to the
+	//     supplier.
+	//
+	// Any of "invoice", "order_acknowledgement", "purchase_order_submission".
+	NotificationTypes []string `json:"notification_types" api:"required"`
 	// Resource type identifier.
 	//
 	// Any of "account_user".
@@ -140,6 +161,7 @@ type AccountUser struct {
 		Department           respjson.Field
 		IsCommissionEligible respjson.Field
 		LastUsedAt           respjson.Field
+		NotificationTypes    respjson.Field
 		Object               respjson.Field
 		Role                 respjson.Field
 		Status               respjson.Field

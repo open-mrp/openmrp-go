@@ -45,6 +45,9 @@ func NewCoreActionService(opts ...option.RequestOption) (r CoreActionService) {
 // succeeds and nothing is sent; in that case a sales order or purchase order is
 // also left unmarked, while an invoice is still marked as sent.
 //
+// An `id` that is not one of the account's records of the given `type` answers
+// `404`.
+//
 // This endpoint requires the permissions: `invoices:read`, `sales_orders:read`,
 // `purchase_orders:read`.
 func (r *CoreActionService) EmailRecord(ctx context.Context, body CoreActionEmailRecordParams, opts ...option.RequestOption) (res *CoreActionEmailRecordResponse, err error) {

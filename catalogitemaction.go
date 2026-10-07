@@ -42,12 +42,21 @@ func NewCatalogItemActionService(opts ...option.RequestOption) (r CatalogItemAct
 // `reconcile_type` controls whether each quantity is added to the item's current
 // quantity (`addition`) or replaces it (`force`). The figure a `force` measures
 // against is what is on hand net of demand nothing has covered, the same basis the
-// single-item endpoint uses. The response reports each item as reconciled, skipped
-// (e.g. unknown SKU), or errored (e.g. unknown unit), so a problem with one item
-// does not fail the rest of the batch.
+// single-item endpoint uses. Each quantity is converted from its row's unit into
+// the item's base unit, and `previous_quantity` and `new_quantity` are reported in
+// that base unit. A SKU listed twice applies each row in turn.
 //
-// Each correction is written to the item's inventory audit trail as a user
-// correction, attributed to the caller.
+// The response reports each row as reconciled, skipped (unknown SKU), or errored
+// (unknown unit, or a unit outside the item's unit group), so a problem with one
+// row does not fail the rest. Rows are written in batches of 50, each in its own
+// transaction; a batch that cannot be written is rolled back whole and every row
+// in it is reported in `errors`, while the batches before and after it still
+// apply. Resubmit only the errored rows — in `addition` mode, resubmitting the
+// whole request would apply the reconciled rows twice.
+//
+// At most 1,000 rows per request, and a request body of at most 8 MB. Each
+// correction is written to the item's inventory audit trail as a user correction,
+// attributed to the caller.
 //
 // This endpoint requires the permission: `items:create`.
 func (r *CatalogItemActionService) BulkReconcile(ctx context.Context, body CatalogItemActionBulkReconcileParams, opts ...option.RequestOption) (res *BulkReconcileItemsResponse, err error) {
@@ -71,12 +80,14 @@ type BulkReconcileItemInputParam struct {
 	// Items whose SKU does not match an existing item are reported in the response's
 	// `skipped_items` rather than failing the request.
 	SKU string `json:"sku" api:"required"`
-	// Abbreviation of a unit available to your account (e.g. `kg`).
+	// Abbreviation of the unit `quantity` is counted in (e.g. `kg`), matched without
+	// regard to case.
 	//
-	// The unit is checked for existence only: the quantity is always recorded in the
-	// item's own base unit, so send figures already expressed in that unit. Rows
-	// naming an abbreviation that matches no built-in or account-defined unit are
-	// reported in the response's `errors`.
+	// It must be the item's base unit or another unit in its category's unit group;
+	// the quantity is converted from it into the base unit before it is applied, so
+	// `2 dz` against an item stocked in eaches reconciles 24. A row whose abbreviation
+	// matches no unit, or a unit outside the item's unit group, is reported in the
+	// response's `errors` and writes nothing.
 	Unit string `json:"unit" api:"required"`
 	paramObj
 }
@@ -93,7 +104,8 @@ func (r *BulkReconcileItemInputParam) UnmarshalJSON(data []byte) error {
 //
 // The properties Data, ReconcileType are required.
 type BulkReconcileItemsRequestParam struct {
-	// Items to reconcile.
+	// Items to reconcile, at most 1,000 rows per request. Split a larger count across
+	// requests.
 	Data []BulkReconcileItemInputParam `json:"data,omitzero" api:"required"`
 	// How each item's quantity is applied to its current quantity.
 	//

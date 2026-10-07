@@ -51,7 +51,8 @@ func NewSaleCustomerActionService(opts ...option.RequestOption) (r SaleCustomerA
 // none of those are copied over from the sources, and the sources' notification
 // recipients are discarded rather than transferred.
 //
-// This endpoint requires the permissions: `customers:update`, `customers:delete`.
+// This endpoint requires the permissions: `customers:update` and
+// `customers:delete`.
 func (r *SaleCustomerActionService) Merge(ctx context.Context, id string, params SaleCustomerActionMergeParams, opts ...option.RequestOption) (res *Customer, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {

@@ -67,7 +67,7 @@ func TestCatalogItemListWithOptionalParams(t *testing.T) {
 		StartsAt:          openmrp.Time(time.Now()),
 		SubassemblyFilter: openmrp.CatalogItemListParamsSubassemblyFilterAll,
 		SupplierID:        openmrp.String("supplier_id"),
-		Types:             []string{"string"},
+		Types:             []string{"product"},
 	})
 	if err != nil {
 		var apierr *openmrp.Error

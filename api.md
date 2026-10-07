@@ -438,6 +438,10 @@ Methods:
 
 ### Properties
 
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CreateItemCategoryPropertyRequestParam">CreateItemCategoryPropertyRequestParam</a>
+
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyUpdateResponse">CatalogItemCategoryPropertyUpdateResponse</a>
@@ -445,6 +449,7 @@ Response Types:
 
 Methods:
 
+- <code title="post /v1/catalog/item-categories/{id}/properties">client.Catalog.ItemCategories.Properties.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyNewParams">CatalogItemCategoryPropertyNewParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Property">Property</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="put /v1/catalog/item-categories/{id}/properties/{property_id}">client.Catalog.ItemCategories.Properties.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, propertyID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyUpdateParams">CatalogItemCategoryPropertyUpdateParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyUpdateResponse">CatalogItemCategoryPropertyUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="delete /v1/catalog/item-categories/{id}/properties/{property_id}">client.Catalog.ItemCategories.Properties.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, propertyID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyDeleteParams">CatalogItemCategoryPropertyDeleteParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CatalogItemCategoryPropertyDeleteResponse">CatalogItemCategoryPropertyDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
@@ -762,6 +767,7 @@ Methods:
 
 Params Types:
 
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ConversationParticipantInputParam">ConversationParticipantInputParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CreateConversationRequestParam">CreateConversationRequestParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#UpdateConversationRequestParam">UpdateConversationRequestParam</a>
 
@@ -903,12 +909,14 @@ Methods:
 Params Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ApproveSendDraftRequestParam">ApproveSendDraftRequestParam</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#RescheduleMessageRequestParam">RescheduleMessageRequestParam</a>
 
 Methods:
 
 - <code title="post /v1/messaging/messages/{id}/actions/approve-send">client.Messaging.Messages.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionService.ApproveSend">ApproveSend</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionApproveSendParams">MessagingMessageActionApproveSendParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Message">Message</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /v1/messaging/messages/{id}/actions/cancel">client.Messaging.Messages.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionService.Cancel">Cancel</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionCancelParams">MessagingMessageActionCancelParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Message">Message</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="post /v1/messaging/messages/{id}/actions/reject">client.Messaging.Messages.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionService.Reject">Reject</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionRejectParams">MessagingMessageActionRejectParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Message">Message</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /v1/messaging/messages/{id}/actions/reschedule">client.Messaging.Messages.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionService.Reschedule">Reschedule</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MessagingMessageActionRescheduleParams">MessagingMessageActionRescheduleParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Message">Message</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Groups
 
@@ -1268,6 +1276,7 @@ Params Types:
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CheckoutSalesOrderRequestParam">CheckoutSalesOrderRequestParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CreateSalesOrderLineInputParam">CreateSalesOrderLineInputParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CreateSalesOrderRequestParam">CreateSalesOrderRequestParam</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#InlineAddressInputParam">InlineAddressInputParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#QuoteSalesOrderLineInputParam">QuoteSalesOrderLineInputParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#QuoteSalesOrderPricesRequestParam">QuoteSalesOrderPricesRequestParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SalesOrderEmailContactInputParam">SalesOrderEmailContactInputParam</a>
@@ -1547,6 +1556,10 @@ Methods:
 
 ### Actions
 
+Params Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#StartInventoryChangeLogsExportRequestParam">StartInventoryChangeLogsExportRequestParam</a>
+
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#FileDownload">FileDownload</a>
@@ -1554,6 +1567,7 @@ Response Types:
 Methods:
 
 - <code title="get /v1/operations/inventory-change-logs/actions/export">client.Operations.InventoryChangeLogs.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogActionService.Export">Export</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogActionExportParams">OperationInventoryChangeLogActionExportParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#FileDownload">FileDownload</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="post /v1/operations/inventory-change-logs/actions/export">client.Operations.InventoryChangeLogs.Actions.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogActionService.StartExport">StartExport</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, params <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OperationInventoryChangeLogActionStartExportParams">OperationInventoryChangeLogActionStartExportParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Job">Job</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Machines
 

@@ -66,8 +66,8 @@ func (r *SaleAccountUserSalesTargetService) New(ctx context.Context, id string, 
 // amount, and unit. If it already exists, only the amount value is updated — the
 // dates and unit are left unchanged, so raising or lowering a goal mid-period is
 // the intended use. The sales rep must be an active account user in your account,
-// and the target ID must belong to that account, otherwise the request returns a
-// not-found error.
+// and an existing target must be filed under that rep, otherwise the request
+// returns a not-found error.
 //
 // This endpoint requires the permission: `sales_targets:update`.
 func (r *SaleAccountUserSalesTargetService) Update(ctx context.Context, targetID string, params SaleAccountUserSalesTargetUpdateParams, opts ...option.RequestOption) (res *SalesTarget, err error) {
@@ -111,11 +111,12 @@ func (r *SaleAccountUserSalesTargetService) List(ctx context.Context, id string,
 //
 // The properties AmountUnitID, AmountValue, EndsAt, StartsAt are required.
 type CreateSalesTargetRequestParam struct {
-	// The unit the goal is denominated in, typically a currency unit.
+	// The unit the goal is denominated in, typically a currency unit. It must be one
+	// of your account's units or a unit every account shares.
 	AmountUnitID string `json:"amount_unit_id" api:"required"`
 	// The revenue goal for the period, as a decimal string (e.g. `50000.00`).
-	AmountValue string `json:"amount_value" api:"required"`
-	// End of the period the target applies to.
+	AmountValue string `json:"amount_value" api:"required" format:"decimal"`
+	// End of the period the target applies to. It may not be before `starts_at`.
 	EndsAt time.Time `json:"ends_at" api:"required" format:"date-time"`
 	// Start of the period the target applies to (inclusive).
 	StartsAt time.Time `json:"starts_at" api:"required" format:"date-time"`
@@ -226,7 +227,8 @@ const (
 //
 // The properties AmountUnitID, AmountValue, EndsAt, StartsAt are required.
 type UpsertSalesTargetRequestParam struct {
-	// The unit the goal is denominated in, typically a currency unit.
+	// The unit the goal is denominated in, typically a currency unit. It must be one
+	// of your account's units or a unit every account shares.
 	//
 	// Only applied when creating a new target; the unit on an existing target is not
 	// changed.
@@ -235,8 +237,8 @@ type UpsertSalesTargetRequestParam struct {
 	//
 	// This is the only value an existing target accepts; everything else on it stays
 	// as it was.
-	AmountValue string `json:"amount_value" api:"required"`
-	// End of the period the target applies to.
+	AmountValue string `json:"amount_value" api:"required" format:"decimal"`
+	// End of the period the target applies to. It may not be before `starts_at`.
 	//
 	// Only applied when creating a new target; the dates on an existing target are not
 	// changed.

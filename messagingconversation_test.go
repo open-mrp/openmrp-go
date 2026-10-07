@@ -30,9 +30,13 @@ func TestMessagingConversationNewWithOptionalParams(t *testing.T) {
 			ParticipantAccountUserIDs: []string{"acus_e5zu8bde0z3h"},
 			Type:                      openmrp.CreateConversationRequestTypeGroup,
 			GroupID:                   openmrp.String("cvgp_wjlypugna7s4"),
-			Title:                     openmrp.String("Order #1042 — shipping question"),
-			TopicResourceID:           openmrp.String("or_9lqo07quiwyb"),
-			TopicResourceType:         openmrp.CreateConversationRequestTopicResourceTypeSalesOrder,
+			Participants: []openmrp.ConversationParticipantInputParam{{
+				AccountUserID: "acus_e5zu8bde0z3h",
+				Role:          openmrp.ConversationParticipantInputRoleAdmin,
+			}},
+			Title:             openmrp.String("Order #1042 — shipping question"),
+			TopicResourceID:   openmrp.String("or_9lqo07quiwyb"),
+			TopicResourceType: openmrp.CreateConversationRequestTopicResourceTypeSalesOrder,
 		},
 		Include: []string{"assignee"},
 	})

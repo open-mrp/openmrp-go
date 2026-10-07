@@ -52,8 +52,11 @@ func NewCatalogMaterialService(opts ...option.RequestOption) (r CatalogMaterialS
 // zero and cannot be supplied here — it is derived from recorded consumption as
 // production happens.
 //
-// This endpoint requires the permissions: `materials:create`, `customers:update`,
-// `suppliers:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `materials:create`.
 func (r *CatalogMaterialService) New(ctx context.Context, params CatalogMaterialNewParams, opts ...option.RequestOption) (res *Material, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/materials"
@@ -63,8 +66,11 @@ func (r *CatalogMaterialService) New(ctx context.Context, params CatalogMaterial
 
 // Returns a material by ID.
 //
-// This endpoint requires the permissions: `materials:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `materials:read`.
 func (r *CatalogMaterialService) Get(ctx context.Context, id string, query CatalogMaterialGetParams, opts ...option.RequestOption) (res *Material, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -80,11 +86,13 @@ func (r *CatalogMaterialService) Get(ctx context.Context, id string, query Catal
 //
 // Fields not provided retain their current values. Only the cost side of pricing
 // can be changed here; the selling price set at creation is not editable through
-// this endpoint. Use the Change Item Category endpoint to move the material to a
-// different category.
+// this endpoint.
 //
-// This endpoint requires the permissions: `materials:update`, `customers:update`,
-// `suppliers:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `materials:update`.
 func (r *CatalogMaterialService) Update(ctx context.Context, id string, params CatalogMaterialUpdateParams, opts ...option.RequestOption) (res *Material, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -100,8 +108,11 @@ func (r *CatalogMaterialService) Update(ctx context.Context, id string, params C
 //
 // `q` matches against SKU and description, with closer SKU matches ranked first.
 //
-// This endpoint requires the permissions: `materials:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `materials:read`.
 func (r *CatalogMaterialService) List(ctx context.Context, query CatalogMaterialListParams, opts ...option.RequestOption) (res *ListMaterial, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/materials"
@@ -116,8 +127,11 @@ func (r *CatalogMaterialService) List(ctx context.Context, query CatalogMaterial
 // material as it stood immediately before deletion, and deleting an
 // already-deleted material returns an error.
 //
-// This endpoint requires the permissions: `materials:delete`, `customers:update`,
-// `suppliers:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `materials:delete`.
 func (r *CatalogMaterialService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *Material, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -370,6 +384,15 @@ func (r *RateInputParam) UnmarshalJSON(data []byte) error {
 
 // Request to update a material.
 type UpdateMaterialRequestParam struct {
+	// ID of the item category to move the material to.
+	//
+	// The move is the one Change Item Category makes: the category has to be a
+	// material category and has to carry the properties of every attribute the
+	// material already has, and the material's rate and order-point units switch to
+	// the category's base unit while their numbers stay as they were. It is applied
+	// before the other fields in the request, so an `order_point` or `unit_cost` sent
+	// alongside is written after it.
+	CategoryID param.Opt[string] `json:"category_id,omitzero"`
 	// New description for the material.
 	Description param.Opt[string] `json:"description,omitzero"`
 	// New notes for the material.

@@ -39,6 +39,8 @@ func NewCatalogPartActionService(opts ...option.RequestOption) (r CatalogPartAct
 
 // Creates or updates multiple parts for the account, matched by SKU, then writes
 // asynchronously — 202 with a job to poll.
+//
+// At most 1,000 parts and an 8 MB request body per call.
 func (r *CatalogPartActionService) BulkUpsert(ctx context.Context, params CatalogPartActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/parts/actions/bulk-upsert"

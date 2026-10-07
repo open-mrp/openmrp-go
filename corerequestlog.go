@@ -234,14 +234,14 @@ type RequestLog struct {
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
 	// "invalid_credentials", "insufficient_permissions", "payment_required",
 	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
-	// "resource_conflict", "resource_gone", "idempotency_in_progress",
-	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
-	// "parameter_missing", "parameter_invalid", "parameter_unknown",
-	// "parameters_exclusive", "internal_error", "service_unavailable",
-	// "external_service_error", "timeout", "connection_error", "request_timeout",
-	// "client_closed_request", "api_version_required", "api_version_invalid",
-	// "api_version_too_old".
+	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
+	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
+	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
+	// "parameter_unknown", "parameters_exclusive", "internal_error",
+	// "service_unavailable", "external_service_error", "timeout", "connection_error",
+	// "request_timeout", "client_closed_request", "api_version_required",
+	// "api_version_invalid", "api_version_too_old".
 	ErrorCode RequestLogErrorCode `json:"error_code" api:"required"`
 	// Human-readable error message.
 	//
@@ -360,6 +360,7 @@ const (
 	RequestLogErrorCodeMissingField            RequestLogErrorCode = "missing_field"
 	RequestLogErrorCodeInvalidFormat           RequestLogErrorCode = "invalid_format"
 	RequestLogErrorCodeMethodNotAllowed        RequestLogErrorCode = "method_not_allowed"
+	RequestLogErrorCodeRequestTooLarge         RequestLogErrorCode = "request_too_large"
 	RequestLogErrorCodeResourceNotFound        RequestLogErrorCode = "resource_not_found"
 	RequestLogErrorCodeResourceExists          RequestLogErrorCode = "resource_exists"
 	RequestLogErrorCodeResourceConflict        RequestLogErrorCode = "resource_conflict"
@@ -472,14 +473,14 @@ type CoreRequestLogListParams struct {
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
 	// "invalid_credentials", "insufficient_permissions", "payment_required",
 	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
-	// "resource_conflict", "resource_gone", "idempotency_in_progress",
-	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
-	// "parameter_missing", "parameter_invalid", "parameter_unknown",
-	// "parameters_exclusive", "internal_error", "service_unavailable",
-	// "external_service_error", "timeout", "connection_error", "request_timeout",
-	// "client_closed_request", "api_version_required", "api_version_invalid",
-	// "api_version_too_old".
+	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
+	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
+	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
+	// "parameter_unknown", "parameters_exclusive", "internal_error",
+	// "service_unavailable", "external_service_error", "timeout", "connection_error",
+	// "request_timeout", "client_closed_request", "api_version_required",
+	// "api_version_invalid", "api_version_too_old".
 	ErrorCodes []string `query:"error_codes,omitzero" json:"-"`
 	// Exclude request logs whose API error code is in this set.
 	//
@@ -492,14 +493,14 @@ type CoreRequestLogListParams struct {
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
 	// "invalid_credentials", "insufficient_permissions", "payment_required",
 	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
-	// "resource_conflict", "resource_gone", "idempotency_in_progress",
-	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
-	// "parameter_missing", "parameter_invalid", "parameter_unknown",
-	// "parameters_exclusive", "internal_error", "service_unavailable",
-	// "external_service_error", "timeout", "connection_error", "request_timeout",
-	// "client_closed_request", "api_version_required", "api_version_invalid",
-	// "api_version_too_old".
+	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
+	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
+	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
+	// "parameter_unknown", "parameters_exclusive", "internal_error",
+	// "service_unavailable", "external_service_error", "timeout", "connection_error",
+	// "request_timeout", "client_closed_request", "api_version_required",
+	// "api_version_invalid", "api_version_too_old".
 	ExcludeErrorCodes []string `query:"exclude_error_codes,omitzero" json:"-"`
 	// Filter by the request host.
 	//

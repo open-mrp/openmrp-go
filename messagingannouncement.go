@@ -99,7 +99,7 @@ type Announcement struct {
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
 	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
-	// "production_run.updated".
+	// "production_run.updated", "invoice.payment_status_changed".
 	Category AnnouncementCategory `json:"category" api:"required"`
 	// Creation timestamp.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -193,15 +193,16 @@ func (r *Announcement) UnmarshalJSON(data []byte) error {
 type AnnouncementCategory string
 
 const (
-	AnnouncementCategoryChatMessage          AnnouncementCategory = "chat.message"
-	AnnouncementCategoryChatMention          AnnouncementCategory = "chat.mention"
-	AnnouncementCategoryChatAdded            AnnouncementCategory = "chat.added"
-	AnnouncementCategoryOrderUpdated         AnnouncementCategory = "order.updated"
-	AnnouncementCategoryAgentRunCompleted    AnnouncementCategory = "agent.run_completed"
-	AnnouncementCategoryAgentAlert           AnnouncementCategory = "agent.alert"
-	AnnouncementCategorySystemBroadcast      AnnouncementCategory = "system.broadcast"
-	AnnouncementCategoryCustomerRegistered   AnnouncementCategory = "customer.registered"
-	AnnouncementCategoryProductionRunUpdated AnnouncementCategory = "production_run.updated"
+	AnnouncementCategoryChatMessage                 AnnouncementCategory = "chat.message"
+	AnnouncementCategoryChatMention                 AnnouncementCategory = "chat.mention"
+	AnnouncementCategoryChatAdded                   AnnouncementCategory = "chat.added"
+	AnnouncementCategoryOrderUpdated                AnnouncementCategory = "order.updated"
+	AnnouncementCategoryAgentRunCompleted           AnnouncementCategory = "agent.run_completed"
+	AnnouncementCategoryAgentAlert                  AnnouncementCategory = "agent.alert"
+	AnnouncementCategorySystemBroadcast             AnnouncementCategory = "system.broadcast"
+	AnnouncementCategoryCustomerRegistered          AnnouncementCategory = "customer.registered"
+	AnnouncementCategoryProductionRunUpdated        AnnouncementCategory = "production_run.updated"
+	AnnouncementCategoryInvoicePaymentStatusChanged AnnouncementCategory = "invoice.payment_status_changed"
 )
 
 // Resource type identifier.

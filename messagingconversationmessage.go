@@ -285,7 +285,8 @@ type SendMessageRequestParam struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -348,7 +349,10 @@ type SendMessageRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	LinkResourceType SendMessageRequestLinkResourceType `json:"link_resource_type,omitzero"`
 	// Account user ids explicitly @mentioned in the message.
 	//
@@ -537,6 +541,10 @@ const (
 	SendMessageRequestLinkResourceTypeSalesTotals                          SendMessageRequestLinkResourceType = "sales_totals"
 	SendMessageRequestLinkResourceTypeSalesBreakdown                       SendMessageRequestLinkResourceType = "sales_breakdown"
 	SendMessageRequestLinkResourceTypeSalesInvoice                         SendMessageRequestLinkResourceType = "sales_invoice"
+	SendMessageRequestLinkResourceTypeOpenOrdersSummary                    SendMessageRequestLinkResourceType = "open_orders_summary"
+	SendMessageRequestLinkResourceTypeOpenOrderProduct                     SendMessageRequestLinkResourceType = "open_order_product"
+	SendMessageRequestLinkResourceTypeOpenOrder                            SendMessageRequestLinkResourceType = "open_order"
+	SendMessageRequestLinkResourceTypeOpenOrderLine                        SendMessageRequestLinkResourceType = "open_order_line"
 	SendMessageRequestLinkResourceTypeNewCustomer                          SendMessageRequestLinkResourceType = "new_customer"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverage                SendMessageRequestLinkResourceType = "schedule_order_coverage"
 	SendMessageRequestLinkResourceTypeScheduleOrderCoverageLine            SendMessageRequestLinkResourceType = "schedule_order_coverage_line"
@@ -737,6 +745,12 @@ const (
 	SendMessageRequestLinkResourceTypePickRelated                          SendMessageRequestLinkResourceType = "pick_related"
 	SendMessageRequestLinkResourceTypePickTotals                           SendMessageRequestLinkResourceType = "pick_totals"
 	SendMessageRequestLinkResourceTypePickStageTotal                       SendMessageRequestLinkResourceType = "pick_stage_total"
+	SendMessageRequestLinkResourceTypeAnalyzeProductionCostsResponse       SendMessageRequestLinkResourceType = "analyze_production_costs_response"
+	SendMessageRequestLinkResourceTypeProductionCost                       SendMessageRequestLinkResourceType = "production_cost"
+	SendMessageRequestLinkResourceTypeProductionCostTotals                 SendMessageRequestLinkResourceType = "production_cost_totals"
+	SendMessageRequestLinkResourceTypeProductionCostDepartment             SendMessageRequestLinkResourceType = "production_cost_department"
+	SendMessageRequestLinkResourceTypeProductionCostCategory               SendMessageRequestLinkResourceType = "production_cost_category"
+	SendMessageRequestLinkResourceTypeProductionCostDepartmentCategory     SendMessageRequestLinkResourceType = "production_cost_department_category"
 )
 
 // Whether to deliver the message now or hold it as a customer-reply draft.

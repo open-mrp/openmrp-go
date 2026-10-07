@@ -101,6 +101,7 @@ func TestCatalogPartUpdateWithOptionalParams(t *testing.T) {
 		openmrp.CatalogPartUpdateParams{
 			Include: []string{"item"},
 			UpdatePartRequest: openmrp.UpdatePartRequestParam{
+				CategoryID:  openmrp.String("ic_d06g9c6yc9ck"),
 				Description: openmrp.String("Deep groove ball bearing, 20x47x14mm"),
 				Notes:       openmrp.String("Superseded by low-friction variant; keep for legacy assemblies."),
 				SKU:         openmrp.String("BRG-6204-2RS"),

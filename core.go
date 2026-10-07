@@ -142,7 +142,8 @@ type Entity struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -205,7 +206,10 @@ type Entity struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	Type EntityType `json:"type" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -361,6 +365,10 @@ const (
 	EntityTypeSalesTotals                          EntityType = "sales_totals"
 	EntityTypeSalesBreakdown                       EntityType = "sales_breakdown"
 	EntityTypeSalesInvoice                         EntityType = "sales_invoice"
+	EntityTypeOpenOrdersSummary                    EntityType = "open_orders_summary"
+	EntityTypeOpenOrderProduct                     EntityType = "open_order_product"
+	EntityTypeOpenOrder                            EntityType = "open_order"
+	EntityTypeOpenOrderLine                        EntityType = "open_order_line"
 	EntityTypeNewCustomer                          EntityType = "new_customer"
 	EntityTypeScheduleOrderCoverage                EntityType = "schedule_order_coverage"
 	EntityTypeScheduleOrderCoverageLine            EntityType = "schedule_order_coverage_line"
@@ -561,6 +569,12 @@ const (
 	EntityTypePickRelated                          EntityType = "pick_related"
 	EntityTypePickTotals                           EntityType = "pick_totals"
 	EntityTypePickStageTotal                       EntityType = "pick_stage_total"
+	EntityTypeAnalyzeProductionCostsResponse       EntityType = "analyze_production_costs_response"
+	EntityTypeProductionCost                       EntityType = "production_cost"
+	EntityTypeProductionCostTotals                 EntityType = "production_cost_totals"
+	EntityTypeProductionCostDepartment             EntityType = "production_cost_department"
+	EntityTypeProductionCostCategory               EntityType = "production_cost_category"
+	EntityTypeProductionCostDepartmentCategory     EntityType = "production_cost_department_category"
 )
 
 // A single page of resources, together with the metadata needed to page through
@@ -668,7 +682,8 @@ type CoreGetSearchParams struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -731,7 +746,10 @@ type CoreGetSearchParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	Types []string `query:"types,omitzero" json:"-"`
 	paramObj
 }

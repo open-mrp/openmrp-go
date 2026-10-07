@@ -64,8 +64,11 @@ func (r *CatalogProductLineService) New(ctx context.Context, params CatalogProdu
 // Both the product lines your account owns and the shared system lines can be
 // retrieved.
 //
-// This endpoint requires the permissions: `product_lines:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `product_lines:read`.
 func (r *CatalogProductLineService) Get(ctx context.Context, id string, query CatalogProductLineGetParams, opts ...option.RequestOption) (res *ProductLine, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -100,8 +103,11 @@ func (r *CatalogProductLineService) Update(ctx context.Context, id string, param
 // Covers both the product lines your account owns and the shared system lines. The
 // `q` search term is matched against the product line name.
 //
-// This endpoint requires the permissions: `product_lines:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `product_lines:read`.
 func (r *CatalogProductLineService) List(ctx context.Context, query CatalogProductLineListParams, opts ...option.RequestOption) (res *ListProductLine, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/product-lines"
@@ -276,6 +282,9 @@ type ProductLine struct {
 	//   - `commission_applied`: commission applies to these products, unless overridden
 	//     elsewhere.
 	//
+	// Null to customer and supplier portal users, like the rest of your commission
+	// settings.
+	//
 	// Any of "commission_applied", "commission_exempt".
 	CommissionPolicy ProductLineCommissionPolicy `json:"commission_policy" api:"required"`
 	// Creation timestamp.
@@ -303,7 +312,8 @@ type ProductLine struct {
 	//   - `make_to_order`: built only against orders already on the book, holding no
 	//     buffer.
 	//
-	// Null falls through to the account default.
+	// Null falls through to the account default. Always null to customer and supplier
+	// portal users, like the rest of your production planning.
 	//
 	// Any of "make_to_stock", "make_to_order".
 	FulfillmentPolicy ProductLineFulfillmentPolicy `json:"fulfillment_policy" api:"required"`
@@ -313,6 +323,8 @@ type ProductLine struct {
 	// shared system lines.
 	Name string `json:"name" api:"required"`
 	// Free-form notes about the product line.
+	//
+	// Null to customer and supplier portal users: they are your own team's notes.
 	Notes string `json:"notes" api:"required"`
 	// Resource type identifier.
 	//
@@ -360,6 +372,9 @@ func (r *ProductLine) UnmarshalJSON(data []byte) error {
 //   - `commission_exempt`: no commission applies to these products.
 //   - `commission_applied`: commission applies to these products, unless overridden
 //     elsewhere.
+//
+// Null to customer and supplier portal users, like the rest of your commission
+// settings.
 type ProductLineCommissionPolicy string
 
 const (
@@ -386,7 +401,8 @@ const (
 //   - `make_to_order`: built only against orders already on the book, holding no
 //     buffer.
 //
-// Null falls through to the account default.
+// Null falls through to the account default. Always null to customer and supplier
+// portal users, like the rest of your production planning.
 type ProductLineFulfillmentPolicy string
 
 const (

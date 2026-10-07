@@ -72,6 +72,9 @@ func (r *OperationFulfillmentRecommendationService) List(ctx context.Context, op
 // behind it.
 type FulfillmentRecommendation struct {
 	// Annual cost of goods for this item: demand times unit cost.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	AnnualCogs float64 `json:"annual_cogs" api:"required"`
 	// Months observed divided by months with demand: 1 means it sells every month, 3
 	// means once a quarter on average.

@@ -38,10 +38,10 @@ func NewOperationPickLineActionService(opts ...option.RequestOption) (r Operatio
 // Marks a pick line as fully picked.
 //
 // Sets the line's picked quantity to its sales order line's ordered quantity less
-// everything already picked for that order line, including whatever this line had
-// picked before the call. To record a short pick instead, set the quantity
-// yourself with Update Pick Line. Has no effect on a line that has already been
-// packed.
+// what the order line's other pick lines hold, and never lowers it: picking a line
+// again changes nothing, and an over-pick is kept as recorded. To record a short
+// pick instead, set the quantity yourself with Update Pick Line. Has no effect on
+// a line that has already been packed.
 //
 // This endpoint requires the permission: `picks:update`.
 func (r *OperationPickLineActionService) Pick(ctx context.Context, id string, body OperationPickLineActionPickParams, opts ...option.RequestOption) (res *PickLine, err error) {

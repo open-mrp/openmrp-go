@@ -128,7 +128,7 @@ type NotificationPreference struct {
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
 	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
-	// "production_run.updated".
+	// "production_run.updated", "invoice.payment_status_changed".
 	Category NotificationPreferenceCategory `json:"category" api:"required"`
 	// Creation timestamp.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
@@ -194,15 +194,16 @@ func (r *NotificationPreference) UnmarshalJSON(data []byte) error {
 type NotificationPreferenceCategory string
 
 const (
-	NotificationPreferenceCategoryChatMessage          NotificationPreferenceCategory = "chat.message"
-	NotificationPreferenceCategoryChatMention          NotificationPreferenceCategory = "chat.mention"
-	NotificationPreferenceCategoryChatAdded            NotificationPreferenceCategory = "chat.added"
-	NotificationPreferenceCategoryOrderUpdated         NotificationPreferenceCategory = "order.updated"
-	NotificationPreferenceCategoryAgentRunCompleted    NotificationPreferenceCategory = "agent.run_completed"
-	NotificationPreferenceCategoryAgentAlert           NotificationPreferenceCategory = "agent.alert"
-	NotificationPreferenceCategorySystemBroadcast      NotificationPreferenceCategory = "system.broadcast"
-	NotificationPreferenceCategoryCustomerRegistered   NotificationPreferenceCategory = "customer.registered"
-	NotificationPreferenceCategoryProductionRunUpdated NotificationPreferenceCategory = "production_run.updated"
+	NotificationPreferenceCategoryChatMessage                 NotificationPreferenceCategory = "chat.message"
+	NotificationPreferenceCategoryChatMention                 NotificationPreferenceCategory = "chat.mention"
+	NotificationPreferenceCategoryChatAdded                   NotificationPreferenceCategory = "chat.added"
+	NotificationPreferenceCategoryOrderUpdated                NotificationPreferenceCategory = "order.updated"
+	NotificationPreferenceCategoryAgentRunCompleted           NotificationPreferenceCategory = "agent.run_completed"
+	NotificationPreferenceCategoryAgentAlert                  NotificationPreferenceCategory = "agent.alert"
+	NotificationPreferenceCategorySystemBroadcast             NotificationPreferenceCategory = "system.broadcast"
+	NotificationPreferenceCategoryCustomerRegistered          NotificationPreferenceCategory = "customer.registered"
+	NotificationPreferenceCategoryProductionRunUpdated        NotificationPreferenceCategory = "production_run.updated"
+	NotificationPreferenceCategoryInvoicePaymentStatusChanged NotificationPreferenceCategory = "invoice.payment_status_changed"
 )
 
 // How often email for this category is sent.

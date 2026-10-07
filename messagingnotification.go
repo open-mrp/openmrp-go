@@ -231,7 +231,7 @@ type Notification struct {
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
 	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
-	// "production_run.updated".
+	// "production_run.updated", "invoice.payment_status_changed".
 	Category    NotificationCategory `json:"category" api:"required"`
 	ChangeCount int64                `json:"change_count" api:"required"`
 	// Creation timestamp.
@@ -316,15 +316,16 @@ func (r *Notification) UnmarshalJSON(data []byte) error {
 type NotificationCategory string
 
 const (
-	NotificationCategoryChatMessage          NotificationCategory = "chat.message"
-	NotificationCategoryChatMention          NotificationCategory = "chat.mention"
-	NotificationCategoryChatAdded            NotificationCategory = "chat.added"
-	NotificationCategoryOrderUpdated         NotificationCategory = "order.updated"
-	NotificationCategoryAgentRunCompleted    NotificationCategory = "agent.run_completed"
-	NotificationCategoryAgentAlert           NotificationCategory = "agent.alert"
-	NotificationCategorySystemBroadcast      NotificationCategory = "system.broadcast"
-	NotificationCategoryCustomerRegistered   NotificationCategory = "customer.registered"
-	NotificationCategoryProductionRunUpdated NotificationCategory = "production_run.updated"
+	NotificationCategoryChatMessage                 NotificationCategory = "chat.message"
+	NotificationCategoryChatMention                 NotificationCategory = "chat.mention"
+	NotificationCategoryChatAdded                   NotificationCategory = "chat.added"
+	NotificationCategoryOrderUpdated                NotificationCategory = "order.updated"
+	NotificationCategoryAgentRunCompleted           NotificationCategory = "agent.run_completed"
+	NotificationCategoryAgentAlert                  NotificationCategory = "agent.alert"
+	NotificationCategorySystemBroadcast             NotificationCategory = "system.broadcast"
+	NotificationCategoryCustomerRegistered          NotificationCategory = "customer.registered"
+	NotificationCategoryProductionRunUpdated        NotificationCategory = "production_run.updated"
+	NotificationCategoryInvoicePaymentStatusChanged NotificationCategory = "invoice.payment_status_changed"
 )
 
 // Resource type identifier.
@@ -569,7 +570,7 @@ type SendNotificationRequestParam struct {
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
 	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
-	// "production_run.updated".
+	// "production_run.updated", "invoice.payment_status_changed".
 	Category SendNotificationRequestCategory `json:"category,omitzero" api:"required"`
 	// Who a notification is aimed at.
 	Target NotificationTargetInputParam `json:"target,omitzero" api:"required"`
@@ -620,7 +621,8 @@ type SendNotificationRequestParam struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -683,7 +685,10 @@ type SendNotificationRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	LinkResourceType SendNotificationRequestLinkResourceType `json:"link_resource_type,omitzero"`
 	// How prominently the notification should be surfaced, from `low` through
 	// `urgent`.
@@ -708,15 +713,16 @@ func (r *SendNotificationRequestParam) UnmarshalJSON(data []byte) error {
 type SendNotificationRequestCategory string
 
 const (
-	SendNotificationRequestCategoryChatMessage          SendNotificationRequestCategory = "chat.message"
-	SendNotificationRequestCategoryChatMention          SendNotificationRequestCategory = "chat.mention"
-	SendNotificationRequestCategoryChatAdded            SendNotificationRequestCategory = "chat.added"
-	SendNotificationRequestCategoryOrderUpdated         SendNotificationRequestCategory = "order.updated"
-	SendNotificationRequestCategoryAgentRunCompleted    SendNotificationRequestCategory = "agent.run_completed"
-	SendNotificationRequestCategoryAgentAlert           SendNotificationRequestCategory = "agent.alert"
-	SendNotificationRequestCategorySystemBroadcast      SendNotificationRequestCategory = "system.broadcast"
-	SendNotificationRequestCategoryCustomerRegistered   SendNotificationRequestCategory = "customer.registered"
-	SendNotificationRequestCategoryProductionRunUpdated SendNotificationRequestCategory = "production_run.updated"
+	SendNotificationRequestCategoryChatMessage                 SendNotificationRequestCategory = "chat.message"
+	SendNotificationRequestCategoryChatMention                 SendNotificationRequestCategory = "chat.mention"
+	SendNotificationRequestCategoryChatAdded                   SendNotificationRequestCategory = "chat.added"
+	SendNotificationRequestCategoryOrderUpdated                SendNotificationRequestCategory = "order.updated"
+	SendNotificationRequestCategoryAgentRunCompleted           SendNotificationRequestCategory = "agent.run_completed"
+	SendNotificationRequestCategoryAgentAlert                  SendNotificationRequestCategory = "agent.alert"
+	SendNotificationRequestCategorySystemBroadcast             SendNotificationRequestCategory = "system.broadcast"
+	SendNotificationRequestCategoryCustomerRegistered          SendNotificationRequestCategory = "customer.registered"
+	SendNotificationRequestCategoryProductionRunUpdated        SendNotificationRequestCategory = "production_run.updated"
+	SendNotificationRequestCategoryInvoicePaymentStatusChanged SendNotificationRequestCategory = "invoice.payment_status_changed"
 )
 
 // Type of the resource the notification should link to, such as `sales_order`.
@@ -848,6 +854,10 @@ const (
 	SendNotificationRequestLinkResourceTypeSalesTotals                          SendNotificationRequestLinkResourceType = "sales_totals"
 	SendNotificationRequestLinkResourceTypeSalesBreakdown                       SendNotificationRequestLinkResourceType = "sales_breakdown"
 	SendNotificationRequestLinkResourceTypeSalesInvoice                         SendNotificationRequestLinkResourceType = "sales_invoice"
+	SendNotificationRequestLinkResourceTypeOpenOrdersSummary                    SendNotificationRequestLinkResourceType = "open_orders_summary"
+	SendNotificationRequestLinkResourceTypeOpenOrderProduct                     SendNotificationRequestLinkResourceType = "open_order_product"
+	SendNotificationRequestLinkResourceTypeOpenOrder                            SendNotificationRequestLinkResourceType = "open_order"
+	SendNotificationRequestLinkResourceTypeOpenOrderLine                        SendNotificationRequestLinkResourceType = "open_order_line"
 	SendNotificationRequestLinkResourceTypeNewCustomer                          SendNotificationRequestLinkResourceType = "new_customer"
 	SendNotificationRequestLinkResourceTypeScheduleOrderCoverage                SendNotificationRequestLinkResourceType = "schedule_order_coverage"
 	SendNotificationRequestLinkResourceTypeScheduleOrderCoverageLine            SendNotificationRequestLinkResourceType = "schedule_order_coverage_line"
@@ -1048,6 +1058,12 @@ const (
 	SendNotificationRequestLinkResourceTypePickRelated                          SendNotificationRequestLinkResourceType = "pick_related"
 	SendNotificationRequestLinkResourceTypePickTotals                           SendNotificationRequestLinkResourceType = "pick_totals"
 	SendNotificationRequestLinkResourceTypePickStageTotal                       SendNotificationRequestLinkResourceType = "pick_stage_total"
+	SendNotificationRequestLinkResourceTypeAnalyzeProductionCostsResponse       SendNotificationRequestLinkResourceType = "analyze_production_costs_response"
+	SendNotificationRequestLinkResourceTypeProductionCost                       SendNotificationRequestLinkResourceType = "production_cost"
+	SendNotificationRequestLinkResourceTypeProductionCostTotals                 SendNotificationRequestLinkResourceType = "production_cost_totals"
+	SendNotificationRequestLinkResourceTypeProductionCostDepartment             SendNotificationRequestLinkResourceType = "production_cost_department"
+	SendNotificationRequestLinkResourceTypeProductionCostCategory               SendNotificationRequestLinkResourceType = "production_cost_category"
+	SendNotificationRequestLinkResourceTypeProductionCostDepartmentCategory     SendNotificationRequestLinkResourceType = "production_cost_department_category"
 )
 
 // How prominently the notification should be surfaced, from `low` through
@@ -1113,7 +1129,7 @@ type MessagingNotificationListParams struct {
 	//
 	// Any of "chat.message", "chat.mention", "chat.added", "order.updated",
 	// "agent.run_completed", "agent.alert", "system.broadcast", "customer.registered",
-	// "production_run.updated".
+	// "production_run.updated", "invoice.payment_status_changed".
 	Category MessagingNotificationListParamsCategory `query:"category,omitzero" json:"-"`
 	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
 	// `null`.
@@ -1157,15 +1173,16 @@ func (r MessagingNotificationListParams) URLQuery() (v url.Values, err error) {
 type MessagingNotificationListParamsCategory string
 
 const (
-	MessagingNotificationListParamsCategoryChatMessage          MessagingNotificationListParamsCategory = "chat.message"
-	MessagingNotificationListParamsCategoryChatMention          MessagingNotificationListParamsCategory = "chat.mention"
-	MessagingNotificationListParamsCategoryChatAdded            MessagingNotificationListParamsCategory = "chat.added"
-	MessagingNotificationListParamsCategoryOrderUpdated         MessagingNotificationListParamsCategory = "order.updated"
-	MessagingNotificationListParamsCategoryAgentRunCompleted    MessagingNotificationListParamsCategory = "agent.run_completed"
-	MessagingNotificationListParamsCategoryAgentAlert           MessagingNotificationListParamsCategory = "agent.alert"
-	MessagingNotificationListParamsCategorySystemBroadcast      MessagingNotificationListParamsCategory = "system.broadcast"
-	MessagingNotificationListParamsCategoryCustomerRegistered   MessagingNotificationListParamsCategory = "customer.registered"
-	MessagingNotificationListParamsCategoryProductionRunUpdated MessagingNotificationListParamsCategory = "production_run.updated"
+	MessagingNotificationListParamsCategoryChatMessage                 MessagingNotificationListParamsCategory = "chat.message"
+	MessagingNotificationListParamsCategoryChatMention                 MessagingNotificationListParamsCategory = "chat.mention"
+	MessagingNotificationListParamsCategoryChatAdded                   MessagingNotificationListParamsCategory = "chat.added"
+	MessagingNotificationListParamsCategoryOrderUpdated                MessagingNotificationListParamsCategory = "order.updated"
+	MessagingNotificationListParamsCategoryAgentRunCompleted           MessagingNotificationListParamsCategory = "agent.run_completed"
+	MessagingNotificationListParamsCategoryAgentAlert                  MessagingNotificationListParamsCategory = "agent.alert"
+	MessagingNotificationListParamsCategorySystemBroadcast             MessagingNotificationListParamsCategory = "system.broadcast"
+	MessagingNotificationListParamsCategoryCustomerRegistered          MessagingNotificationListParamsCategory = "customer.registered"
+	MessagingNotificationListParamsCategoryProductionRunUpdated        MessagingNotificationListParamsCategory = "production_run.updated"
+	MessagingNotificationListParamsCategoryInvoicePaymentStatusChanged MessagingNotificationListParamsCategory = "invoice.payment_status_changed"
 )
 
 // Return only notifications in this lifecycle state.

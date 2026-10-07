@@ -44,8 +44,11 @@ func NewSaleSalesOrderLineActionService(opts ...option.RequestOption) (r SaleSal
 // The lines are renumbered from `1` in the given order. Discount and freight lines
 // always stay at the bottom of the list regardless of the sequence given here.
 //
-// This endpoint requires the permissions: `customers:update`, `suppliers:update`,
-// `sales_orders:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `sales_orders:update`.
 func (r *SaleSalesOrderLineActionService) Reorder(ctx context.Context, id string, body SaleSalesOrderLineActionReorderParams, opts ...option.RequestOption) (res *SaleSalesOrderLineActionReorderResponse, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {

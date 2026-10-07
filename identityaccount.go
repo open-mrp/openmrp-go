@@ -45,6 +45,9 @@ func NewIdentityAccountService(opts ...option.RequestOption) (r IdentityAccountS
 // customer portal. You can only upload a favicon for the account you are acting
 // in.
 //
+// A body that is empty or not a PNG, JPEG, GIF, WebP, or ICO image is refused with
+// a 400, and one over 10 MB with a 413; the existing favicon is kept either way.
+//
 // This endpoint requires the permission: `self:update`.
 func (r *IdentityAccountService) UpdateFavicon(ctx context.Context, id string, opts ...option.RequestOption) (res *IdentityAccountUpdateFaviconResponse, err error) {
 	opts = slices.Concat(r.options, opts)

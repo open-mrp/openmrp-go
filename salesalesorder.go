@@ -63,8 +63,14 @@ func (r *SaleSalesOrderService) New(ctx context.Context, params SaleSalesOrderNe
 
 // Returns a sales order by ID.
 //
-// This endpoint requires the permissions: `customers:read`, `suppliers:read`,
-// `sales_orders:read`.
+// A customer or supplier portal retrieves only an order its own account placed;
+// any other order is reported as not found.
+//
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `sales_orders:read`.
 func (r *SaleSalesOrderService) Get(ctx context.Context, id string, query SaleSalesOrderGetParams, opts ...option.RequestOption) (res *SalesOrder, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -100,10 +106,14 @@ func (r *SaleSalesOrderService) Update(ctx context.Context, id string, params Sa
 //
 // A free-text search term (`q`) is matched as an exact value against the order
 // number and the customer purchase order number, and still respects the other
-// filters. Customer accounts calling this endpoint only ever see their own orders.
+// filters. A customer or supplier portal calling this endpoint only ever sees the
+// orders its own account placed, whatever filters it sets.
 //
-// This endpoint requires the permissions: `sales_orders:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `sales_orders:read`.
 func (r *SaleSalesOrderService) List(ctx context.Context, query SaleSalesOrderListParams, opts ...option.RequestOption) (res *ListSalesOrder, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/sales/sales-orders"
@@ -437,13 +447,8 @@ func (r *CreateSalesOrderLineInputParam) UnmarshalJSON(data []byte) error {
 
 // Request to create a sales order.
 //
-// The properties BillToAddressID, BuyerAccountID, Lines, PriorityCode,
-// ShipToAddressID are required.
+// The properties BuyerAccountID, Lines, PriorityCode are required.
 type CreateSalesOrderRequestParam struct {
-	// Bill-to address ID.
-	//
-	// Must reference an existing address on the order's owner or buyer account.
-	BillToAddressID string `json:"bill_to_address_id" api:"required"`
 	// ID of the customer account the order is for.
 	BuyerAccountID string `json:"buyer_account_id" api:"required"`
 	// The line items to put on the order.
@@ -455,10 +460,11 @@ type CreateSalesOrderRequestParam struct {
 	//
 	// Any of "low", "normal", "high".
 	PriorityCode CreateSalesOrderRequestPriorityCode `json:"priority_code,omitzero" api:"required"`
-	// Ship-to address ID.
+	// Bill-to address ID.
 	//
 	// Must reference an existing address on the order's owner or buyer account.
-	ShipToAddressID string `json:"ship_to_address_id" api:"required"`
+	// Required unless `bill_to_address` is sent instead.
+	BillToAddressID param.Opt[string] `json:"bill_to_address_id,omitzero"`
 	// Carrier billing account number charged when `carrier_billing_type` is
 	// `third_party`.
 	CarrierBillingAccountNumber param.Opt[string] `json:"carrier_billing_account_number,omitzero"`
@@ -516,6 +522,11 @@ type CreateSalesOrderRequestParam struct {
 	// nobody can ship on is not a deadline. Mutually exclusive with promised_at and
 	// lead_time_override_days.
 	ShipByOverrideDate param.Opt[time.Time] `json:"ship_by_override_date,omitzero" format:"date-time"`
+	// Ship-to address ID.
+	//
+	// Must reference an existing address on the order's owner or buyer account.
+	// Required unless `ship_to_address` is sent instead.
+	ShipToAddressID param.Opt[string] `json:"ship_to_address_id,omitzero"`
 	// ID of the shipping terms for the order.
 	//
 	// Falls back to the customer's default shipping term; the order is rejected when
@@ -525,6 +536,15 @@ type CreateSalesOrderRequestParam struct {
 	//
 	// Each must be a user on the customer's account.
 	AcknowledgementEmailContacts []SalesOrderEmailContactInputParam `json:"acknowledgement_email_contacts,omitzero"`
+	// An address saved together with the record that uses it, under that record's own
+	// permission.
+	//
+	// Without `id`, a new address is created from these fields, so `name` and
+	// `country` are required. With `id`, that saved address is updated: omitted fields
+	// are left unchanged, and `null` clears `phone`, `email`, `receive_calendar_id` or
+	// `street_line_2`. The address must already belong to the account the record saves
+	// it in.
+	BillToAddress InlineAddressInputParam `json:"bill_to_address,omitzero"`
 	// Who is billed for freight.
 	//
 	//   - `sender`: the sender pays for shipping.
@@ -537,6 +557,15 @@ type CreateSalesOrderRequestParam struct {
 	//
 	// Each must be a user on the customer's account.
 	InvoiceEmailContacts []SalesOrderEmailContactInputParam `json:"invoice_email_contacts,omitzero"`
+	// An address saved together with the record that uses it, under that record's own
+	// permission.
+	//
+	// Without `id`, a new address is created from these fields, so `name` and
+	// `country` are required. With `id`, that saved address is updated: omitted fields
+	// are left unchanged, and `null` clears `phone`, `email`, `receive_calendar_id` or
+	// `street_line_2`. The address must already belong to the account the record saves
+	// it in.
+	ShipToAddress InlineAddressInputParam `json:"ship_to_address,omitzero"`
 	paramObj
 }
 
@@ -717,6 +746,69 @@ type FreightPolicy string
 const (
 	FreightPolicyFreeFreight   FreightPolicy = "free_freight"
 	FreightPolicyBilledFreight FreightPolicy = "billed_freight"
+)
+
+// An address saved together with the record that uses it, under that record's own
+// permission.
+//
+// Without `id`, a new address is created from these fields, so `name` and
+// `country` are required. With `id`, that saved address is updated: omitted fields
+// are left unchanged, and `null` clears `phone`, `email`, `receive_calendar_id` or
+// `street_line_2`. The address must already belong to the account the record saves
+// it in.
+type InlineAddressInputParam struct {
+	// Email address associated with the address.
+	Email param.Opt[string] `json:"email,omitzero"`
+	// Phone number associated with the address.
+	Phone param.Opt[string] `json:"phone,omitzero"`
+	// The operating calendar naming the days this dock accepts freight, overriding the
+	// customer's own.
+	ReceiveCalendarID param.Opt[string] `json:"receive_calendar_id,omitzero"`
+	// Second line of the street address.
+	StreetLine2 param.Opt[string] `json:"street_line_2,omitzero"`
+	// ID of a saved address to update instead of creating a new one.
+	ID param.Opt[string] `json:"id,omitzero"`
+	// Two-letter ISO 3166-1 country code, such as `US`. Required when `id` is omitted.
+	Country param.Opt[string] `json:"country,omitzero"`
+	// City or locality.
+	Locality param.Opt[string] `json:"locality,omitzero"`
+	// Display name of the address. Required when `id` is omitted.
+	Name param.Opt[string] `json:"name,omitzero"`
+	// Postal or ZIP code.
+	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
+	// State or administrative area.
+	State param.Opt[string] `json:"state,omitzero"`
+	// First line of the street address.
+	StreetLine1 param.Opt[string] `json:"street_line_1,omitzero"`
+	// How the address is used.
+	//
+	//   - `standard`: a normal shipping or billing address.
+	//   - `drop_ship`: an address an order is shipped to directly, typically a third
+	//     party or end customer rather than the account itself.
+	//
+	// Any of "standard", "drop_ship".
+	Type InlineAddressInputType `json:"type,omitzero"`
+	paramObj
+}
+
+func (r InlineAddressInputParam) MarshalJSON() (data []byte, err error) {
+	type shadow InlineAddressInputParam
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *InlineAddressInputParam) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// How the address is used.
+//
+//   - `standard`: a normal shipping or billing address.
+//   - `drop_ship`: an address an order is shipped to directly, typically a third
+//     party or end customer rather than the account itself.
+type InlineAddressInputType string
+
+const (
+	InlineAddressInputTypeStandard InlineAddressInputType = "standard"
+	InlineAddressInputTypeDropShip InlineAddressInputType = "drop_ship"
 )
 
 // A single page of resources, together with the metadata needed to page through
@@ -1669,8 +1761,8 @@ type UpdateSalesOrderRequestParam struct {
 	ShipByOverrideDate param.Opt[time.Time] `json:"ship_by_override_date,omitzero" format:"date-time"`
 	// Billing address ID.
 	//
-	// Re-points the order to an existing address. To change an address's contents, use
-	// the update-address endpoint.
+	// Re-points the order to an existing address. To change the address's contents
+	// with the order, send `billing_address` instead.
 	BillingAddressID param.Opt[string] `json:"billing_address_id,omitzero"`
 	// ID of the carrier that will ship the order.
 	CarrierID param.Opt[string] `json:"carrier_id,omitzero"`
@@ -1683,8 +1775,8 @@ type UpdateSalesOrderRequestParam struct {
 	PaymentTermID param.Opt[string] `json:"payment_term_id,omitzero"`
 	// Shipping address ID.
 	//
-	// Re-points the order to an existing address. To change an address's contents, use
-	// the update-address endpoint.
+	// Re-points the order to an existing address. To change the address's contents
+	// with the order, send `shipping_address` instead.
 	ShippingAddressID param.Opt[string] `json:"shipping_address_id,omitzero"`
 	// ID of the shipping terms for the order.
 	ShippingTermID param.Opt[string] `json:"shipping_term_id,omitzero"`
@@ -1708,6 +1800,15 @@ type UpdateSalesOrderRequestParam struct {
 	//
 	// Any of "not_sent", "sent".
 	AcknowledgmentStatus UpdateSalesOrderRequestAcknowledgmentStatus `json:"acknowledgment_status,omitzero"`
+	// An address saved together with the record that uses it, under that record's own
+	// permission.
+	//
+	// Without `id`, a new address is created from these fields, so `name` and
+	// `country` are required. With `id`, that saved address is updated: omitted fields
+	// are left unchanged, and `null` clears `phone`, `email`, `receive_calendar_id` or
+	// `street_line_2`. The address must already belong to the account the record saves
+	// it in.
+	BillingAddress InlineAddressInputParam `json:"billing_address,omitzero"`
 	// Replaces the invoice email contacts on the order.
 	//
 	// An empty list clears all contacts; omitting the field leaves existing contacts
@@ -1717,6 +1818,15 @@ type UpdateSalesOrderRequestParam struct {
 	//
 	// Any of "low", "normal", "high".
 	PriorityCode UpdateSalesOrderRequestPriorityCode `json:"priority_code,omitzero"`
+	// An address saved together with the record that uses it, under that record's own
+	// permission.
+	//
+	// Without `id`, a new address is created from these fields, so `name` and
+	// `country` are required. With `id`, that saved address is updated: omitted fields
+	// are left unchanged, and `null` clears `phone`, `email`, `receive_calendar_id` or
+	// `street_line_2`. The address must already belong to the account the record saves
+	// it in.
+	ShippingAddress InlineAddressInputParam `json:"shipping_address,omitzero"`
 	paramObj
 }
 
@@ -1881,11 +1991,10 @@ type SaleSalesOrderListParams struct {
 	// `previous_page_url` to fetch the adjacent page. Omit to start from the first
 	// page.
 	Cursor param.Opt[string] `query:"cursor,omitzero" json:"-"`
-	// Latest order creation date to include, in `YYYY-MM-DD` format.
-	//
-	// Compared against the creation timestamp at the start of that day, so orders
-	// created later on the end date itself are excluded; pass the following day to
-	// include them.
+	// Only include orders created at or before the start of this date (`YYYY-MM-DD`,
+	// UTC), so orders created later on the end date itself are excluded; pass the
+	// following day to include them. A full timestamp (RFC 3339) is also accepted and
+	// used as given.
 	EndsAt param.Opt[string] `query:"ends_at,omitzero" json:"-"`
 	// Maximum number of results to return in a single page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
@@ -1905,7 +2014,8 @@ type SaleSalesOrderListParams struct {
 	// Latest ship-by date to include, in `YYYY-MM-DD` format. Inclusive of the date
 	// itself.
 	ShipByBefore param.Opt[string] `query:"ship_by_before,omitzero" json:"-"`
-	// Earliest order creation date to include, in `YYYY-MM-DD` format.
+	// Only include orders created on or after this date (`YYYY-MM-DD`, UTC). A full
+	// timestamp (RFC 3339) is also accepted, to bound the range at a local midnight.
 	StartsAt param.Opt[string] `query:"starts_at,omitzero" json:"-"`
 	// Restricts results to orders placed by customers belonging to any of these
 	// account groups.

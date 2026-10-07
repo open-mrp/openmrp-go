@@ -61,8 +61,9 @@ func (r *CoreAuditEventService) Get(ctx context.Context, id string, query CoreAu
 //
 // Results cover every change where your account is either the acting account or
 // the account that was acted upon, so a customer's or supplier's changes to your
-// records appear alongside your own. The `q` parameter searches the resource type,
-// action, resource ID, and originating request ID.
+// records appear alongside your own. The `q` parameter matches a resource ID, an
+// originating request ID, a resource type or an action exactly; a type or action
+// can be given as its code (`sales_order`) or its name (`Sales Order`).
 //
 // This endpoint requires the permission: `audit_events:read`.
 func (r *CoreAuditEventService) List(ctx context.Context, query CoreAuditEventListParams, opts ...option.RequestOption) (res *ListAuditEvent, err error) {
@@ -190,7 +191,8 @@ type AuditEvent struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -253,7 +255,10 @@ type AuditEvent struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	ResourceType AuditEventResourceType `json:"resource_type" api:"required"`
 	// Originating client IP address.
 	SourceIP string `json:"source_ip" api:"required"`
@@ -440,6 +445,10 @@ const (
 	AuditEventResourceTypeSalesTotals                          AuditEventResourceType = "sales_totals"
 	AuditEventResourceTypeSalesBreakdown                       AuditEventResourceType = "sales_breakdown"
 	AuditEventResourceTypeSalesInvoice                         AuditEventResourceType = "sales_invoice"
+	AuditEventResourceTypeOpenOrdersSummary                    AuditEventResourceType = "open_orders_summary"
+	AuditEventResourceTypeOpenOrderProduct                     AuditEventResourceType = "open_order_product"
+	AuditEventResourceTypeOpenOrder                            AuditEventResourceType = "open_order"
+	AuditEventResourceTypeOpenOrderLine                        AuditEventResourceType = "open_order_line"
 	AuditEventResourceTypeNewCustomer                          AuditEventResourceType = "new_customer"
 	AuditEventResourceTypeScheduleOrderCoverage                AuditEventResourceType = "schedule_order_coverage"
 	AuditEventResourceTypeScheduleOrderCoverageLine            AuditEventResourceType = "schedule_order_coverage_line"
@@ -640,6 +649,12 @@ const (
 	AuditEventResourceTypePickRelated                          AuditEventResourceType = "pick_related"
 	AuditEventResourceTypePickTotals                           AuditEventResourceType = "pick_totals"
 	AuditEventResourceTypePickStageTotal                       AuditEventResourceType = "pick_stage_total"
+	AuditEventResourceTypeAnalyzeProductionCostsResponse       AuditEventResourceType = "analyze_production_costs_response"
+	AuditEventResourceTypeProductionCost                       AuditEventResourceType = "production_cost"
+	AuditEventResourceTypeProductionCostTotals                 AuditEventResourceType = "production_cost_totals"
+	AuditEventResourceTypeProductionCostDepartment             AuditEventResourceType = "production_cost_department"
+	AuditEventResourceTypeProductionCostCategory               AuditEventResourceType = "production_cost_category"
+	AuditEventResourceTypeProductionCostDepartmentCategory     AuditEventResourceType = "production_cost_department_category"
 )
 
 // Field-level before/after transition recorded during a mutation.
@@ -652,9 +667,11 @@ type AuditFieldChange struct {
 	Field string `json:"field" api:"required"`
 	// New value as a JSON fragment.
 	//
-	// `null` on `delete` events, where the field has no remaining value. Encoded as a
-	// JSON value (object, array, string, number, boolean, or null), not a JSON-encoded
-	// string.
+	// `null` on `delete` events, where the field has no remaining value.
+	//
+	// Both values are `null` on a change to a cost field, such as a unit cost or labor
+	// rate, unless the caller holds `costs:read`. Encoded as a JSON value (object,
+	// array, string, number, boolean, or null), not a JSON-encoded string.
 	NewValue any `json:"new_value" api:"required"`
 	// Resource type identifier.
 	//
@@ -810,7 +827,8 @@ type ListObjectType struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -873,7 +891,10 @@ type ListObjectType struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	Data []string `json:"data" api:"required"`
 	// Resource type identifier.
 	//
@@ -1024,7 +1045,8 @@ type CoreAuditEventListParams struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -1087,7 +1109,10 @@ type CoreAuditEventListParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	ResourceTypes []string `query:"resource_types,omitzero" json:"-"`
 	// Scope results to a root record's entire history tree.
 	//
@@ -1131,7 +1156,8 @@ type CoreAuditEventListParams struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -1194,7 +1220,10 @@ type CoreAuditEventListParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	RootResourceType CoreAuditEventListParamsRootResourceType `query:"root_resource_type,omitzero" json:"-"`
 	// Filter by the _target_ account the mutation was performed against (the event's
 	// `account`).
@@ -1345,6 +1374,10 @@ const (
 	CoreAuditEventListParamsRootResourceTypeSalesTotals                          CoreAuditEventListParamsRootResourceType = "sales_totals"
 	CoreAuditEventListParamsRootResourceTypeSalesBreakdown                       CoreAuditEventListParamsRootResourceType = "sales_breakdown"
 	CoreAuditEventListParamsRootResourceTypeSalesInvoice                         CoreAuditEventListParamsRootResourceType = "sales_invoice"
+	CoreAuditEventListParamsRootResourceTypeOpenOrdersSummary                    CoreAuditEventListParamsRootResourceType = "open_orders_summary"
+	CoreAuditEventListParamsRootResourceTypeOpenOrderProduct                     CoreAuditEventListParamsRootResourceType = "open_order_product"
+	CoreAuditEventListParamsRootResourceTypeOpenOrder                            CoreAuditEventListParamsRootResourceType = "open_order"
+	CoreAuditEventListParamsRootResourceTypeOpenOrderLine                        CoreAuditEventListParamsRootResourceType = "open_order_line"
 	CoreAuditEventListParamsRootResourceTypeNewCustomer                          CoreAuditEventListParamsRootResourceType = "new_customer"
 	CoreAuditEventListParamsRootResourceTypeScheduleOrderCoverage                CoreAuditEventListParamsRootResourceType = "schedule_order_coverage"
 	CoreAuditEventListParamsRootResourceTypeScheduleOrderCoverageLine            CoreAuditEventListParamsRootResourceType = "schedule_order_coverage_line"
@@ -1545,4 +1578,10 @@ const (
 	CoreAuditEventListParamsRootResourceTypePickRelated                          CoreAuditEventListParamsRootResourceType = "pick_related"
 	CoreAuditEventListParamsRootResourceTypePickTotals                           CoreAuditEventListParamsRootResourceType = "pick_totals"
 	CoreAuditEventListParamsRootResourceTypePickStageTotal                       CoreAuditEventListParamsRootResourceType = "pick_stage_total"
+	CoreAuditEventListParamsRootResourceTypeAnalyzeProductionCostsResponse       CoreAuditEventListParamsRootResourceType = "analyze_production_costs_response"
+	CoreAuditEventListParamsRootResourceTypeProductionCost                       CoreAuditEventListParamsRootResourceType = "production_cost"
+	CoreAuditEventListParamsRootResourceTypeProductionCostTotals                 CoreAuditEventListParamsRootResourceType = "production_cost_totals"
+	CoreAuditEventListParamsRootResourceTypeProductionCostDepartment             CoreAuditEventListParamsRootResourceType = "production_cost_department"
+	CoreAuditEventListParamsRootResourceTypeProductionCostCategory               CoreAuditEventListParamsRootResourceType = "production_cost_category"
+	CoreAuditEventListParamsRootResourceTypeProductionCostDepartmentCategory     CoreAuditEventListParamsRootResourceType = "production_cost_department_category"
 )

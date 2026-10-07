@@ -139,6 +139,9 @@ type AccountGroup struct {
 	//   - `commission_exempt`: orders from accounts in this group are exempt from
 	//     commission.
 	//
+	// Null to customer and supplier portal users, like the rest of your commission
+	// settings.
+	//
 	// Any of "commission_applied", "commission_exempt".
 	CommissionPolicy AccountGroupCommissionPolicy `json:"commission_policy" api:"required"`
 	// Creation timestamp.
@@ -207,6 +210,9 @@ func (r *AccountGroup) UnmarshalJSON(data []byte) error {
 //     in this group.
 //   - `commission_exempt`: orders from accounts in this group are exempt from
 //     commission.
+//
+// Null to customer and supplier portal users, like the rest of your commission
+// settings.
 type AccountGroupCommissionPolicy string
 
 const (

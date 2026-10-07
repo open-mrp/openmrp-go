@@ -39,6 +39,8 @@ func NewCatalogMaterialActionService(opts ...option.RequestOption) (r CatalogMat
 
 // Creates or updates multiple materials for the account, matched by SKU. Validates
 // and resolves synchronously, then writes asynchronously — 202 with a job to poll.
+//
+// At most 1,000 materials and an 8 MB request body per call.
 func (r *CatalogMaterialActionService) BulkUpsert(ctx context.Context, params CatalogMaterialActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/materials/actions/bulk-upsert"

@@ -133,6 +133,9 @@ type ProductionScheduleSettings struct {
 	// the typical changeover duration it prices the setup cost that decides economic
 	// campaign sizes. The constraint department's own labor rate takes precedence when
 	// it has one, leaving this as the fallback.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	ChangeoverLaborRate float64 `json:"changeover_labor_rate" api:"required"`
 	// Longest plausible changeover, and the ceiling of the changeover model.
 	ChangeoverMaxMinutes float64 `json:"changeover_max_minutes" api:"required"`
@@ -444,6 +447,9 @@ type UpdateProductionScheduleSettingsRequestParam struct {
 	// rate, because one person works a single machine through a changeover. The
 	// constraint department's own labor rate takes precedence when it has one, leaving
 	// this as the fallback.
+	//
+	// Ignored unless the caller holds `costs:read`: the stored rate is kept, because a
+	// caller who cannot read it cannot send it back.
 	ChangeoverLaborRate float64 `json:"changeover_labor_rate" api:"required"`
 	// Longest plausible changeover, and the ceiling of the changeover model.
 	ChangeoverMaxMinutes float64 `json:"changeover_max_minutes" api:"required"`

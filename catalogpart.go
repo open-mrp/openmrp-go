@@ -49,8 +49,11 @@ func NewCatalogPartService(opts ...option.RequestOption) (r CatalogPartService) 
 // Inventory tracking for the new part starts at a zero on-hand quantity in the
 // category's base unit.
 //
-// This endpoint requires the permissions: `parts:create`, `customers:update`,
-// `suppliers:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `parts:create`.
 func (r *CatalogPartService) New(ctx context.Context, params CatalogPartNewParams, opts ...option.RequestOption) (res *Part, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/parts"
@@ -60,8 +63,11 @@ func (r *CatalogPartService) New(ctx context.Context, params CatalogPartNewParam
 
 // Returns a part by ID.
 //
-// This endpoint requires the permissions: `parts:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `parts:read`.
 func (r *CatalogPartService) Get(ctx context.Context, id string, query CatalogPartGetParams, opts ...option.RequestOption) (res *Part, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -75,12 +81,15 @@ func (r *CatalogPartService) Get(ctx context.Context, id string, query CatalogPa
 
 // Partially updates a part.
 //
-// Fields not provided retain their current values. Only the SKU, description, and
-// notes are editable here; the part's category and attributes are changed through
-// the item endpoints.
+// Fields not provided retain their current values. The SKU, description, notes,
+// and category are editable here; the part's attributes are changed through the
+// item endpoints.
 //
-// This endpoint requires the permissions: `parts:update`, `customers:update`,
-// `suppliers:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `parts:update`.
 func (r *CatalogPartService) Update(ctx context.Context, id string, params CatalogPartUpdateParams, opts ...option.RequestOption) (res *Part, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -99,8 +108,11 @@ func (r *CatalogPartService) Update(ctx context.Context, id string, params Catal
 // the parts whose SKU matches it most closely are returned first, ordered by
 // creation time within each level of match.
 //
-// This endpoint requires the permissions: `parts:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `parts:read`.
 func (r *CatalogPartService) List(ctx context.Context, query CatalogPartListParams, opts ...option.RequestOption) (res *ListPart, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/parts"
@@ -114,8 +126,11 @@ func (r *CatalogPartService) List(ctx context.Context, query CatalogPartListPara
 // other endpoints, but the record is retained. Deleting an already-deleted part
 // returns an error.
 //
-// This endpoint requires the permissions: `parts:delete`, `customers:update`,
-// `suppliers:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `parts:delete`.
 func (r *CatalogPartService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *Part, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -261,6 +276,13 @@ type UpdatePartRequestParam struct {
 	Description param.Opt[string] `json:"description,omitzero"`
 	// New free-form notes about the part.
 	Notes param.Opt[string] `json:"notes,omitzero"`
+	// ID of the item category to move the part to.
+	//
+	// The move is the one Change Item Category makes: the category has to be a product
+	// category and has to carry the properties of every attribute the part already
+	// has, and the part's rate units switch to the category's base unit while their
+	// numbers stay as they were. It is applied before the other fields in the request.
+	CategoryID param.Opt[string] `json:"category_id,omitzero"`
 	// New stock keeping unit code for the part.
 	//
 	// Must remain unique within the account; a conflict error is returned if another

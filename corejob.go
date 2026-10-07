@@ -44,8 +44,14 @@ func NewCoreJobService(opts ...option.RequestOption) (r CoreJobService) {
 // `Location` to observe its outcome. A completed export carries the link to its
 // file on `export.url`.
 //
-// This endpoint requires the permissions: `jobs:read`, `customers:read`,
-// `suppliers:read`.
+// A customer or supplier portal reads only the jobs it started itself; any other
+// job is reported as not found.
+//
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `jobs:read`.
 func (r *CoreJobService) Get(ctx context.Context, id string, query CoreJobGetParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -142,7 +148,8 @@ type Job struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -205,7 +212,10 @@ type Job struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	ResourceType JobResourceType `json:"resource_type" api:"required"`
 	// A single page of resources, together with the metadata needed to page through
 	// the rest of the result set.
@@ -389,6 +399,10 @@ const (
 	JobResourceTypeSalesTotals                          JobResourceType = "sales_totals"
 	JobResourceTypeSalesBreakdown                       JobResourceType = "sales_breakdown"
 	JobResourceTypeSalesInvoice                         JobResourceType = "sales_invoice"
+	JobResourceTypeOpenOrdersSummary                    JobResourceType = "open_orders_summary"
+	JobResourceTypeOpenOrderProduct                     JobResourceType = "open_order_product"
+	JobResourceTypeOpenOrder                            JobResourceType = "open_order"
+	JobResourceTypeOpenOrderLine                        JobResourceType = "open_order_line"
 	JobResourceTypeNewCustomer                          JobResourceType = "new_customer"
 	JobResourceTypeScheduleOrderCoverage                JobResourceType = "schedule_order_coverage"
 	JobResourceTypeScheduleOrderCoverageLine            JobResourceType = "schedule_order_coverage_line"
@@ -589,6 +603,12 @@ const (
 	JobResourceTypePickRelated                          JobResourceType = "pick_related"
 	JobResourceTypePickTotals                           JobResourceType = "pick_totals"
 	JobResourceTypePickStageTotal                       JobResourceType = "pick_stage_total"
+	JobResourceTypeAnalyzeProductionCostsResponse       JobResourceType = "analyze_production_costs_response"
+	JobResourceTypeProductionCost                       JobResourceType = "production_cost"
+	JobResourceTypeProductionCostTotals                 JobResourceType = "production_cost_totals"
+	JobResourceTypeProductionCostDepartment             JobResourceType = "production_cost_department"
+	JobResourceTypeProductionCostCategory               JobResourceType = "production_cost_category"
+	JobResourceTypeProductionCostDepartmentCategory     JobResourceType = "production_cost_department_category"
 )
 
 // How far the job has got.
@@ -789,14 +809,14 @@ type ResponseError struct {
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
 	// "invalid_credentials", "insufficient_permissions", "payment_required",
 	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
-	// "resource_conflict", "resource_gone", "idempotency_in_progress",
-	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
-	// "parameter_missing", "parameter_invalid", "parameter_unknown",
-	// "parameters_exclusive", "internal_error", "service_unavailable",
-	// "external_service_error", "timeout", "connection_error", "request_timeout",
-	// "client_closed_request", "api_version_required", "api_version_invalid",
-	// "api_version_too_old".
+	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
+	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
+	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
+	// "parameter_unknown", "parameters_exclusive", "internal_error",
+	// "service_unavailable", "external_service_error", "timeout", "connection_error",
+	// "request_timeout", "client_closed_request", "api_version_required",
+	// "api_version_invalid", "api_version_too_old".
 	Code ResponseErrorCode `json:"code" api:"required"`
 	// A URL to documentation about the error.
 	DocURL string `json:"doc_url" api:"required"`
@@ -853,6 +873,7 @@ const (
 	ResponseErrorCodeMissingField            ResponseErrorCode = "missing_field"
 	ResponseErrorCodeInvalidFormat           ResponseErrorCode = "invalid_format"
 	ResponseErrorCodeMethodNotAllowed        ResponseErrorCode = "method_not_allowed"
+	ResponseErrorCodeRequestTooLarge         ResponseErrorCode = "request_too_large"
 	ResponseErrorCodeResourceNotFound        ResponseErrorCode = "resource_not_found"
 	ResponseErrorCodeResourceExists          ResponseErrorCode = "resource_exists"
 	ResponseErrorCodeResourceConflict        ResponseErrorCode = "resource_conflict"

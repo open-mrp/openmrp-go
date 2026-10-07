@@ -62,8 +62,11 @@ func (r *OperationCarrierService) New(ctx context.Context, params OperationCarri
 
 // Returns a carrier by ID.
 //
-// This endpoint requires the permissions: `carriers:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `carriers:read`.
 func (r *OperationCarrierService) Get(ctx context.Context, id string, query OperationCarrierGetParams, opts ...option.RequestOption) (res *Carrier, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -97,8 +100,11 @@ func (r *OperationCarrierService) Update(ctx context.Context, id string, params 
 // This covers the carriers you have created plus the platform-provided system
 // carriers that every account shares.
 //
-// This endpoint requires the permissions: `carriers:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `carriers:read`.
 func (r *OperationCarrierService) List(ctx context.Context, query OperationCarrierListParams, opts ...option.RequestOption) (res *ListCarrier, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/operations/carriers"

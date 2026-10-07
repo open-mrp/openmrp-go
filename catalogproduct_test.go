@@ -104,6 +104,7 @@ func TestCatalogProductUpdateWithOptionalParams(t *testing.T) {
 		openmrp.CatalogProductUpdateParams{
 			Include: []string{"product_line"},
 			UpdateProductRequest: openmrp.UpdateProductRequestParam{
+				CategoryID:       openmrp.String("ic_d06g9c6yc9ck"),
 				Description:      openmrp.String("Wireless barcode scanner with charging cradle (v2)"),
 				Notes:            openmrp.String("Firmware 2.1 improves Bluetooth pairing reliability."),
 				PortalVisibility: openmrp.UpdateProductRequestPortalVisibilityVisible,

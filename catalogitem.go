@@ -149,6 +149,8 @@ type Item struct {
 	// Item description.
 	Description string `json:"description" api:"required"`
 	// Free-form notes about the item.
+	//
+	// Null to customer and supplier portal users: they are your own team's notes.
 	Notes string `json:"notes" api:"required"`
 	// Resource type identifier.
 	//
@@ -228,6 +230,8 @@ type ItemCategory struct {
 	// Display name of the item category.
 	Name string `json:"name" api:"required"`
 	// Free-form notes about the item category.
+	//
+	// Null to customer and supplier portal users: they are your own team's notes.
 	Notes string `json:"notes" api:"required"`
 	// Resource type identifier.
 	//
@@ -547,6 +551,8 @@ type CatalogItemListParams struct {
 	// Any of "all", "initial_only".
 	SubassemblyFilter CatalogItemListParamsSubassemblyFilter `query:"subassembly_filter,omitzero" json:"-"`
 	// Filter to items of these types (`product`, `material`, `part`).
+	//
+	// Any of "product", "material", "part".
 	Types []string `query:"types,omitzero" json:"-"`
 	paramObj
 }

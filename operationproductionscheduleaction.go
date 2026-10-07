@@ -199,8 +199,7 @@ func (r *OperationProductionScheduleActionService) Regenerate(ctx context.Contex
 // outright, since that is far more likely to be a misconfigured lot size than a
 // real week's work.
 //
-// This endpoint requires the permissions: `production_schedules:update`,
-// `production_runs:create`.
+// This endpoint requires the permission: `production_schedules:update`.
 func (r *OperationProductionScheduleActionService) ReleaseWeek(ctx context.Context, id string, body OperationProductionScheduleActionReleaseWeekParams, opts ...option.RequestOption) (res *ReleaseScheduleWeekResult, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -877,6 +876,9 @@ type SchedulePolicy struct {
 	// Any of "make_to_stock", "make_to_order".
 	FulfillmentPolicy SchedulePolicyFulfillmentPolicy `json:"fulfillment_policy" api:"required"`
 	// Annual cost of holding one unit.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	HoldingCost float64 `json:"holding_cost" api:"required"`
 	// Entity is a polymorphic reference to any resource in the system.
 	Item Entity `json:"item" api:"required"`
@@ -902,10 +904,16 @@ type SchedulePolicy struct {
 	// How long one unit occupies the constraint.
 	SecondsPerUnit float64 `json:"seconds_per_unit" api:"required"`
 	// Cost of one changeover, used as the setup cost in the lot-size calculation.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	SetupCost float64 `json:"setup_cost" api:"required"`
 	// SKU of the item.
 	SKU string `json:"sku" api:"required"`
 	// Standard cost per unit.
+	//
+	// Null unless the caller holds `costs:read`; customer and supplier portal users
+	// never see it.
 	UnitCost float64 `json:"unit_cost" api:"required"`
 	// Demand used for planning, per week.
 	WeeklyDemand float64 `json:"weekly_demand" api:"required"`

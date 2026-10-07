@@ -156,6 +156,8 @@ type Conversation struct {
 	// While held, the conversation is exempt from automatic retention purging and from
 	// redaction until the hold is released.
 	//
+	// Null to customer and supplier portal users: a hold is your own legal matter.
+	//
 	// Any of "released", "held".
 	LegalHold ConversationLegalHold `json:"legal_hold" api:"required"`
 	// Resource type identifier.
@@ -257,6 +259,8 @@ const (
 //
 // While held, the conversation is exempt from automatic retention purging and from
 // redaction until the hold is released.
+//
+// Null to customer and supplier portal users: a hold is your own legal matter.
 type ConversationLegalHold string
 
 const (
@@ -500,6 +504,49 @@ const (
 	ConversationParticipantTypeCustomer ConversationParticipantType = "customer"
 )
 
+// A member to seat in a new group conversation, with the role they start with.
+//
+// The properties AccountUserID, Role are required.
+type ConversationParticipantInputParam struct {
+	// The account user to add.
+	AccountUserID string `json:"account_user_id" api:"required"`
+	// The role the member starts with.
+	//
+	//   - `owner`: can rename or delete the conversation and manage members and roles,
+	//     alongside you.
+	//   - `admin`: can add and remove members and rename the conversation.
+	//   - `member`: can post, leave, mute, and react.
+	//   - `viewer`: read-only access.
+	//
+	// Any of "owner", "admin", "member", "viewer".
+	Role ConversationParticipantInputRole `json:"role,omitzero" api:"required"`
+	paramObj
+}
+
+func (r ConversationParticipantInputParam) MarshalJSON() (data []byte, err error) {
+	type shadow ConversationParticipantInputParam
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ConversationParticipantInputParam) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The role the member starts with.
+//
+//   - `owner`: can rename or delete the conversation and manage members and roles,
+//     alongside you.
+//   - `admin`: can add and remove members and rename the conversation.
+//   - `member`: can post, leave, mute, and react.
+//   - `viewer`: read-only access.
+type ConversationParticipantInputRole string
+
+const (
+	ConversationParticipantInputRoleOwner  ConversationParticipantInputRole = "owner"
+	ConversationParticipantInputRoleAdmin  ConversationParticipantInputRole = "admin"
+	ConversationParticipantInputRoleMember ConversationParticipantInputRole = "member"
+	ConversationParticipantInputRoleViewer ConversationParticipantInputRole = "viewer"
+)
+
 // Request to create a conversation.
 //
 // The properties ParticipantAccountUserIDs, Type are required.
@@ -536,6 +583,16 @@ type CreateConversationRequestParam struct {
 	Title param.Opt[string] `json:"title,omitzero"`
 	// The id of the business record to anchor this conversation to.
 	TopicResourceID param.Opt[string] `json:"topic_resource_id,omitzero"`
+	// Members to seat in a group with the role each starts with.
+	//
+	// Each account user listed here joins the group as those in
+	// `participant_account_user_ids` do, then takes the role given, exactly as if you
+	// set it on the new participant: the change is announced in the thread and
+	// recorded on the participant's history. A user also listed in
+	// `participant_account_user_ids` or on the roster takes the role given here. You
+	// cannot list yourself (you own the group) or the same user twice, and a direct
+	// message takes no roles.
+	Participants []ConversationParticipantInputParam `json:"participants,omitzero"`
 	// The type of business record to anchor this conversation to.
 	//
 	// An anchored conversation is returned when conversations are listed for that
@@ -576,7 +633,8 @@ type CreateConversationRequestParam struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -639,7 +697,10 @@ type CreateConversationRequestParam struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	TopicResourceType CreateConversationRequestTopicResourceType `json:"topic_resource_type,omitzero"`
 	paramObj
 }
@@ -795,6 +856,10 @@ const (
 	CreateConversationRequestTopicResourceTypeSalesTotals                          CreateConversationRequestTopicResourceType = "sales_totals"
 	CreateConversationRequestTopicResourceTypeSalesBreakdown                       CreateConversationRequestTopicResourceType = "sales_breakdown"
 	CreateConversationRequestTopicResourceTypeSalesInvoice                         CreateConversationRequestTopicResourceType = "sales_invoice"
+	CreateConversationRequestTopicResourceTypeOpenOrdersSummary                    CreateConversationRequestTopicResourceType = "open_orders_summary"
+	CreateConversationRequestTopicResourceTypeOpenOrderProduct                     CreateConversationRequestTopicResourceType = "open_order_product"
+	CreateConversationRequestTopicResourceTypeOpenOrder                            CreateConversationRequestTopicResourceType = "open_order"
+	CreateConversationRequestTopicResourceTypeOpenOrderLine                        CreateConversationRequestTopicResourceType = "open_order_line"
 	CreateConversationRequestTopicResourceTypeNewCustomer                          CreateConversationRequestTopicResourceType = "new_customer"
 	CreateConversationRequestTopicResourceTypeScheduleOrderCoverage                CreateConversationRequestTopicResourceType = "schedule_order_coverage"
 	CreateConversationRequestTopicResourceTypeScheduleOrderCoverageLine            CreateConversationRequestTopicResourceType = "schedule_order_coverage_line"
@@ -995,6 +1060,12 @@ const (
 	CreateConversationRequestTopicResourceTypePickRelated                          CreateConversationRequestTopicResourceType = "pick_related"
 	CreateConversationRequestTopicResourceTypePickTotals                           CreateConversationRequestTopicResourceType = "pick_totals"
 	CreateConversationRequestTopicResourceTypePickStageTotal                       CreateConversationRequestTopicResourceType = "pick_stage_total"
+	CreateConversationRequestTopicResourceTypeAnalyzeProductionCostsResponse       CreateConversationRequestTopicResourceType = "analyze_production_costs_response"
+	CreateConversationRequestTopicResourceTypeProductionCost                       CreateConversationRequestTopicResourceType = "production_cost"
+	CreateConversationRequestTopicResourceTypeProductionCostTotals                 CreateConversationRequestTopicResourceType = "production_cost_totals"
+	CreateConversationRequestTopicResourceTypeProductionCostDepartment             CreateConversationRequestTopicResourceType = "production_cost_department"
+	CreateConversationRequestTopicResourceTypeProductionCostCategory               CreateConversationRequestTopicResourceType = "production_cost_category"
+	CreateConversationRequestTopicResourceTypeProductionCostDepartmentCategory     CreateConversationRequestTopicResourceType = "production_cost_department_category"
 )
 
 // A single page of resources, together with the metadata needed to page through
@@ -1174,14 +1245,14 @@ type Message struct {
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
 	// "invalid_credentials", "insufficient_permissions", "payment_required",
 	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "resource_not_found", "resource_exists",
-	// "resource_conflict", "resource_gone", "idempotency_in_progress",
-	// "limit_exceeded", "registration_closed", "rate_limit_exceeded",
-	// "parameter_missing", "parameter_invalid", "parameter_unknown",
-	// "parameters_exclusive", "internal_error", "service_unavailable",
-	// "external_service_error", "timeout", "connection_error", "request_timeout",
-	// "client_closed_request", "api_version_required", "api_version_invalid",
-	// "api_version_too_old".
+	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
+	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
+	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
+	// "parameter_unknown", "parameters_exclusive", "internal_error",
+	// "service_unavailable", "external_service_error", "timeout", "connection_error",
+	// "request_timeout", "client_closed_request", "api_version_required",
+	// "api_version_invalid", "api_version_too_old".
 	AgentErrorCode MessageAgentErrorCode `json:"agent_error_code" api:"required"`
 	// A single execution of an agent, from trigger through completion.
 	AgentRun AgentRun `json:"agent_run" api:"required"`
@@ -1358,6 +1429,7 @@ const (
 	MessageAgentErrorCodeMissingField            MessageAgentErrorCode = "missing_field"
 	MessageAgentErrorCodeInvalidFormat           MessageAgentErrorCode = "invalid_format"
 	MessageAgentErrorCodeMethodNotAllowed        MessageAgentErrorCode = "method_not_allowed"
+	MessageAgentErrorCodeRequestTooLarge         MessageAgentErrorCode = "request_too_large"
 	MessageAgentErrorCodeResourceNotFound        MessageAgentErrorCode = "resource_not_found"
 	MessageAgentErrorCodeResourceExists          MessageAgentErrorCode = "resource_exists"
 	MessageAgentErrorCodeResourceConflict        MessageAgentErrorCode = "resource_conflict"
@@ -1870,7 +1942,8 @@ type MessagingConversationListParams struct {
 	// "analyze_delivery_performance_response", "delivery_performance",
 	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
 	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "new_customer", "schedule_order_coverage",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -1933,7 +2006,10 @@ type MessagingConversationListParams struct {
 	// "customer_pricing_finding", "customer_pricing_summary", "computed_rate",
 	// "computed_quantity", "analyze_realized_margins_response",
 	// "realized_margin_finding", "realized_margin_summary", "shipment_related",
-	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total".
+	// "invoice_related", "pick_related", "pick_totals", "pick_stage_total",
+	// "analyze_production_costs_response", "production_cost",
+	// "production_cost_totals", "production_cost_department",
+	// "production_cost_category", "production_cost_department_category".
 	TopicResourceType MessagingConversationListParamsTopicResourceType `query:"topic_resource_type,omitzero" json:"-"`
 	// Filter by conversation type.
 	//
@@ -2115,6 +2191,10 @@ const (
 	MessagingConversationListParamsTopicResourceTypeSalesTotals                          MessagingConversationListParamsTopicResourceType = "sales_totals"
 	MessagingConversationListParamsTopicResourceTypeSalesBreakdown                       MessagingConversationListParamsTopicResourceType = "sales_breakdown"
 	MessagingConversationListParamsTopicResourceTypeSalesInvoice                         MessagingConversationListParamsTopicResourceType = "sales_invoice"
+	MessagingConversationListParamsTopicResourceTypeOpenOrdersSummary                    MessagingConversationListParamsTopicResourceType = "open_orders_summary"
+	MessagingConversationListParamsTopicResourceTypeOpenOrderProduct                     MessagingConversationListParamsTopicResourceType = "open_order_product"
+	MessagingConversationListParamsTopicResourceTypeOpenOrder                            MessagingConversationListParamsTopicResourceType = "open_order"
+	MessagingConversationListParamsTopicResourceTypeOpenOrderLine                        MessagingConversationListParamsTopicResourceType = "open_order_line"
 	MessagingConversationListParamsTopicResourceTypeNewCustomer                          MessagingConversationListParamsTopicResourceType = "new_customer"
 	MessagingConversationListParamsTopicResourceTypeScheduleOrderCoverage                MessagingConversationListParamsTopicResourceType = "schedule_order_coverage"
 	MessagingConversationListParamsTopicResourceTypeScheduleOrderCoverageLine            MessagingConversationListParamsTopicResourceType = "schedule_order_coverage_line"
@@ -2315,6 +2395,12 @@ const (
 	MessagingConversationListParamsTopicResourceTypePickRelated                          MessagingConversationListParamsTopicResourceType = "pick_related"
 	MessagingConversationListParamsTopicResourceTypePickTotals                           MessagingConversationListParamsTopicResourceType = "pick_totals"
 	MessagingConversationListParamsTopicResourceTypePickStageTotal                       MessagingConversationListParamsTopicResourceType = "pick_stage_total"
+	MessagingConversationListParamsTopicResourceTypeAnalyzeProductionCostsResponse       MessagingConversationListParamsTopicResourceType = "analyze_production_costs_response"
+	MessagingConversationListParamsTopicResourceTypeProductionCost                       MessagingConversationListParamsTopicResourceType = "production_cost"
+	MessagingConversationListParamsTopicResourceTypeProductionCostTotals                 MessagingConversationListParamsTopicResourceType = "production_cost_totals"
+	MessagingConversationListParamsTopicResourceTypeProductionCostDepartment             MessagingConversationListParamsTopicResourceType = "production_cost_department"
+	MessagingConversationListParamsTopicResourceTypeProductionCostCategory               MessagingConversationListParamsTopicResourceType = "production_cost_category"
+	MessagingConversationListParamsTopicResourceTypeProductionCostDepartmentCategory     MessagingConversationListParamsTopicResourceType = "production_cost_department_category"
 )
 
 // Filter by conversation type.

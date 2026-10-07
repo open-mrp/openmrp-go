@@ -11,6 +11,7 @@ import (
 
 	"github.com/open-mrp/openmrp-go/internal/apijson"
 	"github.com/open-mrp/openmrp-go/internal/apiquery"
+	shimjson "github.com/open-mrp/openmrp-go/internal/encoding/json"
 	"github.com/open-mrp/openmrp-go/internal/requestconfig"
 	"github.com/open-mrp/openmrp-go/option"
 	"github.com/open-mrp/openmrp-go/packages/param"
@@ -44,11 +45,34 @@ func NewOperationInventoryChangeLogActionService(opts ...option.RequestOption) (
 // is included in the download, newest first. The download is named for the date
 // range you requested, using `all` in place of a bound you left open.
 //
+// This endpoint is deprecated: the file is built inside the request, so a wide
+// window on a busy account can outlast the request timeout. Use
+// `POST /v1/operations/inventory-change-logs/actions/export` instead, which builds
+// the same file in the background and returns a job to poll.
+//
 // This endpoint requires the permission: `inventory_logs:read`.
 func (r *OperationInventoryChangeLogActionService) Export(ctx context.Context, query OperationInventoryChangeLogActionExportParams, opts ...option.RequestOption) (res *FileDownload, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/operations/inventory-change-logs/actions/export"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return res, err
+}
+
+// Starts an export of every inventory change log the filters select and returns
+// the job that tracks it.
+//
+// Poll the job; once it completes, `export.url` links to the Excel file. The file
+// has one row per change log, newest first, with the same columns as the
+// synchronous export, and is named for the window you asked for —
+// `inventory-change-logs-<starts_at>-<ends_at>.xlsx`, each bound as its UTC date
+// and `all` in place of a bound you left open. A file with more change logs than
+// one worksheet holds continues on further worksheets.
+//
+// This endpoint requires the permission: `inventory_logs:read`.
+func (r *OperationInventoryChangeLogActionService) StartExport(ctx context.Context, params OperationInventoryChangeLogActionStartExportParams, opts ...option.RequestOption) (res *Job, err error) {
+	opts = slices.Concat(r.options, opts)
+	path := "v1/operations/inventory-change-logs/actions/export"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return res, err
 }
 
@@ -66,6 +90,37 @@ type FileDownload struct {
 // Returns the unmodified JSON received from the API
 func (r FileDownload) RawJSON() string { return r.JSON.raw }
 func (r *FileDownload) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Filters which inventory change logs land in the exported file.
+type StartInventoryChangeLogsExportRequestParam struct {
+	// Restricts the file to change logs created on or before this timestamp.
+	EndsAt param.Opt[time.Time] `json:"ends_at,omitzero" format:"date-time"`
+	// Restricts the file to change logs created on or after this timestamp.
+	//
+	// Unlike the list, no default window applies: leave it out to export from the
+	// account's first change.
+	StartsAt param.Opt[time.Time] `json:"starts_at,omitzero" format:"date-time"`
+	// Restricts the file to these action types.
+	//
+	// Any of "scan", "user_action", "system_action", "user_correction".
+	ActionTypes []string `json:"action_types,omitzero"`
+	// Restricts the file to changes made by these users.
+	//
+	// Changes that were recorded without a responsible user are excluded whenever this
+	// filter is set.
+	ChangedByUserIDs []string `json:"changed_by_user_ids,omitzero"`
+	// Restricts the file to changes affecting these items.
+	ItemIDs []string `json:"item_ids,omitzero"`
+	paramObj
+}
+
+func (r StartInventoryChangeLogsExportRequestParam) MarshalJSON() (data []byte, err error) {
+	type shadow StartInventoryChangeLogsExportRequestParam
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *StartInventoryChangeLogsExportRequestParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -91,6 +146,33 @@ type OperationInventoryChangeLogActionExportParams struct {
 // URLQuery serializes [OperationInventoryChangeLogActionExportParams]'s query
 // parameters as `url.Values`.
 func (r OperationInventoryChangeLogActionExportParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
+}
+
+type OperationInventoryChangeLogActionStartExportParams struct {
+	// Sub-objects to expand in the response. When omitted, sub-objects are returned as
+	// `null`.
+	//
+	// Any of "created_by", "created_by.role".
+	Include []string `query:"include,omitzero" json:"-"`
+	// Filters which inventory change logs land in the exported file.
+	StartInventoryChangeLogsExportRequest StartInventoryChangeLogsExportRequestParam
+	paramObj
+}
+
+func (r OperationInventoryChangeLogActionStartExportParams) MarshalJSON() (data []byte, err error) {
+	return shimjson.Marshal(r.StartInventoryChangeLogsExportRequest)
+}
+func (r *OperationInventoryChangeLogActionStartExportParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// URLQuery serializes [OperationInventoryChangeLogActionStartExportParams]'s query
+// parameters as `url.Values`.
+func (r OperationInventoryChangeLogActionStartExportParams) URLQuery() (v url.Values, err error) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,

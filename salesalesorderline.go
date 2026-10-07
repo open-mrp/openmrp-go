@@ -50,8 +50,11 @@ func NewSaleSalesOrderLineService(opts ...option.RequestOption) (r SaleSalesOrde
 // issued, the line is added to its pick as outstanding work and the pick is
 // reopened if it had been finished.
 //
-// This endpoint requires the permissions: `customers:update`, `suppliers:update`,
-// `sales_orders:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `sales_orders:update`.
 func (r *SaleSalesOrderLineService) New(ctx context.Context, id string, params SaleSalesOrderLineNewParams, opts ...option.RequestOption) (res *SalesOrderLine, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -72,8 +75,11 @@ func (r *SaleSalesOrderLineService) New(ctx context.Context, id string, params S
 // carry the full previously ordered quantity follow the new value, while partial
 // ones keep the amount that actually moved.
 //
-// This endpoint requires the permissions: `customers:update`, `suppliers:update`,
-// `sales_orders:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `sales_orders:update`.
 func (r *SaleSalesOrderLineService) Update(ctx context.Context, lineID string, params SaleSalesOrderLineUpdateParams, opts ...option.RequestOption) (res *SalesOrderLine, err error) {
 	opts = slices.Concat(r.options, opts)
 	if params.ID == "" {
@@ -98,8 +104,11 @@ func (r *SaleSalesOrderLineService) Update(ctx context.Context, lineID string, p
 // order's pick is deleted and the order falls back to `estimate` with its reserved
 // inventory released.
 //
-// This endpoint requires the permissions: `customers:update`, `suppliers:update`,
-// `sales_orders:update`.
+// Acting in a customer's account requires `customers:update`, and acting in a
+// supplier's account requires `suppliers:update`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `sales_orders:update`.
 func (r *SaleSalesOrderLineService) Delete(ctx context.Context, lineID string, body SaleSalesOrderLineDeleteParams, opts ...option.RequestOption) (res *SaleSalesOrderLineDeleteResponse, err error) {
 	opts = slices.Concat(r.options, opts)
 	if body.ID == "" {

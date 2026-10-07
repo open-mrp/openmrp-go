@@ -109,6 +109,7 @@ func TestCatalogMaterialUpdateWithOptionalParams(t *testing.T) {
 		openmrp.CatalogMaterialUpdateParams{
 			Include: []string{"item"},
 			UpdateMaterialRequest: openmrp.UpdateMaterialRequestParam{
+				CategoryID:  openmrp.String("ic_d06g9c6yc9ck"),
 				Description: openmrp.String("Cold-rolled 304 stainless steel sheet, 2.0mm"),
 				LeadTime: openmrp.QuantityInputRequestParam{
 					UnitID: "un_82bd37dae5po",

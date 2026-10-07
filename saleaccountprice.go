@@ -61,11 +61,14 @@ func (r *SaleAccountPriceService) New(ctx context.Context, params SaleAccountPri
 
 // Returns an account price by ID.
 //
-// A customer portal user can only retrieve a price whose recipient is their own
-// account or its parent; any other price is reported as not found.
+// A customer or supplier portal user can only retrieve a price whose recipient is
+// their own account or its parent; any other price is reported as not found.
 //
-// This endpoint requires the permissions: `discounts:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `discounts:read`.
 func (r *SaleAccountPriceService) Get(ctx context.Context, id string, query SaleAccountPriceGetParams, opts ...option.RequestOption) (res *AccountPrice, err error) {
 	opts = slices.Concat(r.options, opts)
 	if id == "" {
@@ -100,11 +103,14 @@ func (r *SaleAccountPriceService) Update(ctx context.Context, id string, params 
 // Returns a paginated list of account prices, newest first.
 //
 // The search term matches the recipient customer's name or their customer number.
-// Customer portal users always see only the prices that apply to their own
-// account, whatever `recipient_account_id` is set to.
+// Customer and supplier portal users always see only the prices that apply to
+// their own account, whatever `recipient_account_id` is set to.
 //
-// This endpoint requires the permissions: `discounts:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `discounts:read`.
 func (r *SaleAccountPriceService) List(ctx context.Context, query SaleAccountPriceListParams, opts ...option.RequestOption) (res *ListAccountPrice, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/sales/account-prices"
@@ -368,6 +374,9 @@ type Customer struct {
 	// `price_groups` is `commission_exempt`. Exempt customers never have a sales rep
 	// assigned automatically when an order is created without one.
 	//
+	// Null to customer and supplier portal users, like the rest of your commission
+	// settings.
+	//
 	// Any of "commission_applied", "commission_exempt".
 	CommissionPolicy CustomerCommissionPolicy `json:"commission_policy" api:"required"`
 	// Customer contact information.
@@ -393,6 +402,8 @@ type Customer struct {
 	// The customer's business name, as shown throughout the app and on documents.
 	Name string `json:"name" api:"required"`
 	// Free-form note about the customer.
+	//
+	// Null to customer and supplier portal users: it is your own team's note.
 	Note string `json:"note" api:"required"`
 	// Customer notification settings.
 	NotificationPreferences CustomerNotificationPreferences `json:"notification_preferences" api:"required"`
@@ -490,6 +501,9 @@ func (r *Customer) UnmarshalJSON(data []byte) error {
 // The customer counts as exempt if this field, its `type` group, or any of its
 // `price_groups` is `commission_exempt`. Exempt customers never have a sales rep
 // assigned automatically when an order is created without one.
+//
+// Null to customer and supplier portal users, like the rest of your commission
+// settings.
 type CustomerCommissionPolicy string
 
 const (
@@ -594,7 +608,8 @@ type CustomerDefaults struct {
 	//     dates.
 	//
 	// With none set here the customer inherits its account group's policy, then falls
-	// back to make-to-stock.
+	// back to make-to-stock. Always null to customer and supplier portal users, like
+	// the rest of your production planning.
 	//
 	// Any of "make_to_stock", "make_to_order".
 	FulfillmentPolicy CustomerDefaultsFulfillmentPolicy `json:"fulfillment_policy" api:"required"`
@@ -666,7 +681,8 @@ func (r *CustomerDefaults) UnmarshalJSON(data []byte) error {
 //     dates.
 //
 // With none set here the customer inherits its account group's policy, then falls
-// back to make-to-stock.
+// back to make-to-stock. Always null to customer and supplier portal users, like
+// the rest of your production planning.
 type CustomerDefaultsFulfillmentPolicy string
 
 const (

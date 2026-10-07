@@ -60,8 +60,11 @@ func (r *OperationCarrierServiceLevelService) New(ctx context.Context, carrierID
 
 // Returns a service level by ID.
 //
-// This endpoint requires the permissions: `carriers:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `carriers:read`.
 func (r *OperationCarrierServiceLevelService) Get(ctx context.Context, id string, params OperationCarrierServiceLevelGetParams, opts ...option.RequestOption) (res *ServiceLevel, err error) {
 	opts = slices.Concat(r.options, opts)
 	if params.CarrierID == "" {
@@ -104,8 +107,11 @@ func (r *OperationCarrierServiceLevelService) Update(ctx context.Context, id str
 // Use this rather than the `service_levels` field on the carrier itself when a
 // carrier has more than a handful of services, since that inline list is capped.
 //
-// This endpoint requires the permissions: `carriers:read`, `customers:read`,
-// `suppliers:read`.
+// Acting in a customer's account requires `customers:read`, and acting in a
+// supplier's account requires `suppliers:read`, instead of the permission this
+// endpoint requires in your own account.
+//
+// This endpoint requires the permission: `carriers:read`.
 func (r *OperationCarrierServiceLevelService) List(ctx context.Context, carrierID string, query OperationCarrierServiceLevelListParams, opts ...option.RequestOption) (res *ListServiceLevel, err error) {
 	opts = slices.Concat(r.options, opts)
 	if carrierID == "" {
