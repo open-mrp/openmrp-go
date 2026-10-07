@@ -411,8 +411,15 @@ const (
 // override) the unit price are resolved server-side from the product. The quantity
 // unit must belong to the product's unit group.
 //
-// The properties ProductID, Quantity are required.
+// The properties Metadata, ProductID, Quantity are required.
 type CreateSalesOrderLineInputParam struct {
+	// Key-value pairs to store on the line for your own references, such as its ID in
+	// another system.
+	//
+	// Up to 50 keys. Keys are up to 40 characters and cannot contain `[` or `]`;
+	// values are strings up to 500 characters, and an empty string is stored as one. A
+	// key sent as `null` is not stored.
+	Metadata map[string]string `json:"metadata,omitzero" api:"required"`
 	// ID of the product being ordered.
 	ProductID string `json:"product_id" api:"required"`
 	// An amount together with the unit it is expressed in.
@@ -447,7 +454,7 @@ func (r *CreateSalesOrderLineInputParam) UnmarshalJSON(data []byte) error {
 
 // Request to create a sales order.
 //
-// The properties BuyerAccountID, Lines, PriorityCode are required.
+// The properties BuyerAccountID, Lines, Metadata, PriorityCode are required.
 type CreateSalesOrderRequestParam struct {
 	// ID of the customer account the order is for.
 	BuyerAccountID string `json:"buyer_account_id" api:"required"`
@@ -456,6 +463,13 @@ type CreateSalesOrderRequestParam struct {
 	// The freight line, and the discount line when `order_discount_id` is supplied,
 	// are added on top of these automatically.
 	Lines []CreateSalesOrderLineInputParam `json:"lines,omitzero" api:"required"`
+	// Key-value pairs to store on the order for your own references, such as its ID in
+	// another system.
+	//
+	// Up to 50 keys. Keys are up to 40 characters and cannot contain `[` or `]`;
+	// values are strings up to 500 characters, and an empty string is stored as one. A
+	// key sent as `null` is not stored.
+	Metadata map[string]string `json:"metadata,omitzero" api:"required"`
 	// Fulfillment priority used to rank the order on the shop floor.
 	//
 	// Any of "low", "normal", "high".
@@ -1318,6 +1332,9 @@ type SalesOrder struct {
 	// A single page of resources, together with the metadata needed to page through
 	// the rest of the result set.
 	Lines ListSalesOrderLine `json:"lines" api:"required"`
+	// Key-value pairs you attach to the order for your own references, such as its ID
+	// in another system.
+	Metadata map[string]string `json:"metadata" api:"required"`
 	// Free-form note about the order.
 	Note string `json:"note" api:"required"`
 	// Human-readable order number, e.g. `SO-001`.
@@ -1404,6 +1421,7 @@ type SalesOrder struct {
 		IssuedAt                    respjson.Field
 		LineCount                   respjson.Field
 		Lines                       respjson.Field
+		Metadata                    respjson.Field
 		Note                        respjson.Field
 		Number                      respjson.Field
 		Object                      respjson.Field
@@ -1516,6 +1534,9 @@ type SalesOrderLine struct {
 	// first and the automatically generated freight and discount lines always sit at
 	// the bottom; removing a line renumbers the rest so the sequence stays contiguous.
 	LineItemNumber int64 `json:"line_item_number" api:"required"`
+	// Key-value pairs you attach to the line for your own references, such as its ID
+	// in another system.
+	Metadata map[string]string `json:"metadata" api:"required"`
 	// Resource type identifier.
 	//
 	// Any of "sales_order_line".
@@ -1562,6 +1583,7 @@ type SalesOrderLine struct {
 		CreatedAt          respjson.Field
 		Item               respjson.Field
 		LineItemNumber     respjson.Field
+		Metadata           respjson.Field
 		Object             respjson.Field
 		Product            respjson.Field
 		ProductDescription respjson.Field
@@ -1788,6 +1810,13 @@ type UpdateSalesOrderRequestParam struct {
 	//
 	// Any of "sender", "third_party".
 	CarrierBillingType UpdateSalesOrderRequestCarrierBillingType `json:"carrier_billing_type,omitzero"`
+	// Key-value pairs to store on the order, merged into the ones it already has.
+	//
+	// Keys left out are kept, so `{}` changes nothing. Setting a key to `null` removes
+	// it; an empty string is stored as a value. Sending `metadata: null` removes every
+	// key. An object holds at most 50 keys. Keys are up to 40 characters and cannot
+	// contain `[` or `]`; values are up to 500 characters.
+	Metadata map[string]string `json:"metadata,omitzero"`
 	// Replaces the acknowledgement email contacts on the order.
 	//
 	// An empty list clears all contacts; omitting the field leaves existing contacts

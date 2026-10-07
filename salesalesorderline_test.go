@@ -30,6 +30,9 @@ func TestSaleSalesOrderLineNewWithOptionalParams(t *testing.T) {
 		"or_9lqo07quiwyb",
 		openmrp.SaleSalesOrderLineNewParams{
 			CreateSalesOrderLineRequest: openmrp.CreateSalesOrderLineRequestParam{
+				Metadata: map[string]string{
+					"foo": "string",
+				},
 				ProductID:  "pd_07oe0r7adh2w",
 				ProductSKU: "WIDGET-001",
 				Quantity: openmrp.QuantityInputParam{
@@ -74,6 +77,9 @@ func TestSaleSalesOrderLineUpdateWithOptionalParams(t *testing.T) {
 			ID:      "or_9lqo07quiwyb",
 			Include: []string{"product"},
 			UpdateSalesOrderLineRequest: openmrp.UpdateSalesOrderLineRequestParam{
+				Metadata: map[string]string{
+					"foo": "string",
+				},
 				ProductDescription: openmrp.String("product_description"),
 				ProductSKU:         openmrp.String("product_sku"),
 				Quantity: openmrp.QuantityInputParam{

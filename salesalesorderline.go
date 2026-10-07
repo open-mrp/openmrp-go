@@ -126,8 +126,15 @@ func (r *SaleSalesOrderLineService) Delete(ctx context.Context, lineID string, b
 
 // Request to create a line on a sales order.
 //
-// The properties ProductID, ProductSKU, Quantity are required.
+// The properties Metadata, ProductID, ProductSKU, Quantity are required.
 type CreateSalesOrderLineRequestParam struct {
+	// Key-value pairs to store on the line for your own references, such as its ID in
+	// another system.
+	//
+	// Up to 50 keys. Keys are up to 40 characters and cannot contain `[` or `]`;
+	// values are strings up to 500 characters, and an empty string is stored as one. A
+	// key sent as `null` is not stored.
+	Metadata map[string]string `json:"metadata,omitzero" api:"required"`
 	// ID of the product being ordered.
 	ProductID string `json:"product_id" api:"required"`
 	// The product SKU recorded on the line.
@@ -162,6 +169,13 @@ type UpdateSalesOrderLineRequestParam struct {
 	ProductDescription param.Opt[string] `json:"product_description,omitzero"`
 	// SKU recorded on the line.
 	ProductSKU param.Opt[string] `json:"product_sku,omitzero"`
+	// Key-value pairs to store on the line, merged into the ones it already has.
+	//
+	// Keys left out are kept, so `{}` changes nothing. Setting a key to `null` removes
+	// it; an empty string is stored as a value. Sending `metadata: null` removes every
+	// key. An object holds at most 50 keys. Keys are up to 40 characters and cannot
+	// contain `[` or `]`; values are up to 500 characters.
+	Metadata map[string]string `json:"metadata,omitzero"`
 	// An amount together with the unit it is expressed in.
 	//
 	// The unit may be a currency, so money amounts such as a credit limit are written

@@ -30,6 +30,9 @@ func TestSaleSalesOrderNewWithOptionalParams(t *testing.T) {
 		CreateSalesOrderRequest: openmrp.CreateSalesOrderRequestParam{
 			BuyerAccountID: "ac_opnlh43ymyee",
 			Lines: []openmrp.CreateSalesOrderLineInputParam{{
+				Metadata: map[string]string{
+					"foo": "string",
+				},
 				ProductID: "pd_07oe0r7adh2w",
 				Quantity: openmrp.QuantityInputParam{
 					UnitID: "un_82bd37dae5po",
@@ -43,6 +46,9 @@ func TestSaleSalesOrderNewWithOptionalParams(t *testing.T) {
 					Value:             "value",
 				},
 			}},
+			Metadata: map[string]string{
+				"foo": "string",
+			},
 			PriorityCode: openmrp.CreateSalesOrderRequestPriorityCodeNormal,
 			AcknowledgementEmailContacts: []openmrp.SalesOrderEmailContactInputParam{{
 				AccountUserID: "acus_e5zu8bde0z3h",
@@ -179,14 +185,17 @@ func TestSaleSalesOrderUpdateWithOptionalParams(t *testing.T) {
 					AccountUserID: "account_user_id",
 				}},
 				LeadTimeOverrideDays: openmrp.Int(0),
-				Note:                 openmrp.String("Updated shipping instructions"),
-				OrderDiscountID:      openmrp.String("order_discount_id"),
-				PaymentTermID:        openmrp.String("payment_term_id"),
-				PriorityCode:         openmrp.UpdateSalesOrderRequestPriorityCodeNormal,
-				PromisedAt:           openmrp.Time(time.Now()),
-				SalesRepID:           openmrp.String("sales_rep_id"),
-				ServiceLevelID:       openmrp.String("service_level_id"),
-				ShipByOverrideDate:   openmrp.Time(time.Now()),
+				Metadata: map[string]string{
+					"foo": "string",
+				},
+				Note:               openmrp.String("Updated shipping instructions"),
+				OrderDiscountID:    openmrp.String("order_discount_id"),
+				PaymentTermID:      openmrp.String("payment_term_id"),
+				PriorityCode:       openmrp.UpdateSalesOrderRequestPriorityCodeNormal,
+				PromisedAt:         openmrp.Time(time.Now()),
+				SalesRepID:         openmrp.String("sales_rep_id"),
+				ServiceLevelID:     openmrp.String("service_level_id"),
+				ShipByOverrideDate: openmrp.Time(time.Now()),
 				ShippingAddress: openmrp.InlineAddressInputParam{
 					ID:                openmrp.String("id"),
 					Country:           openmrp.String("US"),
