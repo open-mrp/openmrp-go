@@ -549,18 +549,8 @@ const (
 
 // Request to create a conversation.
 //
-// The properties ParticipantAccountUserIDs, Type are required.
+// The property Type is required.
 type CreateConversationRequestParam struct {
-	// The other participants to add.
-	//
-	// For a direct message, exactly one account user. For a group, the members to seed
-	// — these can be omitted when `group_id` supplies a roster, or when the
-	// conversation is anchored to a topic resource, since a record discussion may
-	// start solo and pull people in later.
-	//
-	// The caller is always a participant and does not need to be listed; on a group
-	// they become its owner and every other member seeded at creation is notified.
-	ParticipantAccountUserIDs []string `json:"participant_account_user_ids,omitzero" api:"required"`
 	// The kind of conversation to create.
 	//
 	//   - `direct_message`: a 1:1 thread with exactly one other user. Addressing
@@ -583,6 +573,16 @@ type CreateConversationRequestParam struct {
 	Title param.Opt[string] `json:"title,omitzero"`
 	// The id of the business record to anchor this conversation to.
 	TopicResourceID param.Opt[string] `json:"topic_resource_id,omitzero"`
+	// The other participants to add.
+	//
+	// For a direct message, exactly one account user. For a group, the members to seed
+	// — these can be omitted when `group_id` supplies a roster, or when the
+	// conversation is anchored to a topic resource, since a record discussion may
+	// start solo and pull people in later.
+	//
+	// The caller is always a participant and does not need to be listed; on a group
+	// they become its owner and every other member seeded at creation is notified.
+	ParticipantAccountUserIDs []string `json:"participant_account_user_ids,omitzero"`
 	// Members to seat in a group with the role each starts with.
 	//
 	// Each account user listed here joins the group as those in

@@ -27,9 +27,9 @@ func TestMessagingConversationNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Messaging.Conversations.New(context.TODO(), openmrp.MessagingConversationNewParams{
 		CreateConversationRequest: openmrp.CreateConversationRequestParam{
-			ParticipantAccountUserIDs: []string{"acus_e5zu8bde0z3h"},
 			Type:                      openmrp.CreateConversationRequestTypeGroup,
 			GroupID:                   openmrp.String("cvgp_wjlypugna7s4"),
+			ParticipantAccountUserIDs: []string{"acus_e5zu8bde0z3h"},
 			Participants: []openmrp.ConversationParticipantInputParam{{
 				AccountUserID: "acus_e5zu8bde0z3h",
 				Role:          openmrp.ConversationParticipantInputRoleAdmin,
