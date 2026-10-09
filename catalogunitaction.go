@@ -39,6 +39,8 @@ func NewCatalogUnitActionService(opts ...option.RequestOption) (r CatalogUnitAct
 
 // Creates or updates multiple units of measure for the account, matched by name or
 // abbreviation, then writes asynchronously — 202 with a job to poll.
+//
+// This endpoint requires the permissions: `units:create` and `units:update`.
 func (r *CatalogUnitActionService) BulkUpsert(ctx context.Context, params CatalogUnitActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/units/actions/bulk-upsert"

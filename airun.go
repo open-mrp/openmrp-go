@@ -51,7 +51,8 @@ func NewAIRunService(opts ...option.RequestOption) (r AIRunService) {
 // regardless of how it is normally triggered, and the resulting run is always
 // recorded with `trigger_type` `manual`.
 //
-// This endpoint requires the permission: `agent_runs:create`.
+// This endpoint requires the permissions: `agent_runs:create`, `agents:read` and
+// `agent_runs:read`.
 func (r *AIRunService) New(ctx context.Context, params AIRunNewParams, opts ...option.RequestOption) (res *AgentRun, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/ai/runs"
@@ -164,7 +165,8 @@ type AgentAction struct {
 	//     for human approval (not sent).
 	//   - `send_email`: send an email reply through the conversation's bound inbox.
 	//
-	// Any of "create_artifact", "read_doc", "fetch_url", "send_email", "draft_reply".
+	// Any of "create_artifact", "read_doc", "search_docs", "describe_api_operation",
+	// "search_source", "read_source", "fetch_url", "send_email", "draft_reply".
 	Tool AgentActionTool `json:"tool" api:"required"`
 	// When this action was last updated.
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
@@ -250,11 +252,15 @@ const (
 type AgentActionTool string
 
 const (
-	AgentActionToolCreateArtifact AgentActionTool = "create_artifact"
-	AgentActionToolReadDoc        AgentActionTool = "read_doc"
-	AgentActionToolFetchURL       AgentActionTool = "fetch_url"
-	AgentActionToolSendEmail      AgentActionTool = "send_email"
-	AgentActionToolDraftReply     AgentActionTool = "draft_reply"
+	AgentActionToolCreateArtifact       AgentActionTool = "create_artifact"
+	AgentActionToolReadDoc              AgentActionTool = "read_doc"
+	AgentActionToolSearchDocs           AgentActionTool = "search_docs"
+	AgentActionToolDescribeAPIOperation AgentActionTool = "describe_api_operation"
+	AgentActionToolSearchSource         AgentActionTool = "search_source"
+	AgentActionToolReadSource           AgentActionTool = "read_source"
+	AgentActionToolFetchURL             AgentActionTool = "fetch_url"
+	AgentActionToolSendEmail            AgentActionTool = "send_email"
+	AgentActionToolDraftReply           AgentActionTool = "draft_reply"
 )
 
 // A single execution of an agent, from trigger through completion.

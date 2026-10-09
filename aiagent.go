@@ -315,6 +315,13 @@ type AgentDefinitionConfig struct {
 	// These correspond to tools listed by the List Tools endpoint with category
 	// `api_endpoint`. A single entry `*` grants the entire endpoint-tool catalog.
 	EndpointToolSlugs []string `json:"endpoint_tool_slugs" api:"required"`
+	// Maximum model calls the agent may make in one turn before it must stop and
+	// summarize.
+	//
+	// When the limit is reached, tools are disabled and the agent answers with what it
+	// accomplished, what remains, and what it is missing. `null` means the default: 30
+	// for chat and manual runs, 40 for scheduled and event-driven runs.
+	MaxSteps int64 `json:"max_steps" api:"required"`
 	// Resource type identifier.
 	//
 	// Any of "agent_definition_config".
@@ -362,6 +369,7 @@ type AgentDefinitionConfig struct {
 	JSON struct {
 		EndpointToolReview respjson.Field
 		EndpointToolSlugs  respjson.Field
+		MaxSteps           respjson.Field
 		Object             respjson.Field
 		SystemPrompt       respjson.Field
 		Temperature        respjson.Field
@@ -488,6 +496,13 @@ const (
 
 // Agent-level configuration for creation/update requests.
 type ConfigInputParam struct {
+	// Maximum model calls the agent may make in one turn before it must stop and
+	// summarize, from 1 to 60.
+	//
+	// When the limit is reached, tools are disabled and the agent answers with what it
+	// accomplished, what remains, and what it is missing. Omit to use the default: 30
+	// for chat and manual runs, 40 for scheduled and event-driven runs.
+	MaxSteps param.Opt[int64] `json:"max_steps,omitzero"`
 	// Instructions that define the agent's role and how it should behave.
 	//
 	// Sent to the model on every turn of a run, alongside the platform guidance
@@ -610,6 +625,10 @@ type CreateAgentRequestParam struct {
 	// Every API call the agent makes is authorized against this role, so it bounds
 	// what the agent can see and change. An agent created without a role cannot
 	// execute — its runs fail immediately — so attach one before triggering it.
+	//
+	// Unless you are an admin, the role may grant only permissions you hold yourself
+	// and may not be an admin role; otherwise the request fails with a `403` on
+	// `role_id`.
 	RoleID param.Opt[string] `json:"role_id,omitzero"`
 	// Built-in tools to attach to the agent.
 	Tools []ToolInputParam `json:"tools,omitzero"`
@@ -736,7 +755,8 @@ type ToolInputParam struct {
 	// `config.endpoint_tool_slugs`. The List Tools endpoint (`GET /v1/ai/tools`)
 	// returns both kinds, with API-endpoint tools in the `api_endpoint` category.
 	//
-	// Any of "create_artifact", "read_doc", "fetch_url", "send_email", "draft_reply".
+	// Any of "create_artifact", "read_doc", "search_docs", "describe_api_operation",
+	// "search_source", "read_source", "fetch_url", "send_email", "draft_reply".
 	Tool ToolInputTool `json:"tool,omitzero" api:"required"`
 	// JSON-encoded configuration for this tool instance.
 	//
@@ -771,11 +791,15 @@ func (r *ToolInputParam) UnmarshalJSON(data []byte) error {
 type ToolInputTool string
 
 const (
-	ToolInputToolCreateArtifact ToolInputTool = "create_artifact"
-	ToolInputToolReadDoc        ToolInputTool = "read_doc"
-	ToolInputToolFetchURL       ToolInputTool = "fetch_url"
-	ToolInputToolSendEmail      ToolInputTool = "send_email"
-	ToolInputToolDraftReply     ToolInputTool = "draft_reply"
+	ToolInputToolCreateArtifact       ToolInputTool = "create_artifact"
+	ToolInputToolReadDoc              ToolInputTool = "read_doc"
+	ToolInputToolSearchDocs           ToolInputTool = "search_docs"
+	ToolInputToolDescribeAPIOperation ToolInputTool = "describe_api_operation"
+	ToolInputToolSearchSource         ToolInputTool = "search_source"
+	ToolInputToolReadSource           ToolInputTool = "read_source"
+	ToolInputToolFetchURL             ToolInputTool = "fetch_url"
+	ToolInputToolSendEmail            ToolInputTool = "send_email"
+	ToolInputToolDraftReply           ToolInputTool = "draft_reply"
 )
 
 // Trigger-type-specific configuration.
@@ -857,6 +881,11 @@ type UpdateAgentRequestParam struct {
 	//
 	// Send `null` to detach the role; omit to leave it unchanged. An agent with no
 	// role cannot execute, so detaching the role makes its runs fail immediately.
+	//
+	// Unless you are an admin, the role the agent ends up with — the one you send, or
+	// its current role when you omit this — may grant only permissions you hold
+	// yourself and may not be an admin role; otherwise the request fails with a `403`
+	// on `role_id`.
 	RoleID param.Opt[string] `json:"role_id,omitzero"`
 	// Category grouping for the agent (e.g. `order_processing`), used to organize
 	// agents in the UI.

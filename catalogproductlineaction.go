@@ -39,6 +39,9 @@ func NewCatalogProductLineActionService(opts ...option.RequestOption) (r Catalog
 
 // Creates or updates multiple product lines for the account, matched by name
 // (case-insensitive), then writes asynchronously — 202 with a job to poll.
+//
+// This endpoint requires the permissions: `product_lines:create` and
+// `product_lines:update`.
 func (r *CatalogProductLineActionService) BulkUpsert(ctx context.Context, params CatalogProductLineActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/product-lines/actions/bulk-upsert"

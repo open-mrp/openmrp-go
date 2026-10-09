@@ -39,6 +39,9 @@ func NewCatalogUnitGroupActionService(opts ...option.RequestOption) (r CatalogUn
 
 // Creates or updates multiple unit groups for the account, matched by name
 // (case-insensitive), then writes asynchronously — 202 with a job to poll.
+//
+// This endpoint requires the permissions: `unit_groups:create` and
+// `unit_groups:update`.
 func (r *CatalogUnitGroupActionService) BulkUpsert(ctx context.Context, params CatalogUnitGroupActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/unit-groups/actions/bulk-upsert"

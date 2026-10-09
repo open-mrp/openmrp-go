@@ -41,6 +41,8 @@ func NewCatalogProductActionService(opts ...option.RequestOption) (r CatalogProd
 // and resolves synchronously, then writes asynchronously — 202 with a job to poll.
 //
 // At most 1,000 products and an 8 MB request body per call.
+//
+// This endpoint requires the permissions: `items:create` and `items:update`.
 func (r *CatalogProductActionService) BulkUpsert(ctx context.Context, params CatalogProductActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/products/actions/bulk-upsert"

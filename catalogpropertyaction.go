@@ -40,6 +40,9 @@ func NewCatalogPropertyActionService(opts ...option.RequestOption) (r CatalogPro
 // Creates or updates multiple properties and their attributes for the account,
 // matched by name (case-insensitive), then writes asynchronously — 202 with a job
 // to poll.
+//
+// This endpoint requires the permissions: `properties:create` and
+// `properties:update`.
 func (r *CatalogPropertyActionService) BulkUpsert(ctx context.Context, params CatalogPropertyActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/properties/actions/bulk-upsert"

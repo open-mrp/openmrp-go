@@ -39,6 +39,9 @@ func NewCatalogItemCategoryActionService(opts ...option.RequestOption) (r Catalo
 
 // Creates or updates multiple item categories for the account, matched by name
 // (case-insensitive), then writes asynchronously — 202 with a job to poll.
+//
+// This endpoint requires the permissions: `item_categories:create` and
+// `item_categories:update`.
 func (r *CatalogItemCategoryActionService) BulkUpsert(ctx context.Context, params CatalogItemCategoryActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/catalog/item-categories/actions/bulk-upsert"

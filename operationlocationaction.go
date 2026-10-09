@@ -39,6 +39,9 @@ func NewOperationLocationActionService(opts ...option.RequestOption) (r Operatio
 
 // Creates or updates multiple locations for the account, matched by name
 // (case-insensitive), then writes asynchronously — 202 with a job to poll.
+//
+// This endpoint requires the permissions: `locations:create` and
+// `locations:update`.
 func (r *OperationLocationActionService) BulkUpsert(ctx context.Context, params OperationLocationActionBulkUpsertParams, opts ...option.RequestOption) (res *Job, err error) {
 	opts = slices.Concat(r.options, opts)
 	path := "v1/operations/locations/actions/bulk-upsert"
