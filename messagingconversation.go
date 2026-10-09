@@ -618,23 +618,23 @@ type CreateConversationRequestParam struct {
 	// "account_user", "department", "account_integration", "account_price",
 	// "product_line", "item_category", "attribute", "rate",
 	// "account_group_product_line_access", "sales_target", "adjustment_type",
-	// "account_branding", "account_portal", "account_logo_url", "account_favicon_url",
-	// "public_account", "property", "carrier", "service_level", "item",
-	// "item_lot_default", "item_inventory", "product", "batch", "batch_flow_node",
-	// "scanning_consumption", "open_batch_summary", "scanning_production_step_info",
-	// "scanning_station", "production_step", "production_run", "machine",
-	// "machine_status", "machine_downtime_event", "demand_override",
-	// "demand_override_type", "machine_downtime_reason",
-	// "production_schedule_preview", "production_schedule_regenerate_preview",
-	// "production_schedule", "production_schedule_line",
-	// "production_schedule_deviation", "production_schedule_derived_line",
-	// "production_schedule_settings", "production_schedule_resource_setting",
-	// "production_schedule_item_setting", "fulfillment_recommendation",
-	// "analyze_delivery_performance_response", "delivery_performance",
-	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
-	// "open_order_line", "new_customer", "schedule_order_coverage",
+	// "account_branding", "account_portal", "document_setting", "document_control",
+	// "account_logo_url", "account_favicon_url", "public_account", "property",
+	// "carrier", "service_level", "item", "item_lot_default", "item_inventory",
+	// "product", "batch", "batch_flow_node", "scanning_consumption",
+	// "open_batch_summary", "scanning_production_step_info", "scanning_station",
+	// "production_step", "production_run", "machine", "machine_status",
+	// "machine_downtime_event", "demand_override", "demand_override_type",
+	// "machine_downtime_reason", "production_schedule_preview",
+	// "production_schedule_regenerate_preview", "production_schedule",
+	// "production_schedule_line", "production_schedule_deviation",
+	// "production_schedule_derived_line", "production_schedule_settings",
+	// "production_schedule_resource_setting", "production_schedule_item_setting",
+	// "fulfillment_recommendation", "analyze_delivery_performance_response",
+	// "delivery_performance", "delivery_backlog_bucket", "delivery_lateness_bucket",
+	// "delivery_breakdown", "analyze_sales_summary_response", "sales_totals",
+	// "sales_breakdown", "sales_invoice", "open_orders_summary", "open_order_product",
+	// "open_order", "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -813,6 +813,8 @@ const (
 	CreateConversationRequestTopicResourceTypeAdjustmentType                       CreateConversationRequestTopicResourceType = "adjustment_type"
 	CreateConversationRequestTopicResourceTypeAccountBranding                      CreateConversationRequestTopicResourceType = "account_branding"
 	CreateConversationRequestTopicResourceTypeAccountPortal                        CreateConversationRequestTopicResourceType = "account_portal"
+	CreateConversationRequestTopicResourceTypeDocumentSetting                      CreateConversationRequestTopicResourceType = "document_setting"
+	CreateConversationRequestTopicResourceTypeDocumentControl                      CreateConversationRequestTopicResourceType = "document_control"
 	CreateConversationRequestTopicResourceTypeAccountLogoURL                       CreateConversationRequestTopicResourceType = "account_logo_url"
 	CreateConversationRequestTopicResourceTypeAccountFaviconURL                    CreateConversationRequestTopicResourceType = "account_favicon_url"
 	CreateConversationRequestTopicResourceTypePublicAccount                        CreateConversationRequestTopicResourceType = "public_account"
@@ -1925,23 +1927,23 @@ type MessagingConversationListParams struct {
 	// "account_user", "department", "account_integration", "account_price",
 	// "product_line", "item_category", "attribute", "rate",
 	// "account_group_product_line_access", "sales_target", "adjustment_type",
-	// "account_branding", "account_portal", "account_logo_url", "account_favicon_url",
-	// "public_account", "property", "carrier", "service_level", "item",
-	// "item_lot_default", "item_inventory", "product", "batch", "batch_flow_node",
-	// "scanning_consumption", "open_batch_summary", "scanning_production_step_info",
-	// "scanning_station", "production_step", "production_run", "machine",
-	// "machine_status", "machine_downtime_event", "demand_override",
-	// "demand_override_type", "machine_downtime_reason",
-	// "production_schedule_preview", "production_schedule_regenerate_preview",
-	// "production_schedule", "production_schedule_line",
-	// "production_schedule_deviation", "production_schedule_derived_line",
-	// "production_schedule_settings", "production_schedule_resource_setting",
-	// "production_schedule_item_setting", "fulfillment_recommendation",
-	// "analyze_delivery_performance_response", "delivery_performance",
-	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
-	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
-	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
-	// "open_order_line", "new_customer", "schedule_order_coverage",
+	// "account_branding", "account_portal", "document_setting", "document_control",
+	// "account_logo_url", "account_favicon_url", "public_account", "property",
+	// "carrier", "service_level", "item", "item_lot_default", "item_inventory",
+	// "product", "batch", "batch_flow_node", "scanning_consumption",
+	// "open_batch_summary", "scanning_production_step_info", "scanning_station",
+	// "production_step", "production_run", "machine", "machine_status",
+	// "machine_downtime_event", "demand_override", "demand_override_type",
+	// "machine_downtime_reason", "production_schedule_preview",
+	// "production_schedule_regenerate_preview", "production_schedule",
+	// "production_schedule_line", "production_schedule_deviation",
+	// "production_schedule_derived_line", "production_schedule_settings",
+	// "production_schedule_resource_setting", "production_schedule_item_setting",
+	// "fulfillment_recommendation", "analyze_delivery_performance_response",
+	// "delivery_performance", "delivery_backlog_bucket", "delivery_lateness_bucket",
+	// "delivery_breakdown", "analyze_sales_summary_response", "sales_totals",
+	// "sales_breakdown", "sales_invoice", "open_orders_summary", "open_order_product",
+	// "open_order", "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -2146,6 +2148,8 @@ const (
 	MessagingConversationListParamsTopicResourceTypeAdjustmentType                       MessagingConversationListParamsTopicResourceType = "adjustment_type"
 	MessagingConversationListParamsTopicResourceTypeAccountBranding                      MessagingConversationListParamsTopicResourceType = "account_branding"
 	MessagingConversationListParamsTopicResourceTypeAccountPortal                        MessagingConversationListParamsTopicResourceType = "account_portal"
+	MessagingConversationListParamsTopicResourceTypeDocumentSetting                      MessagingConversationListParamsTopicResourceType = "document_setting"
+	MessagingConversationListParamsTopicResourceTypeDocumentControl                      MessagingConversationListParamsTopicResourceType = "document_control"
 	MessagingConversationListParamsTopicResourceTypeAccountLogoURL                       MessagingConversationListParamsTopicResourceType = "account_logo_url"
 	MessagingConversationListParamsTopicResourceTypeAccountFaviconURL                    MessagingConversationListParamsTopicResourceType = "account_favicon_url"
 	MessagingConversationListParamsTopicResourceTypePublicAccount                        MessagingConversationListParamsTopicResourceType = "public_account"
