@@ -625,16 +625,17 @@ type CreateConversationRequestParam struct {
 	// "open_batch_summary", "scanning_production_step_info", "scanning_station",
 	// "production_step", "production_run", "machine", "machine_status",
 	// "machine_downtime_event", "demand_override", "demand_override_type",
-	// "machine_downtime_reason", "production_schedule_preview",
-	// "production_schedule_regenerate_preview", "production_schedule",
-	// "production_schedule_line", "production_schedule_deviation",
-	// "production_schedule_derived_line", "production_schedule_settings",
-	// "production_schedule_resource_setting", "production_schedule_item_setting",
-	// "fulfillment_recommendation", "analyze_delivery_performance_response",
-	// "delivery_performance", "delivery_backlog_bucket", "delivery_lateness_bucket",
-	// "delivery_breakdown", "analyze_sales_summary_response", "sales_totals",
-	// "sales_breakdown", "sales_invoice", "open_orders_summary", "open_order_product",
-	// "open_order", "open_order_line", "new_customer", "schedule_order_coverage",
+	// "machine_downtime_reason", "machine_item_scan_suggestion",
+	// "production_schedule_preview", "production_schedule_regenerate_preview",
+	// "production_schedule", "production_schedule_line",
+	// "production_schedule_deviation", "production_schedule_derived_line",
+	// "production_schedule_settings", "production_schedule_resource_setting",
+	// "production_schedule_item_setting", "fulfillment_recommendation",
+	// "analyze_delivery_performance_response", "delivery_performance",
+	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -839,6 +840,7 @@ const (
 	CreateConversationRequestTopicResourceTypeDemandOverride                       CreateConversationRequestTopicResourceType = "demand_override"
 	CreateConversationRequestTopicResourceTypeDemandOverrideType                   CreateConversationRequestTopicResourceType = "demand_override_type"
 	CreateConversationRequestTopicResourceTypeMachineDowntimeReason                CreateConversationRequestTopicResourceType = "machine_downtime_reason"
+	CreateConversationRequestTopicResourceTypeMachineItemScanSuggestion            CreateConversationRequestTopicResourceType = "machine_item_scan_suggestion"
 	CreateConversationRequestTopicResourceTypeProductionSchedulePreview            CreateConversationRequestTopicResourceType = "production_schedule_preview"
 	CreateConversationRequestTopicResourceTypeProductionScheduleRegeneratePreview  CreateConversationRequestTopicResourceType = "production_schedule_regenerate_preview"
 	CreateConversationRequestTopicResourceTypeProductionSchedule                   CreateConversationRequestTopicResourceType = "production_schedule"
@@ -1934,16 +1936,17 @@ type MessagingConversationListParams struct {
 	// "open_batch_summary", "scanning_production_step_info", "scanning_station",
 	// "production_step", "production_run", "machine", "machine_status",
 	// "machine_downtime_event", "demand_override", "demand_override_type",
-	// "machine_downtime_reason", "production_schedule_preview",
-	// "production_schedule_regenerate_preview", "production_schedule",
-	// "production_schedule_line", "production_schedule_deviation",
-	// "production_schedule_derived_line", "production_schedule_settings",
-	// "production_schedule_resource_setting", "production_schedule_item_setting",
-	// "fulfillment_recommendation", "analyze_delivery_performance_response",
-	// "delivery_performance", "delivery_backlog_bucket", "delivery_lateness_bucket",
-	// "delivery_breakdown", "analyze_sales_summary_response", "sales_totals",
-	// "sales_breakdown", "sales_invoice", "open_orders_summary", "open_order_product",
-	// "open_order", "open_order_line", "new_customer", "schedule_order_coverage",
+	// "machine_downtime_reason", "machine_item_scan_suggestion",
+	// "production_schedule_preview", "production_schedule_regenerate_preview",
+	// "production_schedule", "production_schedule_line",
+	// "production_schedule_deviation", "production_schedule_derived_line",
+	// "production_schedule_settings", "production_schedule_resource_setting",
+	// "production_schedule_item_setting", "fulfillment_recommendation",
+	// "analyze_delivery_performance_response", "delivery_performance",
+	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -2174,6 +2177,7 @@ const (
 	MessagingConversationListParamsTopicResourceTypeDemandOverride                       MessagingConversationListParamsTopicResourceType = "demand_override"
 	MessagingConversationListParamsTopicResourceTypeDemandOverrideType                   MessagingConversationListParamsTopicResourceType = "demand_override_type"
 	MessagingConversationListParamsTopicResourceTypeMachineDowntimeReason                MessagingConversationListParamsTopicResourceType = "machine_downtime_reason"
+	MessagingConversationListParamsTopicResourceTypeMachineItemScanSuggestion            MessagingConversationListParamsTopicResourceType = "machine_item_scan_suggestion"
 	MessagingConversationListParamsTopicResourceTypeProductionSchedulePreview            MessagingConversationListParamsTopicResourceType = "production_schedule_preview"
 	MessagingConversationListParamsTopicResourceTypeProductionScheduleRegeneratePreview  MessagingConversationListParamsTopicResourceType = "production_schedule_regenerate_preview"
 	MessagingConversationListParamsTopicResourceTypeProductionSchedule                   MessagingConversationListParamsTopicResourceType = "production_schedule"

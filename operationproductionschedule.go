@@ -2068,6 +2068,11 @@ type ScheduleDiagnostics struct {
 	// modeled changeover lands on the time the floor actually reports rather than on a
 	// fixed allowance.
 	ChangeoverSlopeMinutes float64 `json:"changeover_slope_minutes" api:"required"`
+	// Distinct SKUs the participating machines are configured to run.
+	//
+	// Zero with machines present means the plan is empty because runnable SKUs have
+	// not been set up yet.
+	ConfiguredItemCount int64 `json:"configured_item_count" api:"required"`
 	// Machines the constraint department contributed to this solve.
 	ConstraintMachineCount int64 `json:"constraint_machine_count" api:"required"`
 	// Items whose economic lot size was reduced to fit one machine-week, meaning
@@ -2107,10 +2112,8 @@ type ScheduleDiagnostics struct {
 	MachinesWithoutStep int64 `json:"machines_without_step" api:"required"`
 	// Planned items built only against the order book rather than to a forecast.
 	MakeToOrderItemCount int64 `json:"make_to_order_item_count" api:"required"`
-	// Batches found on those machines in the demand window.
-	//
-	// Zero means nothing has been scanned there, which is why a plan can be empty even
-	// with machines configured.
+	// Batches found on those machines in the demand window, used for run rates and
+	// costs.
 	MeasuredBatchCount int64 `json:"measured_batch_count" api:"required"`
 	// Open orders carrying no ship-by commitment, dated at the front of the horizon
 	// because they are issued and unshipped.
@@ -2128,6 +2131,7 @@ type ScheduleDiagnostics struct {
 		AverageInputsAdded           respjson.Field
 		CapacityStarvedSKUs          respjson.Field
 		ChangeoverSlopeMinutes       respjson.Field
+		ConfiguredItemCount          respjson.Field
 		ConstraintMachineCount       respjson.Field
 		EoqCappedSKUs                respjson.Field
 		ExcludedItemCount            respjson.Field

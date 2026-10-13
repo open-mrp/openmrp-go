@@ -62,6 +62,7 @@ func TestOperationPickListWithOptionalParams(t *testing.T) {
 		Limit:            openmrp.Int(0),
 		ProductLineIDs:   []string{"string"},
 		Q:                openmrp.String("q"),
+		QMatch:           openmrp.OperationPickListParamsQMatchPrefix,
 		Sort:             openmrp.OperationPickListParamsSortShipByDate,
 		StartsAt:         openmrp.String("starts_at"),
 		Status:           openmrp.OperationPickListParamsStatusOpen,

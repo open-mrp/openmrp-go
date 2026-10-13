@@ -140,16 +140,17 @@ type Job struct {
 	// "open_batch_summary", "scanning_production_step_info", "scanning_station",
 	// "production_step", "production_run", "machine", "machine_status",
 	// "machine_downtime_event", "demand_override", "demand_override_type",
-	// "machine_downtime_reason", "production_schedule_preview",
-	// "production_schedule_regenerate_preview", "production_schedule",
-	// "production_schedule_line", "production_schedule_deviation",
-	// "production_schedule_derived_line", "production_schedule_settings",
-	// "production_schedule_resource_setting", "production_schedule_item_setting",
-	// "fulfillment_recommendation", "analyze_delivery_performance_response",
-	// "delivery_performance", "delivery_backlog_bucket", "delivery_lateness_bucket",
-	// "delivery_breakdown", "analyze_sales_summary_response", "sales_totals",
-	// "sales_breakdown", "sales_invoice", "open_orders_summary", "open_order_product",
-	// "open_order", "open_order_line", "new_customer", "schedule_order_coverage",
+	// "machine_downtime_reason", "machine_item_scan_suggestion",
+	// "production_schedule_preview", "production_schedule_regenerate_preview",
+	// "production_schedule", "production_schedule_line",
+	// "production_schedule_deviation", "production_schedule_derived_line",
+	// "production_schedule_settings", "production_schedule_resource_setting",
+	// "production_schedule_item_setting", "fulfillment_recommendation",
+	// "analyze_delivery_performance_response", "delivery_performance",
+	// "delivery_backlog_bucket", "delivery_lateness_bucket", "delivery_breakdown",
+	// "analyze_sales_summary_response", "sales_totals", "sales_breakdown",
+	// "sales_invoice", "open_orders_summary", "open_order_product", "open_order",
+	// "open_order_line", "new_customer", "schedule_order_coverage",
 	// "schedule_order_coverage_line", "schedule_deviation_type",
 	// "schedule_at_risk_order", "production_schedule_finished_policy",
 	// "production_schedule_finishing_line", "production_schedule_week_release",
@@ -231,7 +232,7 @@ type Job struct {
 	Status JobStatus `json:"status" api:"required"`
 	// The kind of work the job carries out.
 	//
-	// Any of "bulk_create", "bulk_upsert", "export", "pack_pick".
+	// Any of "bulk_create", "bulk_upsert", "export", "pack_pick", "ship_shipment".
 	Type JobType `json:"type" api:"required"`
 	// When the job was last updated.
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
@@ -382,6 +383,7 @@ const (
 	JobResourceTypeDemandOverride                       JobResourceType = "demand_override"
 	JobResourceTypeDemandOverrideType                   JobResourceType = "demand_override_type"
 	JobResourceTypeMachineDowntimeReason                JobResourceType = "machine_downtime_reason"
+	JobResourceTypeMachineItemScanSuggestion            JobResourceType = "machine_item_scan_suggestion"
 	JobResourceTypeProductionSchedulePreview            JobResourceType = "production_schedule_preview"
 	JobResourceTypeProductionScheduleRegeneratePreview  JobResourceType = "production_schedule_regenerate_preview"
 	JobResourceTypeProductionSchedule                   JobResourceType = "production_schedule"
@@ -629,10 +631,11 @@ const (
 type JobType string
 
 const (
-	JobTypeBulkCreate JobType = "bulk_create"
-	JobTypeBulkUpsert JobType = "bulk_upsert"
-	JobTypeExport     JobType = "export"
-	JobTypePackPick   JobType = "pack_pick"
+	JobTypeBulkCreate   JobType = "bulk_create"
+	JobTypeBulkUpsert   JobType = "bulk_upsert"
+	JobTypeExport       JobType = "export"
+	JobTypePackPick     JobType = "pack_pick"
+	JobTypeShipShipment JobType = "ship_shipment"
 )
 
 // Points a completed export job at the file it produced.

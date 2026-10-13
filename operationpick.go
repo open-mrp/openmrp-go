@@ -62,9 +62,11 @@ func (r *OperationPickService) Get(ctx context.Context, id string, query Operati
 
 // Returns a paginated list of picks, soonest ship-by date first.
 //
-// The `q` search term matches the pick number (which is the order number) and the
-// customer PO number. To narrow by customer, use `customer_ids` rather than
-// searching for a customer name.
+// The `q` search term matches the start of the pick number (which is the order
+// number) and of the customer PO number, ignoring case; send `q_match=contains` to
+// match anywhere in them. A term of three or more characters also matches anywhere
+// in the customer's name and customer number. To narrow by customer, use
+// `customer_ids` rather than searching for a customer name.
 //
 // Acting in a customer's account requires `customers:read`, and acting in a
 // supplier's account requires `suppliers:read`, instead of the permission this
@@ -496,6 +498,19 @@ type OperationPickListParams struct {
 	// Restricts results to picks with at least one line whose product belongs to any
 	// of these product lines.
 	ProductLineIDs []string `query:"product_line_ids,omitzero" json:"-"`
+	// How `q` is matched against the pick number and the customer PO number. Defaults
+	// to `prefix`.
+	//
+	//   - `prefix`: `q` matches the start of the pick number and of the customer PO
+	//     number.
+	//   - `contains`: `q` matches anywhere in the pick number and the customer PO
+	//     number. Slower on accounts with many picks.
+	//
+	// A `q` of one or two characters matches the start of the pick number only,
+	// whichever mode is sent.
+	//
+	// Any of "prefix", "contains".
+	QMatch OperationPickListParamsQMatch `query:"q_match,omitzero" json:"-"`
 	// Orders the results: `ship_by_date` puts the soonest delivery commitment first,
 	// with picks whose order has no ship-by date last; `created_at` puts the newest
 	// pick first.
@@ -520,6 +535,23 @@ func (r OperationPickListParams) URLQuery() (v url.Values, err error) {
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
 }
+
+// How `q` is matched against the pick number and the customer PO number. Defaults
+// to `prefix`.
+//
+//   - `prefix`: `q` matches the start of the pick number and of the customer PO
+//     number.
+//   - `contains`: `q` matches anywhere in the pick number and the customer PO
+//     number. Slower on accounts with many picks.
+//
+// A `q` of one or two characters matches the start of the pick number only,
+// whichever mode is sent.
+type OperationPickListParamsQMatch string
+
+const (
+	OperationPickListParamsQMatchPrefix   OperationPickListParamsQMatch = "prefix"
+	OperationPickListParamsQMatchContains OperationPickListParamsQMatch = "contains"
+)
 
 // Orders the results: `ship_by_date` puts the soonest delivery commitment first,
 // with picks whose order has no ship-by date last; `created_at` puts the newest
