@@ -601,13 +601,11 @@ type CreateConversationRequestParam struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -650,23 +648,18 @@ type CreateConversationRequestParam struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -683,15 +676,14 @@ type CreateConversationRequestParam struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -753,11 +745,6 @@ const (
 	CreateConversationRequestTopicResourceTypeRefreshToken                         CreateConversationRequestTopicResourceType = "refresh_token"
 	CreateConversationRequestTopicResourceTypeList                                 CreateConversationRequestTopicResourceType = "list"
 	CreateConversationRequestTopicResourceTypeSandbox                              CreateConversationRequestTopicResourceType = "sandbox"
-	CreateConversationRequestTopicResourceTypeRegistrationSession                  CreateConversationRequestTopicResourceType = "registration_session"
-	CreateConversationRequestTopicResourceTypePricingPlan                          CreateConversationRequestTopicResourceType = "pricing_plan"
-	CreateConversationRequestTopicResourceTypeAccountPlan                          CreateConversationRequestTopicResourceType = "account_plan"
-	CreateConversationRequestTopicResourceTypePlanChange                           CreateConversationRequestTopicResourceType = "plan_change"
-	CreateConversationRequestTopicResourceTypeEnterpriseInquiry                    CreateConversationRequestTopicResourceType = "enterprise_inquiry"
 	CreateConversationRequestTopicResourceTypeRequestLog                           CreateConversationRequestTopicResourceType = "request_log"
 	CreateConversationRequestTopicResourceTypeAuditEvent                           CreateConversationRequestTopicResourceType = "audit_event"
 	CreateConversationRequestTopicResourceTypeAuditFieldChange                     CreateConversationRequestTopicResourceType = "audit_field_change"
@@ -916,24 +903,11 @@ const (
 	CreateConversationRequestTopicResourceTypeTransactionMethod                    CreateConversationRequestTopicResourceType = "transaction_method"
 	CreateConversationRequestTopicResourceTypeTransactionType                      CreateConversationRequestTopicResourceType = "transaction_type"
 	CreateConversationRequestTopicResourceTypeTransactionAllocation                CreateConversationRequestTopicResourceType = "transaction_allocation"
-	CreateConversationRequestTopicResourceTypeUsageItem                            CreateConversationRequestTopicResourceType = "usage_item"
-	CreateConversationRequestTopicResourceTypeAccountUsageResponse                 CreateConversationRequestTopicResourceType = "account_usage_response"
-	CreateConversationRequestTopicResourceTypeSubscriptionInfo                     CreateConversationRequestTopicResourceType = "subscription_info"
-	CreateConversationRequestTopicResourceTypeBillingPortalSessionResponse         CreateConversationRequestTopicResourceType = "billing_portal_session_response"
-	CreateConversationRequestTopicResourceTypeSwitchPlanResponse                   CreateConversationRequestTopicResourceType = "switch_plan_response"
-	CreateConversationRequestTopicResourceTypeEnsureBillingCustomerResponse        CreateConversationRequestTopicResourceType = "ensure_billing_customer_response"
-	CreateConversationRequestTopicResourceTypeSpendingCapResponse                  CreateConversationRequestTopicResourceType = "spending_cap_response"
-	CreateConversationRequestTopicResourceTypeAgentSpendInfo                       CreateConversationRequestTopicResourceType = "agent_spend_info"
 	CreateConversationRequestTopicResourceTypeWebhookResponse                      CreateConversationRequestTopicResourceType = "webhook_response"
 	CreateConversationRequestTopicResourceTypeAddressSuggestion                    CreateConversationRequestTopicResourceType = "address_suggestion"
 	CreateConversationRequestTopicResourceTypeAddressComponents                    CreateConversationRequestTopicResourceType = "address_components"
 	CreateConversationRequestTopicResourceTypeAddressDetailsResult                 CreateConversationRequestTopicResourceType = "address_details_result"
 	CreateConversationRequestTopicResourceTypeValidatedAddress                     CreateConversationRequestTopicResourceType = "validated_address"
-	CreateConversationRequestTopicResourceTypePlanLimit                            CreateConversationRequestTopicResourceType = "plan_limit"
-	CreateConversationRequestTopicResourceTypePlanChangeProration                  CreateConversationRequestTopicResourceType = "plan_change_proration"
-	CreateConversationRequestTopicResourceTypePlanChangeLineItem                   CreateConversationRequestTopicResourceType = "plan_change_line_item"
-	CreateConversationRequestTopicResourceTypeSetupBillingResponse                 CreateConversationRequestTopicResourceType = "setup_billing_response"
-	CreateConversationRequestTopicResourceTypeConfirmPaymentResponse               CreateConversationRequestTopicResourceType = "confirm_payment_response"
 	CreateConversationRequestTopicResourceTypeOAuthResponse                        CreateConversationRequestTopicResourceType = "oauth_response"
 	CreateConversationRequestTopicResourceTypeOAuthStatusResponse                  CreateConversationRequestTopicResourceType = "oauth_status_response"
 	CreateConversationRequestTopicResourceTypeStripePublishableKey                 CreateConversationRequestTopicResourceType = "stripe_publishable_key"
@@ -1018,7 +992,6 @@ const (
 	CreateConversationRequestTopicResourceTypeSkippedItemResult                    CreateConversationRequestTopicResourceType = "skipped_item_result"
 	CreateConversationRequestTopicResourceTypeReconcileErrorResult                 CreateConversationRequestTopicResourceType = "reconcile_error_result"
 	CreateConversationRequestTopicResourceTypeItemTrendPoint                       CreateConversationRequestTopicResourceType = "item_trend_point"
-	CreateConversationRequestTopicResourceTypeTenancyPendingRegistration           CreateConversationRequestTopicResourceType = "tenancy_pending_registration"
 	CreateConversationRequestTopicResourceTypeInvoiceAllocationEntry               CreateConversationRequestTopicResourceType = "invoice_allocation_entry"
 	CreateConversationRequestTopicResourceTypeAllocationCustomer                   CreateConversationRequestTopicResourceType = "allocation_customer"
 	CreateConversationRequestTopicResourceTypeCheckoutSalesOrder                   CreateConversationRequestTopicResourceType = "checkout_sales_order"
@@ -1241,20 +1214,18 @@ type Message struct {
 	// Machine-readable reason an agent reply failed.
 	//
 	// A client can react to the specific code rather than just showing the body —
-	// `agent_spending_cap_reached`, for example, is a cue to offer raising the agent
-	// spending limit.
+	// `insufficient_permissions`, for example, means the agent was not allowed to act.
 	//
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
-	// "invalid_credentials", "insufficient_permissions", "payment_required",
-	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "invalid_credentials", "insufficient_permissions", "validation_failed",
+	// "missing_field", "invalid_format", "method_not_allowed", "request_too_large",
 	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
-	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
-	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
-	// "parameter_unknown", "parameters_exclusive", "internal_error",
-	// "service_unavailable", "external_service_error", "timeout", "connection_error",
-	// "request_timeout", "client_closed_request", "api_version_required",
-	// "api_version_invalid", "api_version_too_old".
+	// "idempotency_in_progress", "registration_closed", "rate_limit_exceeded",
+	// "parameter_missing", "parameter_invalid", "parameter_unknown",
+	// "parameters_exclusive", "internal_error", "service_unavailable",
+	// "external_service_error", "timeout", "connection_error", "request_timeout",
+	// "client_closed_request", "api_version_required", "api_version_invalid",
+	// "api_version_too_old".
 	AgentErrorCode MessageAgentErrorCode `json:"agent_error_code" api:"required"`
 	// A single execution of an agent, from trigger through completion.
 	AgentRun AgentRun `json:"agent_run" api:"required"`
@@ -1415,8 +1386,7 @@ func (r *Message) UnmarshalJSON(data []byte) error {
 // Machine-readable reason an agent reply failed.
 //
 // A client can react to the specific code rather than just showing the body —
-// `agent_spending_cap_reached`, for example, is a cue to offer raising the agent
-// spending limit.
+// `insufficient_permissions`, for example, means the agent was not allowed to act.
 type MessageAgentErrorCode string
 
 const (
@@ -1425,8 +1395,6 @@ const (
 	MessageAgentErrorCodeAPIKeyRevoked           MessageAgentErrorCode = "api_key_revoked"
 	MessageAgentErrorCodeInvalidCredentials      MessageAgentErrorCode = "invalid_credentials"
 	MessageAgentErrorCodeInsufficientPermissions MessageAgentErrorCode = "insufficient_permissions"
-	MessageAgentErrorCodePaymentRequired         MessageAgentErrorCode = "payment_required"
-	MessageAgentErrorCodeAgentSpendingCapReached MessageAgentErrorCode = "agent_spending_cap_reached"
 	MessageAgentErrorCodeValidationFailed        MessageAgentErrorCode = "validation_failed"
 	MessageAgentErrorCodeMissingField            MessageAgentErrorCode = "missing_field"
 	MessageAgentErrorCodeInvalidFormat           MessageAgentErrorCode = "invalid_format"
@@ -1437,7 +1405,6 @@ const (
 	MessageAgentErrorCodeResourceConflict        MessageAgentErrorCode = "resource_conflict"
 	MessageAgentErrorCodeResourceGone            MessageAgentErrorCode = "resource_gone"
 	MessageAgentErrorCodeIdempotencyInProgress   MessageAgentErrorCode = "idempotency_in_progress"
-	MessageAgentErrorCodeLimitExceeded           MessageAgentErrorCode = "limit_exceeded"
 	MessageAgentErrorCodeRegistrationClosed      MessageAgentErrorCode = "registration_closed"
 	MessageAgentErrorCodeRateLimitExceeded       MessageAgentErrorCode = "rate_limit_exceeded"
 	MessageAgentErrorCodeParameterMissing        MessageAgentErrorCode = "parameter_missing"
@@ -1912,13 +1879,11 @@ type MessagingConversationListParams struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -1961,23 +1926,18 @@ type MessagingConversationListParams struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -1994,15 +1954,14 @@ type MessagingConversationListParams struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -2090,11 +2049,6 @@ const (
 	MessagingConversationListParamsTopicResourceTypeRefreshToken                         MessagingConversationListParamsTopicResourceType = "refresh_token"
 	MessagingConversationListParamsTopicResourceTypeList                                 MessagingConversationListParamsTopicResourceType = "list"
 	MessagingConversationListParamsTopicResourceTypeSandbox                              MessagingConversationListParamsTopicResourceType = "sandbox"
-	MessagingConversationListParamsTopicResourceTypeRegistrationSession                  MessagingConversationListParamsTopicResourceType = "registration_session"
-	MessagingConversationListParamsTopicResourceTypePricingPlan                          MessagingConversationListParamsTopicResourceType = "pricing_plan"
-	MessagingConversationListParamsTopicResourceTypeAccountPlan                          MessagingConversationListParamsTopicResourceType = "account_plan"
-	MessagingConversationListParamsTopicResourceTypePlanChange                           MessagingConversationListParamsTopicResourceType = "plan_change"
-	MessagingConversationListParamsTopicResourceTypeEnterpriseInquiry                    MessagingConversationListParamsTopicResourceType = "enterprise_inquiry"
 	MessagingConversationListParamsTopicResourceTypeRequestLog                           MessagingConversationListParamsTopicResourceType = "request_log"
 	MessagingConversationListParamsTopicResourceTypeAuditEvent                           MessagingConversationListParamsTopicResourceType = "audit_event"
 	MessagingConversationListParamsTopicResourceTypeAuditFieldChange                     MessagingConversationListParamsTopicResourceType = "audit_field_change"
@@ -2253,24 +2207,11 @@ const (
 	MessagingConversationListParamsTopicResourceTypeTransactionMethod                    MessagingConversationListParamsTopicResourceType = "transaction_method"
 	MessagingConversationListParamsTopicResourceTypeTransactionType                      MessagingConversationListParamsTopicResourceType = "transaction_type"
 	MessagingConversationListParamsTopicResourceTypeTransactionAllocation                MessagingConversationListParamsTopicResourceType = "transaction_allocation"
-	MessagingConversationListParamsTopicResourceTypeUsageItem                            MessagingConversationListParamsTopicResourceType = "usage_item"
-	MessagingConversationListParamsTopicResourceTypeAccountUsageResponse                 MessagingConversationListParamsTopicResourceType = "account_usage_response"
-	MessagingConversationListParamsTopicResourceTypeSubscriptionInfo                     MessagingConversationListParamsTopicResourceType = "subscription_info"
-	MessagingConversationListParamsTopicResourceTypeBillingPortalSessionResponse         MessagingConversationListParamsTopicResourceType = "billing_portal_session_response"
-	MessagingConversationListParamsTopicResourceTypeSwitchPlanResponse                   MessagingConversationListParamsTopicResourceType = "switch_plan_response"
-	MessagingConversationListParamsTopicResourceTypeEnsureBillingCustomerResponse        MessagingConversationListParamsTopicResourceType = "ensure_billing_customer_response"
-	MessagingConversationListParamsTopicResourceTypeSpendingCapResponse                  MessagingConversationListParamsTopicResourceType = "spending_cap_response"
-	MessagingConversationListParamsTopicResourceTypeAgentSpendInfo                       MessagingConversationListParamsTopicResourceType = "agent_spend_info"
 	MessagingConversationListParamsTopicResourceTypeWebhookResponse                      MessagingConversationListParamsTopicResourceType = "webhook_response"
 	MessagingConversationListParamsTopicResourceTypeAddressSuggestion                    MessagingConversationListParamsTopicResourceType = "address_suggestion"
 	MessagingConversationListParamsTopicResourceTypeAddressComponents                    MessagingConversationListParamsTopicResourceType = "address_components"
 	MessagingConversationListParamsTopicResourceTypeAddressDetailsResult                 MessagingConversationListParamsTopicResourceType = "address_details_result"
 	MessagingConversationListParamsTopicResourceTypeValidatedAddress                     MessagingConversationListParamsTopicResourceType = "validated_address"
-	MessagingConversationListParamsTopicResourceTypePlanLimit                            MessagingConversationListParamsTopicResourceType = "plan_limit"
-	MessagingConversationListParamsTopicResourceTypePlanChangeProration                  MessagingConversationListParamsTopicResourceType = "plan_change_proration"
-	MessagingConversationListParamsTopicResourceTypePlanChangeLineItem                   MessagingConversationListParamsTopicResourceType = "plan_change_line_item"
-	MessagingConversationListParamsTopicResourceTypeSetupBillingResponse                 MessagingConversationListParamsTopicResourceType = "setup_billing_response"
-	MessagingConversationListParamsTopicResourceTypeConfirmPaymentResponse               MessagingConversationListParamsTopicResourceType = "confirm_payment_response"
 	MessagingConversationListParamsTopicResourceTypeOAuthResponse                        MessagingConversationListParamsTopicResourceType = "oauth_response"
 	MessagingConversationListParamsTopicResourceTypeOAuthStatusResponse                  MessagingConversationListParamsTopicResourceType = "oauth_status_response"
 	MessagingConversationListParamsTopicResourceTypeStripePublishableKey                 MessagingConversationListParamsTopicResourceType = "stripe_publishable_key"
@@ -2355,7 +2296,6 @@ const (
 	MessagingConversationListParamsTopicResourceTypeSkippedItemResult                    MessagingConversationListParamsTopicResourceType = "skipped_item_result"
 	MessagingConversationListParamsTopicResourceTypeReconcileErrorResult                 MessagingConversationListParamsTopicResourceType = "reconcile_error_result"
 	MessagingConversationListParamsTopicResourceTypeItemTrendPoint                       MessagingConversationListParamsTopicResourceType = "item_trend_point"
-	MessagingConversationListParamsTopicResourceTypeTenancyPendingRegistration           MessagingConversationListParamsTopicResourceType = "tenancy_pending_registration"
 	MessagingConversationListParamsTopicResourceTypeInvoiceAllocationEntry               MessagingConversationListParamsTopicResourceType = "invoice_allocation_entry"
 	MessagingConversationListParamsTopicResourceTypeAllocationCustomer                   MessagingConversationListParamsTopicResourceType = "allocation_customer"
 	MessagingConversationListParamsTopicResourceTypeCheckoutSalesOrder                   MessagingConversationListParamsTopicResourceType = "checkout_sales_order"

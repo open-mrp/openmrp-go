@@ -116,13 +116,11 @@ type Job struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -165,23 +163,18 @@ type Job struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -198,15 +191,14 @@ type Job struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -296,11 +288,6 @@ const (
 	JobResourceTypeRefreshToken                         JobResourceType = "refresh_token"
 	JobResourceTypeList                                 JobResourceType = "list"
 	JobResourceTypeSandbox                              JobResourceType = "sandbox"
-	JobResourceTypeRegistrationSession                  JobResourceType = "registration_session"
-	JobResourceTypePricingPlan                          JobResourceType = "pricing_plan"
-	JobResourceTypeAccountPlan                          JobResourceType = "account_plan"
-	JobResourceTypePlanChange                           JobResourceType = "plan_change"
-	JobResourceTypeEnterpriseInquiry                    JobResourceType = "enterprise_inquiry"
 	JobResourceTypeRequestLog                           JobResourceType = "request_log"
 	JobResourceTypeAuditEvent                           JobResourceType = "audit_event"
 	JobResourceTypeAuditFieldChange                     JobResourceType = "audit_field_change"
@@ -459,24 +446,11 @@ const (
 	JobResourceTypeTransactionMethod                    JobResourceType = "transaction_method"
 	JobResourceTypeTransactionType                      JobResourceType = "transaction_type"
 	JobResourceTypeTransactionAllocation                JobResourceType = "transaction_allocation"
-	JobResourceTypeUsageItem                            JobResourceType = "usage_item"
-	JobResourceTypeAccountUsageResponse                 JobResourceType = "account_usage_response"
-	JobResourceTypeSubscriptionInfo                     JobResourceType = "subscription_info"
-	JobResourceTypeBillingPortalSessionResponse         JobResourceType = "billing_portal_session_response"
-	JobResourceTypeSwitchPlanResponse                   JobResourceType = "switch_plan_response"
-	JobResourceTypeEnsureBillingCustomerResponse        JobResourceType = "ensure_billing_customer_response"
-	JobResourceTypeSpendingCapResponse                  JobResourceType = "spending_cap_response"
-	JobResourceTypeAgentSpendInfo                       JobResourceType = "agent_spend_info"
 	JobResourceTypeWebhookResponse                      JobResourceType = "webhook_response"
 	JobResourceTypeAddressSuggestion                    JobResourceType = "address_suggestion"
 	JobResourceTypeAddressComponents                    JobResourceType = "address_components"
 	JobResourceTypeAddressDetailsResult                 JobResourceType = "address_details_result"
 	JobResourceTypeValidatedAddress                     JobResourceType = "validated_address"
-	JobResourceTypePlanLimit                            JobResourceType = "plan_limit"
-	JobResourceTypePlanChangeProration                  JobResourceType = "plan_change_proration"
-	JobResourceTypePlanChangeLineItem                   JobResourceType = "plan_change_line_item"
-	JobResourceTypeSetupBillingResponse                 JobResourceType = "setup_billing_response"
-	JobResourceTypeConfirmPaymentResponse               JobResourceType = "confirm_payment_response"
 	JobResourceTypeOAuthResponse                        JobResourceType = "oauth_response"
 	JobResourceTypeOAuthStatusResponse                  JobResourceType = "oauth_status_response"
 	JobResourceTypeStripePublishableKey                 JobResourceType = "stripe_publishable_key"
@@ -561,7 +535,6 @@ const (
 	JobResourceTypeSkippedItemResult                    JobResourceType = "skipped_item_result"
 	JobResourceTypeReconcileErrorResult                 JobResourceType = "reconcile_error_result"
 	JobResourceTypeItemTrendPoint                       JobResourceType = "item_trend_point"
-	JobResourceTypeTenancyPendingRegistration           JobResourceType = "tenancy_pending_registration"
 	JobResourceTypeInvoiceAllocationEntry               JobResourceType = "invoice_allocation_entry"
 	JobResourceTypeAllocationCustomer                   JobResourceType = "allocation_customer"
 	JobResourceTypeCheckoutSalesOrder                   JobResourceType = "checkout_sales_order"
@@ -776,33 +749,6 @@ const (
 	ListJobResultObjectList ListJobResultObject = "list"
 )
 
-// QuotaInfo provides machine-readable details about a plan-imposed resource limit.
-// Included in limit_exceeded errors so clients can display upgrade prompts, usage
-// bars, or implement programmatic retry/backoff logic.
-type QuotaInfo struct {
-	// Limit is the maximum number of resources allowed by the current plan.
-	Limit int64 `json:"limit" api:"required"`
-	// ResetAt is the time when the quota resets, if applicable. Nil for static
-	// (non-metered) limits.
-	ResetAt time.Time `json:"reset_at" api:"required" format:"date-time"`
-	// Used is the number of resources currently consumed.
-	Used int64 `json:"used" api:"required"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Limit       respjson.Field
-		ResetAt     respjson.Field
-		Used        respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QuotaInfo) RawJSON() string { return r.JSON.raw }
-func (r *QuotaInfo) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // ResponseError is the JSON-serializable error body returned to API clients. It
 // contains only public information. This struct is used by the OpenAPI schema
 // generator to produce documentation.
@@ -810,16 +756,15 @@ type ResponseError struct {
 	// A machine-readable code for the error.
 	//
 	// Any of "expired_token", "api_key_expired", "api_key_revoked",
-	// "invalid_credentials", "insufficient_permissions", "payment_required",
-	// "agent_spending_cap_reached", "validation_failed", "missing_field",
-	// "invalid_format", "method_not_allowed", "request_too_large",
+	// "invalid_credentials", "insufficient_permissions", "validation_failed",
+	// "missing_field", "invalid_format", "method_not_allowed", "request_too_large",
 	// "resource_not_found", "resource_exists", "resource_conflict", "resource_gone",
-	// "idempotency_in_progress", "limit_exceeded", "registration_closed",
-	// "rate_limit_exceeded", "parameter_missing", "parameter_invalid",
-	// "parameter_unknown", "parameters_exclusive", "internal_error",
-	// "service_unavailable", "external_service_error", "timeout", "connection_error",
-	// "request_timeout", "client_closed_request", "api_version_required",
-	// "api_version_invalid", "api_version_too_old".
+	// "idempotency_in_progress", "registration_closed", "rate_limit_exceeded",
+	// "parameter_missing", "parameter_invalid", "parameter_unknown",
+	// "parameters_exclusive", "internal_error", "service_unavailable",
+	// "external_service_error", "timeout", "connection_error", "request_timeout",
+	// "client_closed_request", "api_version_required", "api_version_invalid",
+	// "api_version_too_old".
 	Code ResponseErrorCode `json:"code" api:"required"`
 	// A URL to documentation about the error.
 	DocURL string `json:"doc_url" api:"required"`
@@ -829,10 +774,6 @@ type ResponseError struct {
 	Message string `json:"message" api:"required"`
 	// The parameter that caused the error, if applicable.
 	Param string `json:"param" api:"required"`
-	// QuotaInfo provides machine-readable details about a plan-imposed resource limit.
-	// Included in limit_exceeded errors so clients can display upgrade prompts, usage
-	// bars, or implement programmatic retry/backoff logic.
-	Quota QuotaInfo `json:"quota" api:"required"`
 	// RequestLogURL is a link to the dashboard page for this request's log entry. Nil
 	// when no request log is available.
 	RequestLogURL string `json:"request_log_url" api:"required"`
@@ -847,7 +788,6 @@ type ResponseError struct {
 		IsTransient   respjson.Field
 		Message       respjson.Field
 		Param         respjson.Field
-		Quota         respjson.Field
 		RequestLogURL respjson.Field
 		Type          respjson.Field
 		ExtraFields   map[string]respjson.Field
@@ -870,8 +810,6 @@ const (
 	ResponseErrorCodeAPIKeyRevoked           ResponseErrorCode = "api_key_revoked"
 	ResponseErrorCodeInvalidCredentials      ResponseErrorCode = "invalid_credentials"
 	ResponseErrorCodeInsufficientPermissions ResponseErrorCode = "insufficient_permissions"
-	ResponseErrorCodePaymentRequired         ResponseErrorCode = "payment_required"
-	ResponseErrorCodeAgentSpendingCapReached ResponseErrorCode = "agent_spending_cap_reached"
 	ResponseErrorCodeValidationFailed        ResponseErrorCode = "validation_failed"
 	ResponseErrorCodeMissingField            ResponseErrorCode = "missing_field"
 	ResponseErrorCodeInvalidFormat           ResponseErrorCode = "invalid_format"
@@ -882,7 +820,6 @@ const (
 	ResponseErrorCodeResourceConflict        ResponseErrorCode = "resource_conflict"
 	ResponseErrorCodeResourceGone            ResponseErrorCode = "resource_gone"
 	ResponseErrorCodeIdempotencyInProgress   ResponseErrorCode = "idempotency_in_progress"
-	ResponseErrorCodeLimitExceeded           ResponseErrorCode = "limit_exceeded"
 	ResponseErrorCodeRegistrationClosed      ResponseErrorCode = "registration_closed"
 	ResponseErrorCodeRateLimitExceeded       ResponseErrorCode = "rate_limit_exceeded"
 	ResponseErrorCodeParameterMissing        ResponseErrorCode = "parameter_missing"

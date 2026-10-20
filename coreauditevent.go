@@ -159,13 +159,11 @@ type AuditEvent struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -208,23 +206,18 @@ type AuditEvent struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -241,15 +234,14 @@ type AuditEvent struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -342,11 +334,6 @@ const (
 	AuditEventResourceTypeRefreshToken                         AuditEventResourceType = "refresh_token"
 	AuditEventResourceTypeList                                 AuditEventResourceType = "list"
 	AuditEventResourceTypeSandbox                              AuditEventResourceType = "sandbox"
-	AuditEventResourceTypeRegistrationSession                  AuditEventResourceType = "registration_session"
-	AuditEventResourceTypePricingPlan                          AuditEventResourceType = "pricing_plan"
-	AuditEventResourceTypeAccountPlan                          AuditEventResourceType = "account_plan"
-	AuditEventResourceTypePlanChange                           AuditEventResourceType = "plan_change"
-	AuditEventResourceTypeEnterpriseInquiry                    AuditEventResourceType = "enterprise_inquiry"
 	AuditEventResourceTypeRequestLog                           AuditEventResourceType = "request_log"
 	AuditEventResourceTypeAuditEvent                           AuditEventResourceType = "audit_event"
 	AuditEventResourceTypeAuditFieldChange                     AuditEventResourceType = "audit_field_change"
@@ -505,24 +492,11 @@ const (
 	AuditEventResourceTypeTransactionMethod                    AuditEventResourceType = "transaction_method"
 	AuditEventResourceTypeTransactionType                      AuditEventResourceType = "transaction_type"
 	AuditEventResourceTypeTransactionAllocation                AuditEventResourceType = "transaction_allocation"
-	AuditEventResourceTypeUsageItem                            AuditEventResourceType = "usage_item"
-	AuditEventResourceTypeAccountUsageResponse                 AuditEventResourceType = "account_usage_response"
-	AuditEventResourceTypeSubscriptionInfo                     AuditEventResourceType = "subscription_info"
-	AuditEventResourceTypeBillingPortalSessionResponse         AuditEventResourceType = "billing_portal_session_response"
-	AuditEventResourceTypeSwitchPlanResponse                   AuditEventResourceType = "switch_plan_response"
-	AuditEventResourceTypeEnsureBillingCustomerResponse        AuditEventResourceType = "ensure_billing_customer_response"
-	AuditEventResourceTypeSpendingCapResponse                  AuditEventResourceType = "spending_cap_response"
-	AuditEventResourceTypeAgentSpendInfo                       AuditEventResourceType = "agent_spend_info"
 	AuditEventResourceTypeWebhookResponse                      AuditEventResourceType = "webhook_response"
 	AuditEventResourceTypeAddressSuggestion                    AuditEventResourceType = "address_suggestion"
 	AuditEventResourceTypeAddressComponents                    AuditEventResourceType = "address_components"
 	AuditEventResourceTypeAddressDetailsResult                 AuditEventResourceType = "address_details_result"
 	AuditEventResourceTypeValidatedAddress                     AuditEventResourceType = "validated_address"
-	AuditEventResourceTypePlanLimit                            AuditEventResourceType = "plan_limit"
-	AuditEventResourceTypePlanChangeProration                  AuditEventResourceType = "plan_change_proration"
-	AuditEventResourceTypePlanChangeLineItem                   AuditEventResourceType = "plan_change_line_item"
-	AuditEventResourceTypeSetupBillingResponse                 AuditEventResourceType = "setup_billing_response"
-	AuditEventResourceTypeConfirmPaymentResponse               AuditEventResourceType = "confirm_payment_response"
 	AuditEventResourceTypeOAuthResponse                        AuditEventResourceType = "oauth_response"
 	AuditEventResourceTypeOAuthStatusResponse                  AuditEventResourceType = "oauth_status_response"
 	AuditEventResourceTypeStripePublishableKey                 AuditEventResourceType = "stripe_publishable_key"
@@ -607,7 +581,6 @@ const (
 	AuditEventResourceTypeSkippedItemResult                    AuditEventResourceType = "skipped_item_result"
 	AuditEventResourceTypeReconcileErrorResult                 AuditEventResourceType = "reconcile_error_result"
 	AuditEventResourceTypeItemTrendPoint                       AuditEventResourceType = "item_trend_point"
-	AuditEventResourceTypeTenancyPendingRegistration           AuditEventResourceType = "tenancy_pending_registration"
 	AuditEventResourceTypeInvoiceAllocationEntry               AuditEventResourceType = "invoice_allocation_entry"
 	AuditEventResourceTypeAllocationCustomer                   AuditEventResourceType = "allocation_customer"
 	AuditEventResourceTypeCheckoutSalesOrder                   AuditEventResourceType = "checkout_sales_order"
@@ -797,13 +770,11 @@ type ListObjectType struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -846,23 +817,18 @@ type ListObjectType struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -879,15 +845,14 @@ type ListObjectType struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -1016,13 +981,11 @@ type CoreAuditEventListParams struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -1065,23 +1028,18 @@ type CoreAuditEventListParams struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -1098,15 +1056,14 @@ type CoreAuditEventListParams struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -1128,13 +1085,11 @@ type CoreAuditEventListParams struct {
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
-	// "refresh_token", "list", "sandbox", "registration_session", "pricing_plan",
-	// "account_plan", "plan_change", "enterprise_inquiry", "request_log",
-	// "audit_event", "audit_field_change", "role", "unit", "account_affiliation",
-	// "agent_definition", "available_tool", "agent_definition_tool",
-	// "agent_account_status", "agent_run", "agent_action", "agent_run_step",
-	// "agent_token_usage", "agent_memory", "notification",
-	// "notification_unread_count", "notification_send_result",
+	// "refresh_token", "list", "sandbox", "request_log", "audit_event",
+	// "audit_field_change", "role", "unit", "account_affiliation", "agent_definition",
+	// "available_tool", "agent_definition_tool", "agent_account_status", "agent_run",
+	// "agent_action", "agent_run_step", "agent_token_usage", "agent_memory",
+	// "notification", "notification_unread_count", "notification_send_result",
 	// "notification_unread_summary", "announcement", "conversation", "support_case",
 	// "conversation_participant", "read_cursor", "chat_message",
 	// "notification_unread_summary_account", "messaging_block",
@@ -1177,23 +1132,18 @@ type CoreAuditEventListParams struct {
 	// "shipping_case", "shipping_case_label_url", "settlement", "settlement_summary",
 	// "role_permission", "registration_flow", "registration_flow_option",
 	// "transaction", "transaction_summary", "transaction_method", "transaction_type",
-	// "transaction_allocation", "usage_item", "account_usage_response",
-	// "subscription_info", "billing_portal_session_response", "switch_plan_response",
-	// "ensure_billing_customer_response", "spending_cap_response", "agent_spend_info",
-	// "webhook_response", "address_suggestion", "address_components",
-	// "address_details_result", "validated_address", "plan_limit",
-	// "plan_change_proration", "plan_change_line_item", "setup_billing_response",
-	// "confirm_payment_response", "oauth_response", "oauth_status_response",
-	// "stripe_publishable_key", "stripe_status", "healthcheck",
-	// "agent_definition_config", "trigger_config", "customer_contact_info",
-	// "customer_freight_preferences", "customer_defaults", "customer_lead_time",
-	// "customer_notification_preferences", "order_notification_recipient",
-	// "order_discount", "sales_order_line", "sales_order_type", "sales_order_status",
-	// "material", "supplier_material", "part", "permission_group", "permission",
-	// "pick", "pick_line", "product_type", "production", "production_flow", "map",
-	// "purchase_order", "purchase_order_line", "purchase_order_related", "supplier",
-	// "receivable_entry", "receiving_order", "receiving_order_line",
-	// "receiving_order_totals", "receiving_order_stage_total",
+	// "transaction_allocation", "webhook_response", "address_suggestion",
+	// "address_components", "address_details_result", "validated_address",
+	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
+	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
+	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
+	// "customer_lead_time", "customer_notification_preferences",
+	// "order_notification_recipient", "order_discount", "sales_order_line",
+	// "sales_order_type", "sales_order_status", "material", "supplier_material",
+	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
+	// "production", "production_flow", "map", "purchase_order", "purchase_order_line",
+	// "purchase_order_related", "supplier", "receivable_entry", "receiving_order",
+	// "receiving_order_line", "receiving_order_totals", "receiving_order_stage_total",
 	// "receiving_order_related", "email_contact", "allocation_entry",
 	// "open_credit_entry", "volume_discount", "volume_discount_tier",
 	// "analyze_deliveries_response", "analyze_manufacturing_response",
@@ -1210,15 +1160,14 @@ type CoreAuditEventListParams struct {
 	// "user_photo_upload_result", "user_photo_url", "batch_lot",
 	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
 	// "item_trends", "reconciled_item_result", "skipped_item_result",
-	// "reconcile_error_result", "item_trend_point", "tenancy_pending_registration",
-	// "invoice_allocation_entry", "allocation_customer", "checkout_sales_order",
-	// "sales_order_price_quote", "sales_order_freight_quote",
-	// "sales_order_commitment_quote", "operating_calendar",
-	// "operating_calendar_closure", "sales_order_price_quote_line",
-	// "hubspot_sync_job", "hubspot_sync_report", "hubspot_company_review",
-	// "hubspot_company_candidate", "hubspot_sync_record", "contact_match",
-	// "reply_draft", "conversation_link", "messaging_group", "messaging_group_member",
-	// "portal_profile", "portal_registration_session",
+	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
+	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
+	// "sales_order_freight_quote", "sales_order_commitment_quote",
+	// "operating_calendar", "operating_calendar_closure",
+	// "sales_order_price_quote_line", "hubspot_sync_job", "hubspot_sync_report",
+	// "hubspot_company_review", "hubspot_company_candidate", "hubspot_sync_record",
+	// "contact_match", "reply_draft", "conversation_link", "messaging_group",
+	// "messaging_group_member", "portal_profile", "portal_registration_session",
 	// "portal_registration_session_data", "pack_list", "pack_list_party",
 	// "pack_list_line_item", "pack_list_back_order", "pack_list_case", "job",
 	// "job_result", "job_export", "analyze_customer_pricing_response",
@@ -1275,11 +1224,6 @@ const (
 	CoreAuditEventListParamsRootResourceTypeRefreshToken                         CoreAuditEventListParamsRootResourceType = "refresh_token"
 	CoreAuditEventListParamsRootResourceTypeList                                 CoreAuditEventListParamsRootResourceType = "list"
 	CoreAuditEventListParamsRootResourceTypeSandbox                              CoreAuditEventListParamsRootResourceType = "sandbox"
-	CoreAuditEventListParamsRootResourceTypeRegistrationSession                  CoreAuditEventListParamsRootResourceType = "registration_session"
-	CoreAuditEventListParamsRootResourceTypePricingPlan                          CoreAuditEventListParamsRootResourceType = "pricing_plan"
-	CoreAuditEventListParamsRootResourceTypeAccountPlan                          CoreAuditEventListParamsRootResourceType = "account_plan"
-	CoreAuditEventListParamsRootResourceTypePlanChange                           CoreAuditEventListParamsRootResourceType = "plan_change"
-	CoreAuditEventListParamsRootResourceTypeEnterpriseInquiry                    CoreAuditEventListParamsRootResourceType = "enterprise_inquiry"
 	CoreAuditEventListParamsRootResourceTypeRequestLog                           CoreAuditEventListParamsRootResourceType = "request_log"
 	CoreAuditEventListParamsRootResourceTypeAuditEvent                           CoreAuditEventListParamsRootResourceType = "audit_event"
 	CoreAuditEventListParamsRootResourceTypeAuditFieldChange                     CoreAuditEventListParamsRootResourceType = "audit_field_change"
@@ -1438,24 +1382,11 @@ const (
 	CoreAuditEventListParamsRootResourceTypeTransactionMethod                    CoreAuditEventListParamsRootResourceType = "transaction_method"
 	CoreAuditEventListParamsRootResourceTypeTransactionType                      CoreAuditEventListParamsRootResourceType = "transaction_type"
 	CoreAuditEventListParamsRootResourceTypeTransactionAllocation                CoreAuditEventListParamsRootResourceType = "transaction_allocation"
-	CoreAuditEventListParamsRootResourceTypeUsageItem                            CoreAuditEventListParamsRootResourceType = "usage_item"
-	CoreAuditEventListParamsRootResourceTypeAccountUsageResponse                 CoreAuditEventListParamsRootResourceType = "account_usage_response"
-	CoreAuditEventListParamsRootResourceTypeSubscriptionInfo                     CoreAuditEventListParamsRootResourceType = "subscription_info"
-	CoreAuditEventListParamsRootResourceTypeBillingPortalSessionResponse         CoreAuditEventListParamsRootResourceType = "billing_portal_session_response"
-	CoreAuditEventListParamsRootResourceTypeSwitchPlanResponse                   CoreAuditEventListParamsRootResourceType = "switch_plan_response"
-	CoreAuditEventListParamsRootResourceTypeEnsureBillingCustomerResponse        CoreAuditEventListParamsRootResourceType = "ensure_billing_customer_response"
-	CoreAuditEventListParamsRootResourceTypeSpendingCapResponse                  CoreAuditEventListParamsRootResourceType = "spending_cap_response"
-	CoreAuditEventListParamsRootResourceTypeAgentSpendInfo                       CoreAuditEventListParamsRootResourceType = "agent_spend_info"
 	CoreAuditEventListParamsRootResourceTypeWebhookResponse                      CoreAuditEventListParamsRootResourceType = "webhook_response"
 	CoreAuditEventListParamsRootResourceTypeAddressSuggestion                    CoreAuditEventListParamsRootResourceType = "address_suggestion"
 	CoreAuditEventListParamsRootResourceTypeAddressComponents                    CoreAuditEventListParamsRootResourceType = "address_components"
 	CoreAuditEventListParamsRootResourceTypeAddressDetailsResult                 CoreAuditEventListParamsRootResourceType = "address_details_result"
 	CoreAuditEventListParamsRootResourceTypeValidatedAddress                     CoreAuditEventListParamsRootResourceType = "validated_address"
-	CoreAuditEventListParamsRootResourceTypePlanLimit                            CoreAuditEventListParamsRootResourceType = "plan_limit"
-	CoreAuditEventListParamsRootResourceTypePlanChangeProration                  CoreAuditEventListParamsRootResourceType = "plan_change_proration"
-	CoreAuditEventListParamsRootResourceTypePlanChangeLineItem                   CoreAuditEventListParamsRootResourceType = "plan_change_line_item"
-	CoreAuditEventListParamsRootResourceTypeSetupBillingResponse                 CoreAuditEventListParamsRootResourceType = "setup_billing_response"
-	CoreAuditEventListParamsRootResourceTypeConfirmPaymentResponse               CoreAuditEventListParamsRootResourceType = "confirm_payment_response"
 	CoreAuditEventListParamsRootResourceTypeOAuthResponse                        CoreAuditEventListParamsRootResourceType = "oauth_response"
 	CoreAuditEventListParamsRootResourceTypeOAuthStatusResponse                  CoreAuditEventListParamsRootResourceType = "oauth_status_response"
 	CoreAuditEventListParamsRootResourceTypeStripePublishableKey                 CoreAuditEventListParamsRootResourceType = "stripe_publishable_key"
@@ -1540,7 +1471,6 @@ const (
 	CoreAuditEventListParamsRootResourceTypeSkippedItemResult                    CoreAuditEventListParamsRootResourceType = "skipped_item_result"
 	CoreAuditEventListParamsRootResourceTypeReconcileErrorResult                 CoreAuditEventListParamsRootResourceType = "reconcile_error_result"
 	CoreAuditEventListParamsRootResourceTypeItemTrendPoint                       CoreAuditEventListParamsRootResourceType = "item_trend_point"
-	CoreAuditEventListParamsRootResourceTypeTenancyPendingRegistration           CoreAuditEventListParamsRootResourceType = "tenancy_pending_registration"
 	CoreAuditEventListParamsRootResourceTypeInvoiceAllocationEntry               CoreAuditEventListParamsRootResourceType = "invoice_allocation_entry"
 	CoreAuditEventListParamsRootResourceTypeAllocationCustomer                   CoreAuditEventListParamsRootResourceType = "allocation_customer"
 	CoreAuditEventListParamsRootResourceTypeCheckoutSalesOrder                   CoreAuditEventListParamsRootResourceType = "checkout_sales_order"
