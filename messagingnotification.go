@@ -639,9 +639,9 @@ type SendNotificationRequestParam struct {
 	// "transaction_allocation", "webhook_response", "address_suggestion",
 	// "address_components", "address_details_result", "validated_address",
 	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
-	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
-	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
-	// "customer_lead_time", "customer_notification_preferences",
+	// "stripe_status", "openrouter_usage", "healthcheck", "agent_definition_config",
+	// "trigger_config", "customer_contact_info", "customer_freight_preferences",
+	// "customer_defaults", "customer_lead_time", "customer_notification_preferences",
 	// "order_notification_recipient", "order_discount", "sales_order_line",
 	// "sales_order_type", "sales_order_status", "material", "supplier_material",
 	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
@@ -910,6 +910,7 @@ const (
 	SendNotificationRequestLinkResourceTypeOAuthStatusResponse                  SendNotificationRequestLinkResourceType = "oauth_status_response"
 	SendNotificationRequestLinkResourceTypeStripePublishableKey                 SendNotificationRequestLinkResourceType = "stripe_publishable_key"
 	SendNotificationRequestLinkResourceTypeStripeStatus                         SendNotificationRequestLinkResourceType = "stripe_status"
+	SendNotificationRequestLinkResourceTypeOpenrouterUsage                      SendNotificationRequestLinkResourceType = "openrouter_usage"
 	SendNotificationRequestLinkResourceTypeHealthcheck                          SendNotificationRequestLinkResourceType = "healthcheck"
 	SendNotificationRequestLinkResourceTypeAgentDefinitionConfig                SendNotificationRequestLinkResourceType = "agent_definition_config"
 	SendNotificationRequestLinkResourceTypeTriggerConfig                        SendNotificationRequestLinkResourceType = "trigger_config"

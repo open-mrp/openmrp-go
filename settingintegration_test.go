@@ -13,7 +13,7 @@ import (
 	"github.com/open-mrp/openmrp-go/option"
 )
 
-func TestSettingIntegrationNew(t *testing.T) {
+func TestSettingIntegrationNewWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -30,6 +30,10 @@ func TestSettingIntegrationNew(t *testing.T) {
 			Credentials: `{"private_key":"sk_test_...","publishable_key":"pk_test_...","webhook_secret":"whsec_..."}`,
 			Name:        "My Stripe Integration",
 			Provider:    openmrp.CreateAccountIntegrationRequestProviderStripe,
+			MonthlySpendLimit: openmrp.MoneyInputParam{
+				Amount:   "amount",
+				Currency: "currency",
+			},
 		},
 	})
 	if err != nil {
@@ -58,6 +62,10 @@ func TestSettingIntegrationUpdateWithOptionalParams(t *testing.T) {
 		"acig_5ilahyezrs63",
 		openmrp.SettingIntegrationUpdateParams{
 			UpdateAccountIntegrationRequest: openmrp.UpdateAccountIntegrationRequestParam{
+				MonthlySpendLimit: openmrp.MoneyInputParam{
+					Amount:   "amount",
+					Currency: "currency",
+				},
 				Name:   openmrp.String("Updated Stripe Integration"),
 				Status: openmrp.UpdateAccountIntegrationRequestStatusActive,
 			},

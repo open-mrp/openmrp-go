@@ -2081,12 +2081,14 @@ Methods:
 Params Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#CreateAccountIntegrationRequestParam">CreateAccountIntegrationRequestParam</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#MoneyInputParam">MoneyInputParam</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#UpdateAccountIntegrationRequestParam">UpdateAccountIntegrationRequestParam</a>
 
 Response Types:
 
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#AccountIntegration">AccountIntegration</a>
 - <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListAccountIntegration">ListAccountIntegration</a>
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#Money">Money</a>
 
 Methods:
 
@@ -2094,3 +2096,13 @@ Methods:
 - <code title="put /v1/settings/integrations/{id}">client.Settings.Integrations.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SettingIntegrationService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SettingIntegrationUpdateParams">SettingIntegrationUpdateParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#AccountIntegration">AccountIntegration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /v1/settings/integrations">client.Settings.Integrations.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SettingIntegrationService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SettingIntegrationListParams">SettingIntegrationListParams</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#ListAccountIntegration">ListAccountIntegration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="delete /v1/settings/integrations/{id}">client.Settings.Integrations.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SettingIntegrationService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#AccountIntegration">AccountIntegration</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+### Openrouter
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OpenRouterUsage">OpenRouterUsage</a>
+
+Methods:
+
+- <code title="get /v1/settings/integrations/openrouter/usage">client.Settings.Integrations.Openrouter.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#SettingIntegrationOpenrouterService.GetUsage">GetUsage</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (\*<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go">openmrp</a>.<a href="https://pkg.go.dev/github.com/open-mrp/openmrp-go#OpenRouterUsage">OpenRouterUsage</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

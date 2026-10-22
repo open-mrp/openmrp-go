@@ -598,6 +598,9 @@ type CreateConversationRequestParam struct {
 	// An anchored conversation is returned when conversations are listed for that
 	// record, which is how a discussion shows up on an order or invoice.
 	//
+	// Anchor a group to another `conversation` to start a new topic with the same
+	// people, or to an `agent_definition` to start a new chat with that agent.
+	//
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
@@ -651,9 +654,9 @@ type CreateConversationRequestParam struct {
 	// "transaction_allocation", "webhook_response", "address_suggestion",
 	// "address_components", "address_details_result", "validated_address",
 	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
-	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
-	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
-	// "customer_lead_time", "customer_notification_preferences",
+	// "stripe_status", "openrouter_usage", "healthcheck", "agent_definition_config",
+	// "trigger_config", "customer_contact_info", "customer_freight_preferences",
+	// "customer_defaults", "customer_lead_time", "customer_notification_preferences",
 	// "order_notification_recipient", "order_discount", "sales_order_line",
 	// "sales_order_type", "sales_order_status", "material", "supplier_material",
 	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
@@ -725,6 +728,9 @@ const (
 //
 // An anchored conversation is returned when conversations are listed for that
 // record, which is how a discussion shows up on an order or invoice.
+//
+// Anchor a group to another `conversation` to start a new topic with the same
+// people, or to an `agent_definition` to start a new chat with that agent.
 type CreateConversationRequestTopicResourceType string
 
 const (
@@ -912,6 +918,7 @@ const (
 	CreateConversationRequestTopicResourceTypeOAuthStatusResponse                  CreateConversationRequestTopicResourceType = "oauth_status_response"
 	CreateConversationRequestTopicResourceTypeStripePublishableKey                 CreateConversationRequestTopicResourceType = "stripe_publishable_key"
 	CreateConversationRequestTopicResourceTypeStripeStatus                         CreateConversationRequestTopicResourceType = "stripe_status"
+	CreateConversationRequestTopicResourceTypeOpenrouterUsage                      CreateConversationRequestTopicResourceType = "openrouter_usage"
 	CreateConversationRequestTopicResourceTypeHealthcheck                          CreateConversationRequestTopicResourceType = "healthcheck"
 	CreateConversationRequestTopicResourceTypeAgentDefinitionConfig                CreateConversationRequestTopicResourceType = "agent_definition_config"
 	CreateConversationRequestTopicResourceTypeTriggerConfig                        CreateConversationRequestTopicResourceType = "trigger_config"
@@ -1876,6 +1883,10 @@ type MessagingConversationListParams struct {
 	// Matches both conversations anchored to the record and conversations that merely
 	// link it, which is what powers the "discussions on this record" view.
 	//
+	// A `conversation` or `agent_definition` anchor is personal: only conversations
+	// you take part in are returned, which lists the topics started from a
+	// conversation or your own chats with an agent.
+	//
 	// Any of "account", "actor", "entity", "record", "freight", "commitment",
 	// "sales_order_totals", "sales_order_stage_total", "sales_order_related",
 	// "order_contact", "user", "address", "api_key", "created_api_key",
@@ -1929,9 +1940,9 @@ type MessagingConversationListParams struct {
 	// "transaction_allocation", "webhook_response", "address_suggestion",
 	// "address_components", "address_details_result", "validated_address",
 	// "oauth_response", "oauth_status_response", "stripe_publishable_key",
-	// "stripe_status", "healthcheck", "agent_definition_config", "trigger_config",
-	// "customer_contact_info", "customer_freight_preferences", "customer_defaults",
-	// "customer_lead_time", "customer_notification_preferences",
+	// "stripe_status", "openrouter_usage", "healthcheck", "agent_definition_config",
+	// "trigger_config", "customer_contact_info", "customer_freight_preferences",
+	// "customer_defaults", "customer_lead_time", "customer_notification_preferences",
 	// "order_notification_recipient", "order_discount", "sales_order_line",
 	// "sales_order_type", "sales_order_status", "material", "supplier_material",
 	// "part", "permission_group", "permission", "pick", "pick_line", "product_type",
@@ -2029,6 +2040,10 @@ const (
 //
 // Matches both conversations anchored to the record and conversations that merely
 // link it, which is what powers the "discussions on this record" view.
+//
+// A `conversation` or `agent_definition` anchor is personal: only conversations
+// you take part in are returned, which lists the topics started from a
+// conversation or your own chats with an agent.
 type MessagingConversationListParamsTopicResourceType string
 
 const (
@@ -2216,6 +2231,7 @@ const (
 	MessagingConversationListParamsTopicResourceTypeOAuthStatusResponse                  MessagingConversationListParamsTopicResourceType = "oauth_status_response"
 	MessagingConversationListParamsTopicResourceTypeStripePublishableKey                 MessagingConversationListParamsTopicResourceType = "stripe_publishable_key"
 	MessagingConversationListParamsTopicResourceTypeStripeStatus                         MessagingConversationListParamsTopicResourceType = "stripe_status"
+	MessagingConversationListParamsTopicResourceTypeOpenrouterUsage                      MessagingConversationListParamsTopicResourceType = "openrouter_usage"
 	MessagingConversationListParamsTopicResourceTypeHealthcheck                          MessagingConversationListParamsTopicResourceType = "healthcheck"
 	MessagingConversationListParamsTopicResourceTypeAgentDefinitionConfig                MessagingConversationListParamsTopicResourceType = "agent_definition_config"
 	MessagingConversationListParamsTopicResourceTypeTriggerConfig                        MessagingConversationListParamsTopicResourceType = "trigger_config"

@@ -30,6 +30,8 @@ import (
 // the [NewSettingIntegrationService] method instead.
 type SettingIntegrationService struct {
 	options []option.RequestOption
+	// List and manage third-party account integrations.
+	Openrouter SettingIntegrationOpenrouterService
 }
 
 // NewSettingIntegrationService generates a new service that applies the given
@@ -38,6 +40,7 @@ type SettingIntegrationService struct {
 func NewSettingIntegrationService(opts ...option.RequestOption) (r SettingIntegrationService) {
 	r = SettingIntegrationService{}
 	r.options = opts
+	r.Openrouter = NewSettingIntegrationOpenrouterService(opts...)
 	return
 }
 
@@ -58,7 +61,8 @@ func (r *SettingIntegrationService) New(ctx context.Context, body SettingIntegra
 	return res, err
 }
 
-// Renames an account integration, or activates or deactivates it.
+// Renames an account integration, activates or deactivates it, or changes its
+// monthly spend limit.
 //
 // Omitted fields are left unchanged. Credentials cannot be changed here; to rotate
 // them, call Create Account Integration again with the same `provider`.
@@ -119,6 +123,8 @@ type AccountIntegration struct {
 	ID string `json:"id" api:"required"`
 	// Creation timestamp.
 	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// A monetary amount.
+	MonthlySpendLimit Money `json:"monthly_spend_limit" api:"required"`
 	// Display name of the integration.
 	Name string `json:"name" api:"required"`
 	// Resource type identifier.
@@ -130,8 +136,9 @@ type AccountIntegration struct {
 	// - `stripe`: Stripe payment processing.
 	// - `shippo`: Shippo shipping and label generation.
 	// - `hubspot`: HubSpot CRM.
+	// - `openrouter`: OpenRouter, the LLM gateway that serves agent runs.
 	//
-	// Any of "stripe", "shippo", "hubspot".
+	// Any of "stripe", "shippo", "hubspot", "openrouter".
 	Provider AccountIntegrationProvider `json:"provider" api:"required"`
 	// Lifecycle status of the integration.
 	//
@@ -145,15 +152,16 @@ type AccountIntegration struct {
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID          respjson.Field
-		CreatedAt   respjson.Field
-		Name        respjson.Field
-		Object      respjson.Field
-		Provider    respjson.Field
-		Status      respjson.Field
-		UpdatedAt   respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
+		ID                respjson.Field
+		CreatedAt         respjson.Field
+		MonthlySpendLimit respjson.Field
+		Name              respjson.Field
+		Object            respjson.Field
+		Provider          respjson.Field
+		Status            respjson.Field
+		UpdatedAt         respjson.Field
+		ExtraFields       map[string]respjson.Field
+		raw               string
 	} `json:"-"`
 }
 
@@ -175,12 +183,14 @@ const (
 // - `stripe`: Stripe payment processing.
 // - `shippo`: Shippo shipping and label generation.
 // - `hubspot`: HubSpot CRM.
+// - `openrouter`: OpenRouter, the LLM gateway that serves agent runs.
 type AccountIntegrationProvider string
 
 const (
-	AccountIntegrationProviderStripe  AccountIntegrationProvider = "stripe"
-	AccountIntegrationProviderShippo  AccountIntegrationProvider = "shippo"
-	AccountIntegrationProviderHubspot AccountIntegrationProvider = "hubspot"
+	AccountIntegrationProviderStripe     AccountIntegrationProvider = "stripe"
+	AccountIntegrationProviderShippo     AccountIntegrationProvider = "shippo"
+	AccountIntegrationProviderHubspot    AccountIntegrationProvider = "hubspot"
+	AccountIntegrationProviderOpenrouter AccountIntegrationProvider = "openrouter"
 )
 
 // Lifecycle status of the integration.
@@ -207,10 +217,11 @@ type CreateAccountIntegrationRequestParam struct {
 	//     `webhook_secret` (`whsec_...`).
 	//   - `shippo`: `api_key` (`shippo_live_...` or `shippo_test_...`).
 	//   - `hubspot`: `access_token` (`pat-...`).
+	//   - `openrouter`: `api_key` (`sk-or-...`).
 	//
 	// For Stripe and Shippo, sandbox accounts must supply test keys and production
 	// accounts must supply live keys; credentials that do not match are rejected.
-	// HubSpot tokens make no such distinction.
+	// HubSpot and OpenRouter keys make no such distinction.
 	Credentials string `json:"credentials" api:"required"`
 	// Display name of the integration.
 	Name string `json:"name" api:"required"`
@@ -219,9 +230,12 @@ type CreateAccountIntegrationRequestParam struct {
 	// - `stripe`: Stripe payment processing.
 	// - `shippo`: Shippo shipping and label generation.
 	// - `hubspot`: HubSpot CRM.
+	// - `openrouter`: OpenRouter, the LLM gateway that serves agent runs.
 	//
-	// Any of "stripe", "shippo", "hubspot".
+	// Any of "stripe", "shippo", "hubspot", "openrouter".
 	Provider CreateAccountIntegrationRequestProvider `json:"provider,omitzero" api:"required"`
+	// A monetary amount, supplied on create and update requests.
+	MonthlySpendLimit MoneyInputParam `json:"monthly_spend_limit,omitzero"`
 	paramObj
 }
 
@@ -238,12 +252,14 @@ func (r *CreateAccountIntegrationRequestParam) UnmarshalJSON(data []byte) error 
 // - `stripe`: Stripe payment processing.
 // - `shippo`: Shippo shipping and label generation.
 // - `hubspot`: HubSpot CRM.
+// - `openrouter`: OpenRouter, the LLM gateway that serves agent runs.
 type CreateAccountIntegrationRequestProvider string
 
 const (
-	CreateAccountIntegrationRequestProviderStripe  CreateAccountIntegrationRequestProvider = "stripe"
-	CreateAccountIntegrationRequestProviderShippo  CreateAccountIntegrationRequestProvider = "shippo"
-	CreateAccountIntegrationRequestProviderHubspot CreateAccountIntegrationRequestProvider = "hubspot"
+	CreateAccountIntegrationRequestProviderStripe     CreateAccountIntegrationRequestProvider = "stripe"
+	CreateAccountIntegrationRequestProviderShippo     CreateAccountIntegrationRequestProvider = "shippo"
+	CreateAccountIntegrationRequestProviderHubspot    CreateAccountIntegrationRequestProvider = "hubspot"
+	CreateAccountIntegrationRequestProviderOpenrouter CreateAccountIntegrationRequestProvider = "openrouter"
 )
 
 // A single page of resources, together with the metadata needed to page through
@@ -286,10 +302,52 @@ const (
 	ListAccountIntegrationObjectList ListAccountIntegrationObject = "list"
 )
 
+// A monetary amount.
+type Money struct {
+	// Decimal amount, as a string to preserve precision.
+	Amount string `json:"amount" api:"required" format:"decimal"`
+	// Lowercase ISO 4217 currency code.
+	Currency string `json:"currency" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Amount      respjson.Field
+		Currency    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r Money) RawJSON() string { return r.JSON.raw }
+func (r *Money) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A monetary amount, supplied on create and update requests.
+//
+// The properties Amount, Currency are required.
+type MoneyInputParam struct {
+	// Decimal amount, as a string to preserve precision.
+	Amount string `json:"amount" api:"required" format:"decimal"`
+	// Lowercase ISO 4217 currency code.
+	Currency string `json:"currency" api:"required"`
+	paramObj
+}
+
+func (r MoneyInputParam) MarshalJSON() (data []byte, err error) {
+	type shadow MoneyInputParam
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *MoneyInputParam) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // Request to update an account integration.
 type UpdateAccountIntegrationRequestParam struct {
 	// Display name of the integration.
 	Name param.Opt[string] `json:"name,omitzero"`
+	// A monetary amount, supplied on create and update requests.
+	MonthlySpendLimit MoneyInputParam `json:"monthly_spend_limit,omitzero"`
 	// Lifecycle status of the integration.
 	//
 	// Set to `inactive` to stop the provider being used while keeping its stored
