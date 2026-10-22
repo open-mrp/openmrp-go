@@ -82,7 +82,8 @@ func (r *MessagingConversationActionService) Assign(ctx context.Context, id stri
 //
 // The caller stays a member and keeps receiving notifications; the conversation
 // simply stops appearing in their list until they unhide it, and new messages do
-// not bring it back on their own. The owner of a conversation cannot hide it.
+// not bring it back on their own. Any participant can hide a conversation,
+// including its owner.
 //
 // This endpoint requires the permission: `messaging:update`.
 func (r *MessagingConversationActionService) Hide(ctx context.Context, id string, body MessagingConversationActionHideParams, opts ...option.RequestOption) (res *Conversation, err error) {
