@@ -556,8 +556,8 @@ type CreateSalesOrderRequestParam struct {
 	// Without `id`, a new address is created from these fields, so `name` and
 	// `country` are required. With `id`, that saved address is updated: omitted fields
 	// are left unchanged, `null` clears `phone`, `email`, `receive_calendar_id` or
-	// `street_line_2`, and an empty string clears `state` or `postal_code`. The
-	// address must already belong to the account the record saves it in.
+	// `street_line_2`, and `null` or an empty string clears `state` or `postal_code`.
+	// The address must already belong to the account the record saves it in.
 	BillToAddress InlineAddressInputParam `json:"bill_to_address,omitzero"`
 	// Who is billed for freight.
 	//
@@ -577,8 +577,8 @@ type CreateSalesOrderRequestParam struct {
 	// Without `id`, a new address is created from these fields, so `name` and
 	// `country` are required. With `id`, that saved address is updated: omitted fields
 	// are left unchanged, `null` clears `phone`, `email`, `receive_calendar_id` or
-	// `street_line_2`, and an empty string clears `state` or `postal_code`. The
-	// address must already belong to the account the record saves it in.
+	// `street_line_2`, and `null` or an empty string clears `state` or `postal_code`.
+	// The address must already belong to the account the record saves it in.
 	ShipToAddress InlineAddressInputParam `json:"ship_to_address,omitzero"`
 	paramObj
 }
@@ -768,16 +768,24 @@ const (
 // Without `id`, a new address is created from these fields, so `name` and
 // `country` are required. With `id`, that saved address is updated: omitted fields
 // are left unchanged, `null` clears `phone`, `email`, `receive_calendar_id` or
-// `street_line_2`, and an empty string clears `state` or `postal_code`. The
-// address must already belong to the account the record saves it in.
+// `street_line_2`, and `null` or an empty string clears `state` or `postal_code`.
+// The address must already belong to the account the record saves it in.
 type InlineAddressInputParam struct {
 	// Email address associated with the address.
 	Email param.Opt[string] `json:"email,omitzero"`
 	// Phone number associated with the address.
 	Phone param.Opt[string] `json:"phone,omitzero"`
+	// Postal or ZIP code.
+	//
+	// Send `null` or an empty string to clear.
+	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
 	// The operating calendar naming the days this dock accepts freight, overriding the
 	// customer's own.
 	ReceiveCalendarID param.Opt[string] `json:"receive_calendar_id,omitzero"`
+	// State or administrative area.
+	//
+	// Send `null` or an empty string to clear.
+	State param.Opt[string] `json:"state,omitzero"`
 	// Second line of the street address.
 	StreetLine2 param.Opt[string] `json:"street_line_2,omitzero"`
 	// ID of a saved address to update instead of creating a new one.
@@ -788,14 +796,6 @@ type InlineAddressInputParam struct {
 	Locality param.Opt[string] `json:"locality,omitzero"`
 	// Display name of the address. Required when `id` is omitted.
 	Name param.Opt[string] `json:"name,omitzero"`
-	// Postal or ZIP code.
-	//
-	// Send an empty string to clear.
-	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
-	// State or administrative area.
-	//
-	// Send an empty string to clear.
-	State param.Opt[string] `json:"state,omitzero"`
 	// First line of the street address.
 	StreetLine1 param.Opt[string] `json:"street_line_1,omitzero"`
 	// How the address is used.
@@ -1839,8 +1839,8 @@ type UpdateSalesOrderRequestParam struct {
 	// Without `id`, a new address is created from these fields, so `name` and
 	// `country` are required. With `id`, that saved address is updated: omitted fields
 	// are left unchanged, `null` clears `phone`, `email`, `receive_calendar_id` or
-	// `street_line_2`, and an empty string clears `state` or `postal_code`. The
-	// address must already belong to the account the record saves it in.
+	// `street_line_2`, and `null` or an empty string clears `state` or `postal_code`.
+	// The address must already belong to the account the record saves it in.
 	BillingAddress InlineAddressInputParam `json:"billing_address,omitzero"`
 	// Replaces the invoice email contacts on the order.
 	//
@@ -1857,8 +1857,8 @@ type UpdateSalesOrderRequestParam struct {
 	// Without `id`, a new address is created from these fields, so `name` and
 	// `country` are required. With `id`, that saved address is updated: omitted fields
 	// are left unchanged, `null` clears `phone`, `email`, `receive_calendar_id` or
-	// `street_line_2`, and an empty string clears `state` or `postal_code`. The
-	// address must already belong to the account the record saves it in.
+	// `street_line_2`, and `null` or an empty string clears `state` or `postal_code`.
+	// The address must already belong to the account the record saves it in.
 	ShippingAddress InlineAddressInputParam `json:"shipping_address,omitzero"`
 	paramObj
 }
