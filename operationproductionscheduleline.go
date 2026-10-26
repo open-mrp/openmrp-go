@@ -437,6 +437,11 @@ type UpdateProductionScheduleLineRequestParam struct {
 	// planned at, which this does not change.
 	Lots param.Opt[int64] `json:"lots,omitzero"`
 	// ID of the machine to move the campaign to.
+	//
+	// The campaign takes on that machine's production step, so a release issues its
+	// batches on the step the new machine runs. Batches already released for the
+	// campaign move to the new machine with it, and the moved campaign is kept on that
+	// machine when the version is regenerated with `preserve_manual`.
 	MachineID param.Opt[string] `json:"machine_id,omitzero"`
 	// Units to build over the campaign.
 	//

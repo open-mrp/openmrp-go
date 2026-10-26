@@ -262,8 +262,12 @@ type UpdateAddressRequestParam struct {
 	// Display name of the address.
 	Name param.Opt[string] `json:"name,omitzero"`
 	// Postal or ZIP code.
+	//
+	// Send an empty string to clear.
 	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
 	// State or administrative area.
+	//
+	// Send an empty string to clear.
 	State param.Opt[string] `json:"state,omitzero"`
 	// First line of the street address.
 	StreetLine1 param.Opt[string] `json:"street_line_1,omitzero"`
