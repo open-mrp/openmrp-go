@@ -112,9 +112,9 @@ type ValidateAddressRequestParam struct {
 	// A full country name such as `United States` is recognized for a handful of
 	// common countries; send the two-letter code for anywhere else.
 	Country string `json:"country" api:"required"`
-	// Postal or ZIP code.
+	// Postal or ZIP code. Empty for an address without one.
 	PostalCode string `json:"postal_code" api:"required"`
-	// State or administrative area.
+	// State or administrative area. Empty for an address without one.
 	State string `json:"state" api:"required"`
 	// Second line of the street address.
 	AddressLine2 param.Opt[string] `json:"address_line_2,omitzero"`
