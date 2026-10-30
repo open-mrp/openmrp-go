@@ -174,12 +174,12 @@ type AddConversationLinkRequestParam struct {
 	// "catalog_category", "catalog_product", "catalog_property", "catalog_attribute",
 	// "inventory_item", "analyze_weeks_of_sales_response",
 	// "bulk_reconcile_items_response", "sys_property", "sys_property_type",
-	// "sys_property_value", "territory", "tenancy", "checkout_session",
-	// "estimate_rate_result", "rate_shop_option", "rate_shop_result", "owner",
-	// "created_by", "message", "account_photo_upload_result",
-	// "user_photo_upload_result", "user_photo_url", "batch_lot",
-	// "production_run_batch_summary", "check_duplicate_result", "item_costs",
-	// "item_trends", "reconciled_item_result", "skipped_item_result",
+	// "sys_property_value", "territory", "feedback_report", "tenancy",
+	// "checkout_session", "estimate_rate_result", "rate_shop_option",
+	// "rate_shop_result", "owner", "created_by", "message",
+	// "account_photo_upload_result", "user_photo_upload_result", "user_photo_url",
+	// "batch_lot", "production_run_batch_summary", "check_duplicate_result",
+	// "item_costs", "item_trends", "reconciled_item_result", "skipped_item_result",
 	// "reconcile_error_result", "item_trend_point", "invoice_allocation_entry",
 	// "allocation_customer", "checkout_sales_order", "sales_order_price_quote",
 	// "sales_order_freight_quote", "sales_order_commitment_quote",
@@ -459,6 +459,7 @@ const (
 	AddConversationLinkRequestResourceTypeSysPropertyType                      AddConversationLinkRequestResourceType = "sys_property_type"
 	AddConversationLinkRequestResourceTypeSysPropertyValue                     AddConversationLinkRequestResourceType = "sys_property_value"
 	AddConversationLinkRequestResourceTypeTerritory                            AddConversationLinkRequestResourceType = "territory"
+	AddConversationLinkRequestResourceTypeFeedbackReport                       AddConversationLinkRequestResourceType = "feedback_report"
 	AddConversationLinkRequestResourceTypeTenancy                              AddConversationLinkRequestResourceType = "tenancy"
 	AddConversationLinkRequestResourceTypeCheckoutSession                      AddConversationLinkRequestResourceType = "checkout_session"
 	AddConversationLinkRequestResourceTypeEstimateRateResult                   AddConversationLinkRequestResourceType = "estimate_rate_result"
